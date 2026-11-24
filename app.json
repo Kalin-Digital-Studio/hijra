@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "Hijrah",
+    "slug": "hijrah-apps",
+    "version": "1.0.0",
+    "scheme": "hijrah",
+    "userInterfaceStyle": "automatic",
+    "ios": { "bundleIdentifier": "app.hijrah.mobile", "supportsTablet": true },
+    "android": { "package": "app.hijrah.mobile" },
+    "plugins": ["expo-router", "expo-sqlite"]
+  }
+}
