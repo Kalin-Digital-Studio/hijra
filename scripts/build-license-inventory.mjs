@@ -17,9 +17,12 @@ const purposes = {
   expo: 'SDK, tooling, dan runtime Expo',
   'expo-constants': 'Metadata aplikasi',
   'expo-doctor': 'Pemeriksaan kompatibilitas proyek',
+  'expo-file-system': 'Penyimpanan avatar lokal',
+  'expo-image-picker': 'Pemilih foto profil perangkat',
   'expo-linking': 'Deep linking untuk Expo Router',
   'expo-router': 'Navigasi berbasis route',
   'expo-sqlite': 'Database lokal',
+  'expo-splash-screen': 'Splash native dan kontrol startup',
   'expo-status-bar': 'Tampilan status bar',
   'expo-system-ui': 'Preferensi tampilan sistem',
   i18next: 'Resource dan fallback terjemahan',
@@ -92,10 +95,13 @@ const navigationNotice = 'https://raw.githubusercontent.com/react-navigation/rea
 const materialIcons = { 'arrow_right.xml': 'chevron_right', 'checkmark.xml': 'check' };
 const assetMap = JSON.parse(await readFile(bundlePath + '/assetmap.json', 'utf8'));
 const assets = new Map();
+const localArtwork = new Set(['introduction.png', 'daily-worship.png', 'personal-growth.png']);
 for (const { httpServerLocation, name, type } of Object.values(assetMap)) {
   const filename = name + '.' + type;
   const path = httpServerLocation + '/' + filename;
   const key = resolved.get(packageLocation(path));
+  if (!key && /\/assets\/onboarding$/.test(httpServerLocation) && localArtwork.has(filename)) continue;
+  if (!key && /\/assets\/branding$/.test(httpServerLocation) && filename === 'logo_hijra.png') continue;
   if (!key) throw new Error('Asset requires explicit license evidence: ' + path);
   const item = byPackage.get(key);
   const asset = { item, license: item.license, notice: null, origin: null };
@@ -120,6 +126,8 @@ for (const name of [
 ]) {
   if (direct.has(name)) runtime.add(resolved.get('node_modules/' + name));
 }
+const imageLoader = resolved.get('node_modules/expo-image-loader');
+if (direct.has('expo-image-picker') && imageLoader) runtime.add(imageLoader);
 
 const notices = {};
 for (const key of [...runtime].sort()) {
@@ -154,7 +162,7 @@ await writeFile('src/constants/licenseNotices.ts',
 const report = [
   '# Inventaris lisensi pihak ketiga',
   '',
-  'Audit Phase 01 · 24 November 2026 · Expo ' + direct.get('expo') + '. Lockfile memuat ' + evidence.length + ' versi paket registry. ' + installed.size + ' versi registry terpasang di Windows. Paket yang khusus untuk platform lain tetap dicantumkan.',
+  'Audit Phase 02 · 25 November 2026 · Expo ' + direct.get('expo') + '. Lockfile memuat ' + evidence.length + ' versi paket registry. ' + installed.size + ' versi registry terpasang di Windows. Paket yang khusus untuk platform lain tetap dicantumkan. Riwayat audit Phase 01 tercatat di [Development Progress](DEVELOPMENT_PROGRESS.md).',
   '',
   'Teks untuk dependensi yang dirujuk bundle Android dan iOS tersedia di **Profil > Tentang Aplikasi > Lisensi Pihak Ketiga**. Ikon tab memakai karakter Unicode dengan font sistem. Aplikasi tidak menambahkan paket ikon, font eksternal, atau dataset eksternal.',
   '',
@@ -197,6 +205,17 @@ for (const [path, { item, license, origin, notice }] of [...assets.entries()].so
 report.push(
   '| SQLite | ' + sqliteVersion + ' | Mesin database native | [SQLite](https://www.sqlite.org/copyright.html) | Public domain | Ya | Ya | Pernyataan public domain tersedia di aplikasi | Diverifikasi |',
   '| Open Sans | Aset arsip Jimp 0.16.13 | Font internal tooling gambar | [Arsip resmi Jimp](https://registry.npmjs.org/jimp/-/jimp-0.16.13.tgz) | Apache-2.0 | Ya | Ya, sesuai ketentuan | Apache License.txt di arsip | Terpasang sebagai aset tooling |',
+  '',
+  '## Aset lokal Phase 02',
+  '',
+  'Ilustrasi sementara untuk onboarding dibuat dari bentuk geometris khusus untuk proyek. Logo diberikan oleh Product Owner. Konfirmasi asal pembuatan dan hak distribusi logo perlu dicatat sebelum publikasi.',
+  '',
+  '| Berkas | Penggunaan | Provenans | Status |',
+  '| --- | --- | --- | --- |',
+  '| `assets/branding/logo_hijra.png` | Startup, onboarding, splash native dan ikon aplikasi | Logo yang diberikan Product Owner untuk Hijra | Terpasang. Asal pembuatan dan hak distribusi komersial belum terdokumentasi. |',
+  '| `assets/onboarding/introduction.png` | Slide pendamping ibadah | Ilustrasi orisinal proyek | Sementara |',
+  '| `assets/onboarding/daily-worship.png` | Slide ibadah harian | Ilustrasi orisinal proyek | Sementara |',
+  '| `assets/onboarding/personal-growth.png` | Slide jurnal dan kebiasaan | Ilustrasi orisinal proyek | Sementara |',
   '',
   'Modul LAN-only di `tools/lan-only-ws-tunnel/` adalah kode proyek lokal. Nama dependensi pada lockfile mengikuti nama modul yang diimpor Expo CLI.',
   '',

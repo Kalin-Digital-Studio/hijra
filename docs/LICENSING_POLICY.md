@@ -1,4 +1,4 @@
-# Kebijakan lisensi Hijrah Apps
+# Kebijakan lisensi Hijra
 
 Kebijakan ini berlaku untuk Phase 01 dan semua fase berikutnya. Semua pustaka, framework, dependensi, paket, font, ikon, gambar, ilustrasi, animasi, audio, dataset, dan aset pihak ketiga harus dapat digunakan secara gratis dan komersial, boleh didistribusikan melalui Google Play Store dan Apple App Store, dan boleh dimodifikasi jika dibutuhkan. Syaratnya harus jelas, dapat diverifikasi, dan bebas dari kewajiban berlangganan, royalti, dan biaya lisensi berulang.
 
@@ -22,6 +22,8 @@ Kebijakan ini berlaku untuk Phase 01 dan semua fase berikutnya. Semua pustaka, f
 Pada fase yang relevan, verifikasi hak penggunaan komersial dan redistribusi serta autentisitas teks Arab Al-Qur’an, terjemahan Al-Qur’an, tafsir, audio tilawah, kumpulan dan terjemahan hadits, audio adzan, kumpulan doa dan dzikir, serta API dan dataset jadwal shalat. Catat edisi, penerbit atau pemegang hak, dan sumber yang dipakai untuk validasi konten. Akses publik tidak membuktikan izin redistribusi.
 
 ## Kriteria penerimaan
+
+Aset onboarding harus dicatat dengan asal, tujuan, hak komersial dan redistribusi, serta status. Untuk aset AI, cantumkan penyedia dan ketentuan penggunaan yang berlaku. Aset buatan proyek dapat dipakai sebagai placeholder sambil menunggu persetujuan visual.
 
 - [ ] Semua lisensi dependensi langsung dan transitif ditinjau.
 - [ ] Semua ikon, font, dan aset eksternal memiliki lisensi yang terverifikasi.

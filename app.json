@@ -1,12 +1,24 @@
 {
   "expo": {
-    "name": "Hijrah",
+    "name": "Hijra",
     "slug": "hijrah-apps",
     "version": "1.0.0",
     "scheme": "hijrah",
+    "icon": "./assets/branding/logo_hijra.png",
     "userInterfaceStyle": "automatic",
-    "ios": { "bundleIdentifier": "app.hijrah.mobile", "supportsTablet": true },
+    "ios": { "bundleIdentifier": "app.hijrah.mobile", "supportsTablet": true, "infoPlist": { "CFBundleAllowMixedLocalizations": true } },
+    "locales": { "id": "./src/locales/id/native.json", "en": "./src/locales/en/native.json" },
     "android": { "package": "app.hijrah.mobile" },
-    "plugins": ["expo-router", "expo-sqlite"]
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      ["expo-splash-screen", {
+        "backgroundColor": "#174638",
+        "image": "./assets/branding/logo_hijra.png",
+        "imageWidth": 176,
+        "dark": { "backgroundColor": "#174638", "image": "./assets/branding/logo_hijra.png" }
+      }],
+      ["expo-image-picker", { "photosPermission": "Allow Hijra to choose a local profile photo.", "cameraPermission": false, "microphonePermission": false }]
+    ]
   }
 }

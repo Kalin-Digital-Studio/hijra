@@ -1,4 +1,4 @@
 import { create } from 'zustand';
 import type { Settings } from '../types/settings';
 
-export const useSettings = create<Settings>(() => ({ language: 'id', theme: 'system' }));
+export const useSettings = create<Settings>(() => ({ language: 'id', theme: 'system', week_start: 'monday' }));

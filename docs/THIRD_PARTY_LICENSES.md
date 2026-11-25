@@ -1,6 +1,6 @@
 # Inventaris lisensi pihak ketiga
 
-Audit Phase 01 · 24 November 2026 · Expo 58.0.26. Lockfile memuat 825 versi paket registry. 785 versi registry terpasang di Windows. Paket yang khusus untuk platform lain tetap dicantumkan.
+Audit Phase 02 · 25 November 2026 · Expo 58.0.26. Lockfile memuat 828 versi paket registry. 788 versi registry terpasang di Windows. Paket yang khusus untuk platform lain tetap dicantumkan. Riwayat audit Phase 01 tercatat di [Development Progress](DEVELOPMENT_PROGRESS.md).
 
 Teks untuk dependensi yang dirujuk bundle Android dan iOS tersedia di **Profil > Tentang Aplikasi > Lisensi Pihak Ketiga**. Ikon tab memakai karakter Unicode dengan font sistem. Aplikasi tidak menambahkan paket ikon, font eksternal, atau dataset eksternal.
 
@@ -417,9 +417,11 @@ Untuk build store mandiri, audit lagi komponen native, artefak CocoaPods/Gradle,
 | expo-asset | 58.0.21 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-constants | 58.0.16 | Langsung · Metadata aplikasi | [Tarball resmi](https://registry.npmjs.org/expo-constants/-/expo-constants-58.0.16.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-doctor | 1.21.8 | Langsung · Pemeriksaan kompatibilitas proyek | [Tarball resmi](https://registry.npmjs.org/expo-doctor/-/expo-doctor-1.21.8.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
-| expo-file-system | 58.0.14 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-file-system/-/expo-file-system-58.0.14.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
+| expo-file-system | 58.0.14 | Langsung · Penyimpanan avatar lokal | [Tarball resmi](https://registry.npmjs.org/expo-file-system/-/expo-file-system-58.0.14.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-font | 58.0.12 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-font/-/expo-font-58.0.12.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
 | expo-glass-effect | 58.0.5 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-glass-effect/-/expo-glass-effect-58.0.5.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
+| expo-image-loader | 58.0.3 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-image-loader/-/expo-image-loader-58.0.3.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
+| expo-image-picker | 58.0.10 | Langsung · Pemilih foto profil perangkat | [Tarball resmi](https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-58.0.10.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-keep-awake | 58.0.4 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-58.0.4.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
 | expo-linking | 58.0.17 | Langsung · Deep linking untuk Expo Router | [Tarball resmi](https://registry.npmjs.org/expo-linking/-/expo-linking-58.0.17.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-modules-autolinking | 58.1.0 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-modules-autolinking/-/expo-modules-autolinking-58.1.0.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
@@ -429,6 +431,7 @@ Untuk build store mandiri, audit lagi komponen native, artefak CocoaPods/Gradle,
 | expo-modules-macros | 0.33.0 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-modules-macros/-/expo-modules-macros-0.33.0.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
 | expo-router | 58.0.32 | Langsung · Navigasi berbasis route | [Tarball resmi](https://registry.npmjs.org/expo-router/-/expo-router-58.0.32.tgz) · [Notice upstream](https://raw.githubusercontent.com/expo/expo/sdk-58/LICENSE) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip dan notice upstream · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-server | 58.1.0 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-server/-/expo-server-58.1.0.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
+| expo-splash-screen | 58.0.14 | Langsung · Splash native dan kontrol startup | [Tarball resmi](https://registry.npmjs.org/expo-splash-screen/-/expo-splash-screen-58.0.14.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-sqlite | 58.0.18 | Langsung · Database lokal | [Tarball resmi](https://registry.npmjs.org/expo-sqlite/-/expo-sqlite-58.0.18.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-status-bar | 58.0.5 | Langsung · Tampilan status bar | [Tarball resmi](https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-58.0.5.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-system-ui | 58.0.7 | Langsung · Preferensi tampilan sistem | [Tarball resmi](https://registry.npmjs.org/expo-system-ui/-/expo-system-ui-58.0.7.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
@@ -853,5 +856,16 @@ Untuk build store mandiri, audit lagi komponen native, artefak CocoaPods/Gradle,
 | `expo-router/assets/unmatched.png` | 58.0.32 | Aset UI paket expo-router | [Tarball resmi](https://registry.npmjs.org/expo-router/-/expo-router-58.0.32.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice paket tersedia di aplikasi | Diverifikasi, dibundel |
 | SQLite | 3.53.3 | Mesin database native | [SQLite](https://www.sqlite.org/copyright.html) | Public domain | Ya | Ya | Pernyataan public domain tersedia di aplikasi | Diverifikasi |
 | Open Sans | Aset arsip Jimp 0.16.13 | Font internal tooling gambar | [Arsip resmi Jimp](https://registry.npmjs.org/jimp/-/jimp-0.16.13.tgz) | Apache-2.0 | Ya | Ya, sesuai ketentuan | Apache License.txt di arsip | Terpasang sebagai aset tooling |
+
+## Aset lokal Phase 02
+
+Ilustrasi sementara untuk onboarding dibuat dari bentuk geometris khusus untuk proyek. Logo diberikan oleh Product Owner. Konfirmasi asal pembuatan dan hak distribusi logo perlu dicatat sebelum publikasi.
+
+| Berkas | Penggunaan | Provenans | Status |
+| --- | --- | --- | --- |
+| `assets/branding/logo_hijra.png` | Startup, onboarding, splash native dan ikon aplikasi | Logo yang diberikan Product Owner untuk Hijra | Terpasang. Asal pembuatan dan hak distribusi komersial belum terdokumentasi. |
+| `assets/onboarding/introduction.png` | Slide pendamping ibadah | Ilustrasi orisinal proyek | Sementara |
+| `assets/onboarding/daily-worship.png` | Slide ibadah harian | Ilustrasi orisinal proyek | Sementara |
+| `assets/onboarding/personal-growth.png` | Slide jurnal dan kebiasaan | Ilustrasi orisinal proyek | Sementara |
 
 Modul LAN-only di `tools/lan-only-ws-tunnel/` adalah kode proyek lokal. Nama dependensi pada lockfile mengikuti nama modul yang diimpor Expo CLI.

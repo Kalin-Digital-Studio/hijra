@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import {
-  ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View,
+  ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View,
   type TextInputProps, type TextProps,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,13 +8,14 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../hooks/useTheme';
 import { radius, space, typography } from '../theme/tokens';
 
-export function ScreenContainer({ children, standalone }: PropsWithChildren<{ standalone?: boolean }>) {
+export function ScreenContainer({ children, standalone, keyboard, compact }: PropsWithChildren<{ standalone?: boolean; keyboard?: boolean; compact?: boolean }>) {
   const { colors } = useTheme();
+  const content = <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, compact && styles.compact]}>
+    <View style={styles.column}>{children}</View>
+  </ScrollView>;
   return (
     <SafeAreaView edges={standalone ? ['top', 'left', 'right', 'bottom'] : ['top', 'left', 'right']} style={[styles.screen, { backgroundColor: colors.background }]}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.column}>{children}</View>
-      </ScrollView>
+      {keyboard ? <KeyboardAvoidingView style={styles.screen} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>{content}</KeyboardAvoidingView> : content}
     </SafeAreaView>
   );
 }
@@ -101,6 +102,7 @@ export function LoadingState() {
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   content: { padding: space.lg },
+  compact: { padding: space.md },
   column: { width: '100%', maxWidth: 680, alignSelf: 'center', gap: space.md },
   stack: { gap: space.xs },
   body: { fontSize: typography.body, lineHeight: 24 },

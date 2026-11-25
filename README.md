@@ -1,10 +1,10 @@
-# Hijrah Apps
+# Hijra
 
-Hijrah adalah aplikasi Islamic Lifestyle dengan data lokal. Phase 01 menyediakan fondasi Expo, navigasi, katalog master ibadah, serta pengaturan bahasa dan tema.
+Hijra dari Kalin Digital Studio adalah aplikasi Islamic Lifestyle dengan data lokal. Phase 01 menyediakan fondasi Expo dan katalog master ibadah. Phase 02 menambah onboarding bilingual, profil lokal, foto profil, dan pilihan awal pekan.
 
 ## Menjalankan dengan Expo Go
 
-1. Siapkan Node.js 24 LTS versi 24.3 atau lebih tinggi, npm, dan Expo Go yang kompatibel dengan [Expo SDK 58](https://expo.dev/go) pada perangkat Android atau iOS. Jika Expo Go meminta sesi Expo, ikuti instruksinya. Hijrah sendiri tidak memiliki akun.
+1. Siapkan Node.js 24 LTS versi 24.3 atau lebih tinggi, npm, dan Expo Go yang kompatibel dengan [Expo SDK 58](https://expo.dev/go) pada perangkat Android atau iOS. Jika Expo Go meminta sesi Expo, ikuti instruksinya. Hijra sendiri tidak memiliki akun.
 2. Dari root repositori, jalankan `npm ci --ignore-scripts`.
 3. Hubungkan komputer dan perangkat ke Wi-Fi yang sama, lalu jalankan `npm start -- --go --lan --clear`. Opsi `--clear` menyegarkan cache Metro.
 4. Pindai QR dengan Expo Go di Android atau Kamera di iOS. Jika koneksi gagal, periksa apakah perangkat dapat menjangkau komputer dan firewall mengizinkan port Metro, biasanya 8081.
@@ -20,7 +20,6 @@ npm run typecheck
 npm run lint
 npx expo-doctor
 npm exec -- expo install --check
-npx expo install --fix
 npm exec -- expo export --platform android --platform ios --source-maps external --dump-assetmap --output-dir dist
 ```
 
@@ -30,3 +29,9 @@ Sebelum menginstal perubahan lockfile, jalankan `npm run audit:licenses` dan `no
 
 Setelah audit diselesaikan, instal dependensi, lakukan export dengan source map dan asset map, jalankan `node scripts/build-license-inventory.mjs dist`, lalu export kembali agar bundle memuat daftar notice terbaru.
 
+## Phase 03 · Shalat Wajib
+Buka **Ibadah → Shalat Wajib** atau kartu shalat hari ini di Beranda. Perubahan status dan atribut langsung disimpan. Buka **Riwayat Shalat** untuk melihat ringkasan, matriks, dan grafik pekanan. Profil, catatan, dan riwayat berada di perangkat.
+
+## Phase 04 · Shalat Sunnah
+
+Dari **Ibadah → Shalat Sunnah**, pilih tanggal lalu centang aktivitas untuk menyimpan satu sesi. Buka detail untuk menambah sesi atau mengisi rakaat, jam, dan catatan. **Kelola Aktivitas** mengatur daftar aktif, urutan, rakaat default, dan aktivitas pribadi. **Riwayat** menampilkan jumlah sesi pekanan dan rincian per aktivitas. Beranda menampilkan ringkasan hari ini.

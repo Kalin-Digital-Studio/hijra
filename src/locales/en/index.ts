@@ -1,10 +1,18 @@
+import personal from './personal.ts';
+import prayer from './prayer.ts';
+import sunnah from './sunnah.ts';
+
 export default {
+  ...personal,
+  prayer,
+  sunnah,
   tabs: { home: 'Home', tracker: 'Tracker', goals: 'Goals', reports: 'Reports', profile: 'Profile' },
   greeting: 'Assalamu’alaikum',
   tagline: 'Every day, a better journey.',
   shortcuts: 'Explore worship',
   categories: { prayer: 'Obligatory Prayers', sunnah: 'Sunnah Prayers', quran: 'Quran', dzikir: 'Dhikr' },
   types: {
+    ...sunnah.catalog,
     fajr: 'Fajr', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha',
     duha: 'Duha', tahajjud: 'Tahajjud', witr: 'Witr', 'before-fajr': 'Rawatib before Fajr',
     'before-dhuhr': 'Rawatib before Dhuhr', 'after-dhuhr': 'Rawatib after Dhuhr',
@@ -19,7 +27,7 @@ export default {
     reports: 'Reports will be available once worship logging is enabled.',
   },
   settings: {
-    language: 'Language', theme: 'Appearance', about: 'About Application', licenses: 'Third-Party Licenses',
+    language: 'Language', theme: 'Appearance', about: 'About Hijra', licenses: 'Third-Party Licenses',
     system: 'System default', light: 'Light', dark: 'Dark', id: 'Bahasa Indonesia', en: 'English',
     saveError: 'Could not save settings. Please try again.',
   },
