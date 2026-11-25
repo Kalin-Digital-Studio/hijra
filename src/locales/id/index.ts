@@ -1,11 +1,13 @@
 import personal from './personal.ts';
 import prayer from './prayer.ts';
 import sunnah from './sunnah.ts';
+import { quran } from './quran.ts';
 
 export default {
   ...personal,
   prayer,
   sunnah,
+  quran,
   tabs: { home: 'Beranda', tracker: 'Ibadah', goals: 'Target', reports: 'Laporan', profile: 'Profil' },
   greeting: 'Assalamu’alaikum',
   tagline: 'Selangkah lebih baik setiap hari.',

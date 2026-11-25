@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import type { ComponentRef, PropsWithChildren, Ref } from 'react';
 import {
   ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View,
   type TextInputProps, type TextProps,
@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../hooks/useTheme';
 import { radius, space, typography } from '../theme/tokens';
 
-export function ScreenContainer({ children, standalone, keyboard, compact }: PropsWithChildren<{ standalone?: boolean; keyboard?: boolean; compact?: boolean }>) {
+export function ScreenContainer({ children, standalone, keyboard, compact, scrollRef }: PropsWithChildren<{ standalone?: boolean; keyboard?: boolean; compact?: boolean; scrollRef?: Ref<ComponentRef<typeof ScrollView>> }>) {
   const { colors } = useTheme();
-  const content = <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, compact && styles.compact]}>
+  const content = <ScrollView ref={scrollRef} keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, compact && styles.compact]}>
     <View style={styles.column}>{children}</View>
   </ScrollView>;
   return (

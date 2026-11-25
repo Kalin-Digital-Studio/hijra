@@ -1,5 +1,13 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { readVerses, readQuranFontSize, saveQuranFontSize } from '../src/database/repositories/quranReader.ts';
+import { quranSchema } from '../src/database/migrations/quran.ts';
+import { sunnahSchema } from '../src/database/migrations/sunnah.ts';
+import { deleteReading, readBookmark, readReading, readSurahs, saveBookmark, saveReading } from '../src/database/repositories/quran.ts';
+import { countAyat, nextPosition, searchSurahs, summarizeReading } from '../src/services/quranRules.ts';
+import { quran as enQuran } from '../src/locales/en/quran.ts';
+import { quran as idQuran } from '../src/locales/id/quran.ts';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
@@ -81,7 +89,7 @@ try {
   await writeSetting(v2Api, 'language', 'en');
   await initializeDatabase(v2Api);
   assert.equal((await readSettings(v2Api)).language, 'en');
-  assert.equal(v2.prepare('PRAGMA user_version').get().user_version, 5);
+  assert.equal(v2.prepare('PRAGMA user_version').get().user_version, 8);
   await assert.rejects(persistProfile(freshApi, created.profile.id, clean, { language: 'id', theme: 'system', week_start: 'monday' }), /already completed/);
   assert.ok(fresh.prepare("SELECT value FROM app_settings WHERE key = 'onboarding_completed_at'").get().value);
 
@@ -101,7 +109,7 @@ try {
   assert.equal(existing.profile.displayName, 'Local');
   assert.ok(existing.profile.createdAt);
   assert.deepEqual(await readSettings(oldApi), { language: 'id', theme: 'dark', week_start: 'monday', completed: false });
-  assert.equal(old.prepare('PRAGMA user_version').get().user_version, 5);
+  assert.equal(old.prepare('PRAGMA user_version').get().user_version, 8);
   assert.equal(old.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
   assert.equal(old.prepare('SELECT COUNT(*) AS count FROM ibadah_categories').get().count, 4);
   assert.equal(old.prepare('SELECT COUNT(*) AS count FROM ibadah_types').get().count, 31);
@@ -200,7 +208,7 @@ try {
   assert.equal((await readPrayerLogs(v4Api, 'v4-user', prayerDate))[0].id, 'old-prayer');
   assert.equal((await readLocalProfile(v4Api)).profile.avatarUri, avatar);
   assert.equal((await readSettings(v4Api)).language, 'en');
-  assert.equal(v4.prepare('PRAGMA user_version').get().user_version, 5);
+  assert.equal(v4.prepare('PRAGMA user_version').get().user_version, 8);
   assert.equal((await readSunnahSessions(v4Api, 'v4-user', prayerDate)).length, 0);
   v4.exec("CREATE TRIGGER fail_default BEFORE INSERT ON user_sunnah_preferences WHEN NEW.ibadah_type_id = 'before-fajr' BEGIN SELECT RAISE(ABORT, 'simulated preference failure'); END;");
   await assert.rejects(ensureSunnahPreferences(v4Api, 'v4-user'), /simulated preference failure/);
@@ -287,7 +295,176 @@ try {
   await assert.rejects(initializeDatabase(adapter(broken)), /duplicate column/);
   assert.equal(broken.prepare('PRAGMA user_version').get().user_version, 1);
   assert.ok(!broken.prepare('PRAGMA table_info(user_profiles)').all().some((column) => column.name === 'gender'));
-  console.log('Database v5, v1/v2/v4 upgrades, Phase 01–03 regression, Sunnah preferences, ownership, history, idempotency, sessions, summaries and local dates passed.');
+  assert.deepEqual(Object.keys(enQuran).sort(), Object.keys(idQuran).sort());
+  for (const key of Object.keys(enQuran)) {
+    const params = (text) => [...text.matchAll(/\{\{(\w+)\}\}/g)].map((match) => match[1]).sort();
+    assert.deepEqual(params(enQuran[key]), params(idQuran[key]));
+  }
+
+  // Use the production catalog with test-only users and sessions.
+  const v5 = open('phase05-upgrade.db');
+  v5.exec(initialSchema + profileSchema + prayerSchema + sunnahSchema + ' PRAGMA user_version = 5;');
+  v5.exec("INSERT INTO user_profiles (id, display_name, avatar_uri) VALUES ('q-user', 'Q', 'file:///avatar.png'), ('other', 'Other', NULL);");
+  v5.exec("INSERT INTO app_settings (key, value) VALUES ('language', 'en');");
+  v5.exec("INSERT INTO ibadah_categories VALUES ('sunnah', 1), ('prayer', 0);");
+  v5.exec("INSERT INTO ibadah_types (id, category_id, sort_order) VALUES ('duha', 'sunnah', 0), ('fajr', 'prayer', 0);");
+  v5.exec("INSERT INTO sunnah_prayer_logs (id, user_id, ibadah_type_id, prayer_date, rakaat) VALUES ('prior', 'q-user', 'duha', '2024-07-01', 2);");
+  const qa = adapter(v5);
+  await initializeDatabase(qa);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.equal(v5.prepare("SELECT avatar_uri FROM user_profiles WHERE id='q-user'").get().avatar_uri, 'file:///avatar.png');
+  assert.equal(v5.prepare("SELECT rakaat FROM sunnah_prayer_logs WHERE id='prior'").get().rakaat, 2);
+  assert.equal((await readSettings(qa)).language, 'en');
+  const catalog = await readSurahs(qa);
+  assert.equal(catalog.size, 114);
+  assert.equal([...catalog.values()].reduce((sum, row) => sum + row.verses, 0), 6236);
+  assert([...catalog.values()].every((row, index) => row.number === index + 1 && row.arabic && row.latin && row.id === null && row.en === null));
+  const dataset = await readFile(new URL('../assets/data/quran/tanzil-surahs.json', import.meta.url));
+  assert.equal(createHash('sha256').update(dataset.toString('utf8').replace(/\r\n/g, '\n')).digest('hex'), 'f68bf6abb0525f6fe7f1e332a2ab21500bee93e9409fcfaef5aa4612d732255f');
+
+  const legacyQuran = open('legacy-quran-v6.db');
+  legacyQuran.exec(initialSchema + profileSchema + prayerSchema + sunnahSchema + quranSchema + ' PRAGMA user_version = 6;');
+  legacyQuran.exec(`
+    INSERT INTO user_profiles (id, display_name) VALUES ('legacy', 'Legacy');
+    INSERT INTO quran_surahs VALUES (2, 'Legacy AR', 'Legacy Latin', 'Legacy ID', 'Legacy EN', 286);
+    INSERT INTO quran_reading_logs (id, user_id, reading_date, start_surah, start_ayah, end_surah, end_ayah) VALUES ('legacy-session', 'legacy', '2024-07-01', 2, 1, 2, 4);
+    INSERT INTO quran_bookmarks (id, user_id, surah_number, ayah_number) VALUES ('legacy-mark', 'legacy', 2, 4);
+  `);
+  const legacyApi = adapter(legacyQuran);
+  await initializeDatabase(legacyApi);
+  assert.equal(legacyQuran.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.equal((await readSurahs(legacyApi)).get(2).id, 'Legacy ID');
+  assert.equal((await readReading(legacyApi, 'legacy', '2024-07-01'))[0].id, 'legacy-session');
+  assert.deepEqual({ ...await readBookmark(legacyApi, 'legacy') }, { surah: 2, ayah: 4 });
+  assert.deepEqual(legacyQuran.prepare('PRAGMA foreign_key_check').all(), []);
+  const pos = (surah, ayah) => ({ surah, ayah });
+  assert.equal(countAyat(catalog, pos(1, 1), pos(1, 7)), 7);
+  assert.equal(countAyat(catalog, pos(2, 21), pos(2, 35)), 15);
+  assert.equal(countAyat(catalog, pos(2, 280), pos(3, 10)), 17);
+  assert.equal(countAyat(catalog, pos(1, 5), pos(3, 3)), 292);
+  assert.equal(countAyat(catalog, pos(112, 2), pos(112, 2)), 1);
+  for (const pair of [[pos(2, 50), pos(2, 20)], [pos(1, 1), pos(1, 8)], [pos(1, 0), pos(1, 1)], [pos(1, 1.5), pos(1, 2)], [pos(3, 1), pos(2, 1)], [pos(115, 1), pos(114, 1)]]) {
+    assert.equal(countAyat(catalog, ...pair), null);
+  }
+  for (const query of ['1', 'Al-Faatiha', 'الفاتحة']) {
+    const matches = searchSurahs(catalog, query);
+    assert(matches.some((surah) => surah.number === 1));
+  }
+  assert.deepEqual(nextPosition(catalog, pos(2, 35)), pos(2, 36));
+  assert.deepEqual(nextPosition(catalog, pos(1, 7)), pos(2, 1));
+  assert.equal(nextPosition(catalog, pos(114, 6)), 'restart');
+  const day = '2024-07-01';
+  const repeated = { date: day, start: pos(112, 1), end: pos(112, 4), duration: null, notes: 'Private fixture' };
+  const log = (id, value = repeated, edit = false, bookmark = false) => saveReading(qa, 'q-user', id, value, edit, bookmark);
+  await saveBookmark(qa, 'q-user', pos(2, 100));
+  assert.equal((await readReading(qa, 'q-user', day)).length, 0);
+  await Promise.all([log('one'), log('one'), log('two')]);
+  const stored = await readReading(qa, 'q-user', day);
+  assert.equal(stored.length, 2);
+  assert.equal(stored[0].notes, repeated.notes);
+  assert.deepEqual(summarizeReading(catalog, stored), { ayat: 8, sessions: 2, activeDays: 1,
+    recordedMinutes: null, withDuration: 0, withoutDuration: 2 });
+  assert.equal((await readReading(qa, 'other', day)).length, 0);
+  assert.deepEqual({ ...await readBookmark(qa, 'q-user') }, pos(2, 100));
+  await assert.rejects(log('future', { ...repeated, date: '9999-01-01' }), /future/);
+  await assert.rejects(log('duration', { ...repeated, duration: 0 }), /duration/);
+  await assert.rejects(log('duration', { ...repeated, duration: 1441 }), /duration/);
+  await log('one', { ...repeated, duration: 15 }, true);
+  assert.equal(summarizeReading(catalog, await readReading(qa, 'q-user', day)).recordedMinutes, 15);
+  v5.exec("CREATE TRIGGER fail_bookmark BEFORE UPDATE ON quran_bookmarks BEGIN SELECT RAISE(ABORT, 'bookmark failed'); END;");
+  await assert.rejects(log('atomic', repeated, false, true), /bookmark failed/);
+  await assert.rejects(log('one', { ...repeated, notes: 'Edit' }, true, true), /bookmark failed/);
+  assert.equal((await readReading(qa, 'q-user', day)).length, 2);
+  assert.equal((await readReading(qa, 'q-user', day)).find((session) => session.id === 'one').notes, repeated.notes);
+  assert.deepEqual({ ...await readBookmark(qa, 'q-user') }, pos(2, 100));
+  v5.exec('DROP TRIGGER fail_bookmark;');
+  await log('atomic', { ...repeated, date: '2024-07-02', duration: 10 }, false, true);
+  assert.deepEqual({ ...await readBookmark(qa, 'q-user') }, pos(112, 4));
+  await deleteReading(qa, 'other', 'one');
+  assert.equal((await readReading(qa, 'q-user', day)).length, 2);
+  await deleteReading(qa, 'q-user', 'one');
+  assert.deepEqual({ ...await readBookmark(qa, 'q-user') }, pos(112, 4));
+  await saveBookmark(qa, 'q-user', null);
+  const again = adapter(open('phase05-upgrade.db'));
+  await initializeDatabase(again);
+  assert.equal((await readReading(again, 'q-user', day, '2024-07-07')).length, 2);
+  assert.equal((await readBookmark(again, 'q-user')) ?? null, null);
+  const grouped = [
+    { ...repeated, end: pos(112, 2), duration: null },
+    { ...repeated, date: '2024-07-01', start: pos(2, 1), end: pos(2, 20), duration: 15 },
+    { ...repeated, date: '2024-07-02', start: pos(2, 1), end: pos(2, 15), duration: 10 },
+  ];
+  assert.deepEqual(summarizeReading(catalog, grouped.slice(1).concat(repeated)), {
+    ayat: 39, sessions: 3, activeDays: 2, recordedMinutes: 25, withDuration: 2, withoutDuration: 1,
+  });
+  assert.equal(summarizeReading(catalog, grouped.concat({ ...repeated, date: '2024-07-04' })).activeDays, 3);
+  const today = localDate();
+  const baqara = (start, end) => ({ date: today, start: pos(2, start), end: pos(2, end), duration: null, notes: null });
+  await saveReading(qa, 'other', 'baqara-1', baqara(1, 5), false, true);
+  assert.deepEqual({ ...await readBookmark(qa, 'other') }, pos(2, 5));
+  assert.deepEqual(nextPosition(catalog, pos(2, 5)), pos(2, 6));
+  assert.equal(summarizeReading(catalog, await readReading(qa, 'other', today)).ayat, 5);
+  await saveReading(qa, 'other', 'baqara-2', baqara(6, 10), false, true);
+  const dashboardTotals = summarizeReading(await readSurahs(again), await readReading(again, 'other', today));
+  assert.equal(dashboardTotals.ayat, 10);
+  assert.equal(dashboardTotals.sessions, 2);
+  assert.deepEqual({ ...await readBookmark(again, 'other') }, pos(2, 10));
+  const packedText = await readFile(new URL('../assets/data/quran/tanzil-uthmani.json', import.meta.url), 'utf8');
+  const canonicalText = packedText.replace(/\r\n/g, '\n');
+  assert.equal(createHash('sha256').update(canonicalText).digest('hex'),
+    'f8ddeb66df064d38579d37ecbae1ddd833ff5088b595f2329e8b77d7b1864f51');
+  const { raw } = JSON.parse(packedText);
+  assert.equal(createHash('sha256').update(raw).digest('hex'),
+    'bf4f57b968d03f4131c070b1e285da9be0e0a108a21c910e872801ca273312c8');
+  const sourceRows = raw.split(/\r?\n/).filter((line) => /^\d/.test(line));
+  const offlineRows = [];
+  for (const surah of catalog.values()) {
+    const verses = await readVerses(qa, surah.number);
+    assert.equal(verses.length, surah.verses);
+    offlineRows.push(...verses.map(({ surah, ayah, arabic }) => [surah, ayah, arabic].join('|')));
+  }
+  assert.equal(offlineRows.length, 6236);
+  assert.deepEqual(offlineRows, sourceRows);
+  const opening = await readVerses(qa, 1);
+  const second = await readVerses(qa, 2);
+  const ninth = await readVerses(qa, 9);
+  assert(second[0].arabic.startsWith(opening[0].arabic + ' '));
+  assert(!ninth[0].arabic.startsWith(opening[0].arabic));
+  assert.equal(await readQuranFontSize(qa), 30);
+  await saveQuranFontSize(qa, 46);
+
+  const offlineReopen = adapter(open('phase05-upgrade.db'));
+  await initializeDatabase(offlineReopen);
+  assert.equal(await readQuranFontSize(offlineReopen), 46);
+  assert.deepEqual(await readVerses(offlineReopen, 1), opening);
+  v5.exec("INSERT INTO user_profiles (id, display_name) VALUES ('reader-profile', 'Reader');");
+  const recordReader = (id, start, end) => saveReading(qa, 'reader-profile', id, {
+    date: today, start, end, duration: null, notes: null,
+  }, false, true);
+  await recordReader('opening-1', pos(1, 1), pos(1, 5));
+  assert.equal(summarizeReading(catalog, await readReading(offlineReopen, 'reader-profile', today)).ayat, 5);
+  assert.deepEqual(nextPosition(catalog, await readBookmark(offlineReopen, 'reader-profile')), pos(1, 6));
+  await recordReader('opening-2', pos(1, 6), pos(1, 7));
+  const readerTotals = summarizeReading(catalog, await readReading(offlineReopen, 'reader-profile', today));
+  assert.equal(readerTotals.ayat, 7);
+  assert.equal(readerTotals.sessions, 2);
+  assert.deepEqual(nextPosition(catalog, await readBookmark(offlineReopen, 'reader-profile')), pos(2, 1));
+  // Emulate an already deployed v7 database populated with reading records.
+  v5.exec('DROP TABLE quran_verses; PRAGMA user_version = 7;');
+  await initializeDatabase(qa);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.deepEqual(await readVerses(qa, 1), opening);
+  assert.deepEqual(await readBookmark(qa, 'reader-profile'), await readBookmark(offlineReopen, 'reader-profile'));
+  assert.equal((await readReading(qa, 'reader-profile', today)).length, 2);
+  assert.deepEqual(v5.prepare('PRAGMA foreign_key_check').all(), []);
+  const brokenQuran = open('broken-quran.db');
+  brokenQuran.exec(initialSchema + profileSchema + prayerSchema + sunnahSchema + ' PRAGMA user_version = 5; CREATE TABLE quran_bookmarks (id TEXT);');
+  await assert.rejects(initializeDatabase(adapter(brokenQuran)), /already exists/);
+  assert.equal(brokenQuran.prepare('PRAGMA user_version').get().user_version, 5);
+  assert.equal(brokenQuran.prepare("SELECT count(*) AS count FROM sqlite_master WHERE name = 'quran_surahs'").get().count, 0);
+  console.log('Quran migration to v8, verbatim text integrity, font persistence, reader recording, production catalog calculations, bookmark transitions, atomic rollback, duplicate submission and localization parity passed.');
+
+  console.log('Database v8, v1/v2/v4 upgrades, Phase 01–03 regression, Sunnah preferences, ownership, history, idempotency, sessions, summaries and local dates passed.');
 } finally {
   for (const db of dbs) if (db.isOpen) db.close();
   await rm(directory, { recursive: true });

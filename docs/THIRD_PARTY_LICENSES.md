@@ -2,7 +2,7 @@
 
 Audit Phase 02 · 25 November 2026 · Expo 58.0.26. Lockfile memuat 828 versi paket registry. 788 versi registry terpasang di Windows. Paket yang khusus untuk platform lain tetap dicantumkan. Riwayat audit Phase 01 tercatat di [Development Progress](DEVELOPMENT_PROGRESS.md).
 
-Teks untuk dependensi yang dirujuk bundle Android dan iOS tersedia di **Profil > Tentang Aplikasi > Lisensi Pihak Ketiga**. Ikon tab memakai karakter Unicode dengan font sistem. Aplikasi tidak menambahkan paket ikon, font eksternal, atau dataset eksternal.
+Teks untuk dependensi yang dirujuk bundle Android dan iOS tersedia di **Profil > Tentang Aplikasi > Lisensi Pihak Ketiga**. Ikon tab memakai karakter Unicode dengan font sistem. Aplikasi tidak menambahkan paket ikon atau font eksternal. Dataset Phase 05 tercatat di bagian akhir inventaris.
 
 Product Owner menyetujui penggunaan [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/) khusus Lightning CSS dan binari platformnya sebagai build tooling pada 24 November 2026. Audit SDK 58 menggunakan opsi BSD-3-Clause untuk node-forge dan opsi MIT untuk fb-dotslash serta type-fest.
 
@@ -869,3 +869,15 @@ Ilustrasi sementara untuk onboarding dibuat dari bentuk geometris khusus untuk p
 | `assets/onboarding/personal-growth.png` | Slide jurnal dan kebiasaan | Ilustrasi orisinal proyek | Sementara |
 
 Modul LAN-only di `tools/lan-only-ws-tunnel/` adalah kode proyek lokal. Nama dependensi pada lockfile mengikuti nama modul yang diimpor Expo CLI.
+
+## Phase 05 · Tracker bacaan Al-Qur’an
+
+Tanzil Quran Metadata v1.0 digunakan untuk katalog surah offline. Copyright (C) 2008–2009 Tanzil.info. CC BY mengizinkan penggunaan komersial, redistribusi dan konversi dengan atribusi. Notice sumber, lisensi dan konversi tersedia offline di Profil → Tentang Aplikasi → Lisensi Pihak Ketiga. [Sumber resmi dan verifikasi](QURAN_DATASET.md). Tidak ada dependensi npm baru. Pengecualian MPL 2.0 Lightning CSS tetap berlaku.
+
+### Tanzil Quran Text
+
+| Aset | Versi | Tujuan | Sumber resmi | Lisensi | Komersial dan distribusi | Atribusi | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Tanzil Quran Text Uthmani | 1.1 | Ayat Arab offline | [Unduhan](https://tanzil.net/download/) · [Ketentuan](https://tanzil.net/docs/Text_License) | CC BY 3.0 sesuai notice Tanzil | Verbatim, dengan copyright, atribusi dan tautan | Copyright (C) 2007–2026 Tanzil Project. Notice unduhan tersedia di aplikasi. | 6.236 ayat diverifikasi setara dengan sumber setelah impor |
+
+Tidak ada font eksternal atau dependensi npm baru. [Audit teks dan checksum](QURAN_DATASET.md).

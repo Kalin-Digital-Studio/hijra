@@ -1,5 +1,26 @@
 # Status pengembangan Hijra
 
+## Phase 05 Enhancement · Digital Quran Reader & Reading Tracker
+
+Pembaca native menampilkan teks Arab Tanzil Uthmani v1.1 secara offline. Pengguna memilih awal dan akhir dari layar baca, lalu dapat menyimpan penanda bersama sesi. Beranda membuka pembaca pada ayat berikutnya. Tracker manual serta riwayat pekanan tetap tersedia.
+
+Pengujian SQLite v8 mencocokkan seluruh 6.236 baris ayat dengan sumber, menguji ulang database v7 dengan sesi dan penanda, serta memeriksa preferensi ukuran font setelah buka ulang. Skenario Al-Fatihah ayat 1–5 kemudian 6–7 menghasilkan 7 ayat dan dua sesi, dengan lanjutan Al-Baqara ayat 1. Data lokal dan hasil regresi Phase 01–04 lulus.
+
+TypeScript, lint, Expo Doctor 20/20, dan ekspor bundle Android/iOS lulus. Verifikasi manual Android/iOS masih diperlukan untuk glyph Arab, layout di ukuran terbesar, rute di perangkat, dan cold start dalam mode pesawat. Formal Product Owner UAT tetap dijadwalkan pada Phase 12.
+
+## Phase 05 · Tracker bacaan Al-Qur’an
+
+**PHASE 05 DEVELOPMENT COMPLETE — DONE**
+
+| Area | Hasil |
+| --- | --- |
+| Katalog | Tanzil Quran Metadata v1.0, 114 surah dan 6.236 ayat Hafs/Kufah. Seluruh hitungan per surah cocok dengan referensi King Fahd Quran Complex. Nama Latin dan Arab tersedia offline. Makna Indonesia dan Inggris ditunda hingga Release 2. |
+| Penyimpanan | SQLite v7. Instalasi baru dan upgrade dari v5/v6 lulus, termasuk verifikasi foreign key, rollback, transaksi sesi dan penanda, serta preservasi data lama. |
+| Skenario | Dua sesi Al-Baqara ayat 1–5 dan 6–10 menghasilkan 10 ayat dan dua sesi. Setelah sesi pertama, bookmark berada di ayat 5 dan saran mulai di ayat 6. Setelah sesi kedua, bookmark di ayat 10. Pembukaan ulang database menghasilkan total yang sama. |
+| Toolchain | Expo SDK 58.0.26. TypeScript, lint, pengecekan dependensi Expo, Expo Doctor 20/20, ekspor Android/iOS, pengujian SQLite dan regresi Phase 01–04 lulus. |
+| Lisensi | Metadata Tanzil memakai CC BY. Notice sumber, copyright, lisensi dan konversi tampil offline. Tidak ada dependensi npm baru. [Audit dataset](QURAN_DATASET.md). |
+| Verifikasi perangkat | Pengujian manual Expo Go Android/iOS serta mode pesawat masih tercatat di checklist. Formal Product Owner UAT dijadwalkan pada Phase 12. |
+
 ## Phase 04 · Shalat Sunnah Tracker
 
 **PHASE DEVELOPMENT COMPLETE — DONE**

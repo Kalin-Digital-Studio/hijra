@@ -13,6 +13,7 @@ export default function Tracker() {
       {categoryIds.map((category) => <Button key={category} label={t(`categories.${category}`)} onPress={() => {
         if (category === 'prayer') router.push('/prayer');
         else if (category === 'sunnah') router.push('/sunnah');
+        else if (category === 'quran') router.push('/quran');
         else router.push({ pathname: '/ibadah/[category]', params: { category } });
       }} />)}
     </ScreenContainer>

@@ -11,3 +11,11 @@ Lihat [status implementasi](DEVELOPMENT_PROGRESS.md) dan [panduan UAT](UAT_CHECK
 Phase 03 menambahkan pencatatan Shalat Wajib, riwayat mingguan, dan ringkasan aktual di Beranda. Lima aktivitas yang ada pada data master dapat dicatat per tanggal kalender lokal.
 
 Phase 04 menambahkan pencatatan beberapa sesi Shalat Sunnah per aktivitas dan tanggal, katalog yang dapat dipersonalisasi, serta ringkasan di Beranda dan riwayat pekanan.
+
+## Phase 05 · Tracker bacaan Al-Qur’an
+
+Fase ini menyiapkan pencatatan volume bacaan dari mushaf atau aplikasi lain, penanda posisi, dan riwayat pekanan. Katalog 114 surah tersedia offline dari metadata Tanzil.
+
+### Digital Quran Reader & Reading Tracker
+
+Scope Release 1 diperluas untuk membaca 114 surah dalam bahasa Arab secara offline. Sesi dapat dicatat langsung dari pembaca atau melalui pencatatan manual. Terjemahan ayat, tafsir, audio, tajwid berwarna, hafalan, dan cakupan khatam dijadwalkan untuk Release 2.

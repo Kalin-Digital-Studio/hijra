@@ -54,3 +54,11 @@ Rumus selesai ialah completed ÷ (slot tanggal yang berlaku − exempt). Tepat w
 ## SQLite v5 · Shalat Sunnah
 
 Migrasi v4 → v5 menambahkan metadata aktivitas kustom dan pemilik pada `ibadah_types`, tabel `user_sunnah_preferences` keyed oleh profil dan aktivitas, serta `sunnah_prayer_logs` dengan satu ID per sesi. Log mengacu pada profil dan aktivitas, menyimpan tanggal lokal `YYYY-MM-DD`, rakaat/jam/catatan yang nullable, serta timestamp. Indeks melayani query profil/tanggal dan profil/aktivitas/tanggal. Delapan entri melengkapi sembilan ID Sunnah lama menjadi 17. Penanda inisialisasi default per profil disimpan di `app_settings` dalam transaksi yang sama dengan preferensi.
+
+## SQLite v6 · Tracker bacaan Al-Qur’an
+
+Migrasi transaksional menambah `quran_surahs` (nomor surah sebagai PK, nama Arab, Latin, Indonesia, Inggris, serta jumlah ayat), `quran_reading_logs` (ID sesi, profil, tanggal lokal, posisi awal/akhir, durasi/catatan nullable, timestamp, dan indeks profil/tanggal), serta `quran_bookmarks` (satu posisi dan satu ID per profil, timestamp). Kunci asing mengacu pada profil dan katalog. Repository memeriksa batas ayat menggunakan data master dan menyimpan sesi bersama bookmark dalam satu transaksi bila dipilih. Migrasi v6 → v7 mempertahankan baris sesi dan bookmark beserta relasinya, membuat nama Arab dan makna terlokalisasi nullable, lalu mengimpor 114 surah Tanzil. Makna yang belum tersedia tetap NULL. Migrasi dibatalkan bila hitungan ayat yang sudah digunakan berbeda dari katalog. [Audit dataset](QURAN_DATASET.md).
+
+## SQLite v8 · Teks Al-Qur’an
+
+Migrasi v7 → v8 menambah `quran_verses` dengan kunci primer `(surah_number, ayah_number)`, foreign key ke `quran_surahs`, dan `arabic_text` wajib terisi. Importer memverifikasi urutan dan hitungan terhadap metadata, lalu memasukkan teks tanpa mengubah karakter. Tabel pengguna, sesi, dan penanda tetap terpelihara. `app_settings.quran_font_size` menyimpan salah satu dari 24, 30, 38 dan 46, dengan default 30.

@@ -20,3 +20,11 @@ Lingkup mencakup pencatatan, catatan pribadi, ringkasan, riwayat pekanan, dan ka
 ## Phase 04 · Shalat Sunnah Tracker
 
 Lingkup mencakup katalog Sunnah, preferensi dan aktivitas kustom, beberapa sesi per hari, ringkasan Beranda, serta riwayat pekanan. Verifikasi perangkat tercatat di checklist. Phase berikutnya mengikuti persetujuan lingkup.
+
+## Phase 05 · Tracker bacaan Al-Qur’an
+
+Tracker memakai 114 surah dari katalog Tanzil offline. Makna nama surah berbahasa Indonesia dan Inggris ditunda hingga Release 2. Formal UAT tetap di Phase 12.
+
+### Enhancement Phase 05 · Digital Quran Reader & Reading Tracker
+
+Pembaca native, teks Arab offline, pencatatan dari ayat akhir, dan lanjutan bacaan dari Beranda masuk Release 1. Terjemahan ayat, audio, tafsir, tajwid berwarna, hafalan, dan cakupan khatam tetap di Release 2.

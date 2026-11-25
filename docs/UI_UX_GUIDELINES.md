@@ -11,3 +11,11 @@ Matriks memiliki legenda dan ikon bentuk yang berbeda untuk setiap status. Pada 
 ## Phase 04 · Shalat Sunnah
 
 Gunakan kontrol tanggal dan gaya kartu Tracker yang sama dengan Shalat Wajib. Pisahkan kontrol centang cepat dari tindakan pengelolaan sesi. Matriks pekanan dapat digulir horizontal, dengan angka untuk sesi yang tercatat. Ringkasan Beranda menampilkan agregat serta pratinjau tanpa catatan pribadi.
+
+## Phase 05 · Tracker bacaan Al-Qur’an
+
+Gunakan kartu ringkasan Forest Green, kontrol tanggal dari tracker shalat, dan daftar sesi yang dapat diedit. Pemilih surah mendukung nomor dan nama Latin atau Arab. Form menampilkan batas ayat dan pratinjau hitungan. Riwayat memakai batang volume bacaan per hari dan menonaktifkan tanggal mendatang. Data catatan hanya tampil pada tracker dan form sesi. Nama Latin tetap menjadi label utama.
+
+### Pembaca Al-Qur’an
+
+Teks setiap ayat rata kanan dan arah tulisan RTL. Tata letak aplikasi mengikuti pengaturan bahasa. Identitas ayat tampil terpisah dari teks. Empat ukuran font tersedia dan tersimpan. Blok ayat dapat digulir, dengan tombol untuk blok sebelumnya/berikutnya dan lompat langsung. Simpan memakai aksi utama bertema hijau, sementara penghapusan bookmark memakai aksi destruktif dengan konfirmasi.

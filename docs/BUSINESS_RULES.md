@@ -32,3 +32,15 @@ Satu slot berlaku per profil, shalat, dan tanggal. Slot yang belum ada ditampilk
 ## Phase 04 · Shalat Sunnah
 
 Aktivitas Sunnah bersifat opsional. Ringkasan menjumlahkan sesi, hari aktif, dan rakaat yang diketahui. Tahajjud, Witir, Dhuha, Qabliyah Subuh, dan Ba’diyah Zuhur aktif saat inisialisasi pertama. Aktivitas nonaktif tetap tampil dalam riwayat dan sesi lama dapat diedit. Pencatatan cepat membuat satu sesi jika belum ada. Rakaat, jam lokal, dan catatan bersifat opsional. Rakaat default hanya mengisi awal form detail. Aktivitas kustom hanya tersedia bagi profil pemilik.
+
+## Phase 05 · Tracker bacaan Al-Qur’an
+
+Satu surah dihitung dari akhir dikurangi awal, ditambah satu. Lintas surah menjumlahkan sisa ayat surah awal termasuk ayat mulai, seluruh surah tengah, dan jumlah ayat sampai posisi akhir. Sesi berulang dihitung sebagai volume bacaan. Ringkasan menjumlahkan ayat dan sesi, menghitung tanggal unik, dan menjumlahkan durasi yang terisi. Durasi opsional berupa bilangan bulat 1–1.440 menit. Catatan dibatasi 500 karakter. Tanggal lokal mendukung pencatatan lampau dan menolak tanggal mendatang.
+
+Penanda utama berubah bila disimpan manual atau dipilih saat menyimpan sesi. Default pilihan aktif untuk sesi baru hari ini. Lanjutan bacaan mengisi awal saja. Di akhir An-Nas, aplikasi meminta konfirmasi sebelum menyarankan awal Al-Fatihah. Penghapusan sesi mempertahankan posisi terakhir.
+
+Katalog offline memerlukan nomor urut, nama Latin, dan jumlah ayat untuk semua 114 surah. Nama Arab ditampilkan bila terverifikasi. Makna nama Indonesia dan Inggris ditunda hingga Release 2.
+
+### Pencatatan dari pembaca
+
+Sesi hanya ditulis setelah pengguna memilih ayat akhir dan mengonfirmasi simpan. Lanjutan dalam satu sesi hanya tersedia ke surah berikutnya setelah pengguna mengonfirmasi telah membaca sampai akhir surah. Pengguna dapat memilih awal baru. ID, tanggal, dan rentang dikunci saat konfirmasi. Penanda diperbarui secara atomik bila dipilih. Opsi ini aktif secara default di pembaca. Durasi dan catatan tetap opsional melalui tracker manual. Posisi setelah An-Nas menawarkan mulai ulang melalui konfirmasi.

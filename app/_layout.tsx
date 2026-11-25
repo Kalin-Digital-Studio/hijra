@@ -97,6 +97,11 @@ function Application() {
             <Stack.Screen name="sunnah/index" />
             <Stack.Screen name="sunnah/history" />
             <Stack.Screen name="sunnah/manage" />
+            <Stack.Screen name="quran/index" />
+            <Stack.Screen name="quran/reader" />
+            <Stack.Screen name="quran/manual" />
+            <Stack.Screen name="quran/history" />
+            <Stack.Screen name="quran/bookmark" />
             <Stack.Screen name="about/index" />
             <Stack.Screen name="about/licenses" />
             <Stack.Screen name="settings/introduction" />

@@ -12,6 +12,7 @@ import { radius, space, typography } from '../../theme/tokens';
 import { formatDate } from '../../utils/format';
 import { TodayPrayerCard } from '../prayer/TodayPrayerCard';
 import { TodaySunnahCard } from '../sunnah/TodaySunnahCard';
+import { TodayQuranCard } from '../quran/TodayQuranCard';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -35,9 +36,10 @@ export default function Dashboard() {
       </View>
       <TodayPrayerCard />
       <TodaySunnahCard />
+      <TodayQuranCard />
       <SectionTitle>{t('shortcuts')}</SectionTitle>
       <View style={styles.shortcuts}>
-        {categoryIds.filter((category) => category !== 'prayer' && category !== 'sunnah').map((category) => (
+        {categoryIds.filter((category) => category === 'dzikir').map((category) => (
           <View key={category} style={styles.tile}>
             <Button label={t(`categories.${category}`)} onPress={() => router.push({ pathname: '/ibadah/[category]', params: { category } })} />
           </View>

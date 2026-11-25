@@ -54,3 +54,24 @@ Formal UAT Phase 12 tetap **PENDING**.
 - [ ] Cek senin/minggu sebagai awal pekan, bahasa Indonesia/Inggris, tema terang/gelap, serta regresi profil dan Shalat Wajib.
 
 Formal Product Owner UAT dijadwalkan pada Phase 12.
+
+## Phase 05 · Verifikasi pengembangan perangkat
+
+- [ ] Expo Go Android dan iOS. Buka dari Beranda dan Ibadah. Catat Al-Baqara ayat 1–5 lalu 6–10. Pada hari tanpa catatan awal, Beranda menampilkan 10 ayat dan 2 sesi, serta posisi terakhir ayat 10 jika opsi penanda dipilih.
+- [ ] Cek 114 surah dan rendering Arab. Cari berdasarkan nomor dan nama Latin atau Arab.
+- [ ] Catat ayat tunggal dan lintas surah. Uji batas ayat, beberapa sesi, durasi opsional, catatan, edit, hapus, dan pembatalan.
+- [ ] Atur bookmark, lanjutkan dalam surah dan di batas surah, konfirmasi awal Al-Fatihah setelah An-Nas, lalu hapus bookmark sambil mempertahankan sesi.
+- [ ] Cek hari lampau, pergantian hari, awal pekan, statistik Beranda, tema, mode offline, buka ulang aplikasi, dan regresi Phase 01–04.
+
+Formal Product Owner UAT dijadwalkan pada Phase 12.
+
+### Enhancement Phase 05 · Pengujian perangkat
+
+- [ ] Android dan iOS. Buka daftar 114 surah, cari Al-Fatihah, buka dan periksa ketujuh ayat Arab.
+- [ ] Pada profil atau tanggal kosong, catat ayat 1–5 dengan penanda aktif. Di Beranda, periksa 5 ayat dan 1 sesi. Lanjutkan dari ayat 6 dan simpan sampai ayat 7. Periksa 7 ayat, 2 sesi, dan posisi berikutnya Al-Baqara ayat 1.
+- [ ] Buka Al-Baqara, lompat ke ayat 286, dan uji sesi lintas surah setelah konfirmasi. Uji mulai sesi baru, riwayat, serta input manual.
+- [ ] Uji empat ukuran huruf, tanda jeda, diakritik, RTL, tidak terpotong, mode terang/gelap, serta antarmuka Indonesia/Inggris. Periksa Bismillah pada Al-Fatihah, Al-Baqara, dan At-Tawbah.
+- [ ] Buka ulang dengan mode pesawat pada build yang menyertakan bundle lokal. Cek teks, ukuran font, riwayat, penanda, dan total Beranda. Di Expo Go, Metro diperlukan saat memuat bundle dari awal.
+- [ ] Buka atribusi di modul dan notice lengkap di Profil → Tentang Aplikasi → Lisensi Pihak Ketiga.
+
+Formal Product Owner UAT tetap di Phase 12.

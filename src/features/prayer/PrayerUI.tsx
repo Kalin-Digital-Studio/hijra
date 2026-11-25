@@ -13,18 +13,18 @@ export function PrayerPanel({ children, style }: PropsWithChildren<{ style?: Vie
   return <View style={[prayerStyles.panel, { borderColor: colors.border, backgroundColor: colors.surface }, style]}>{children}</View>;
 }
 
-export function PrayerAction({ label, onPress, disabled, icon, selected }: {
-  label: string; onPress: () => void; disabled?: boolean; icon?: 'back' | 'next' | 'more' | 'up' | 'down'; selected?: boolean;
+export function PrayerAction({ label, onPress, disabled, icon, selected, emphasis }: {
+  label: string; onPress: () => void; disabled?: boolean; icon?: 'back' | 'next' | 'more' | 'up' | 'down'; selected?: boolean; emphasis?: 'primary' | 'danger';
 }) {
   const { colors } = useTheme();
   return (
     <Pressable accessibilityRole="button" accessibilityLabel={label} accessibilityState={{ disabled, selected }}
       disabled={disabled} onPress={onPress} style={({ pressed }) => [prayerStyles.action, {
-        backgroundColor: pressed || selected ? colors.selected : colors.surface, opacity: disabled ? 0.45 : 1,
+        backgroundColor: emphasis === 'primary' ? colors.primary : pressed || selected ? colors.selected : colors.surface, opacity: disabled ? 0.45 : 1,
         borderColor: colors.border,
       }]}>
       {icon ? <PrayerIcon kind={icon} color={colors.primary} background={colors.surface} size={22} /> :
-        <BodyText style={prayerStyles.small}>{label}</BodyText>}
+        <BodyText style={[prayerStyles.small, emphasis === 'primary' && { color: colors.onPrimary }, emphasis === 'danger' && { color: colors.danger }]}>{label}</BodyText>}
     </Pressable>
   );
 }

@@ -35,3 +35,11 @@ Buka **Ibadah → Shalat Wajib** atau kartu shalat hari ini di Beranda. Perubaha
 ## Phase 04 · Shalat Sunnah
 
 Dari **Ibadah → Shalat Sunnah**, pilih tanggal lalu centang aktivitas untuk menyimpan satu sesi. Buka detail untuk menambah sesi atau mengisi rakaat, jam, dan catatan. **Kelola Aktivitas** mengatur daftar aktif, urutan, rakaat default, dan aktivitas pribadi. **Riwayat** menampilkan jumlah sesi pekanan dan rincian per aktivitas. Beranda menampilkan ringkasan hari ini.
+
+## Phase 05 · Tracker bacaan Al-Qur’an
+
+an**’an** atau kartu Al-Qur’an di Beranda pada Expo Go. Tracker menampilkan status katalog pada build ini. Pencatatan, riwayat, dan penanda bacaan membutuhkan 114 metadata surah dengan lisensi dan akurasi terverifikasi. Jalankan `npm run test:database` untuk verifikasi migrasi dan perhitungan menggunakan fixture. Lihat [audit dataset](docs/QURAN_DATASET.md).
+
+## Digital Quran Reader
+
+Dari **Ibadah → Al-Qur’an**, pilih surah dan baca teks Arab offline. Gunakan **Mulai Membaca** atau **Lompat ke Ayat** untuk memilih posisi. Pilih **Selesai membaca sampai ayat …**, periksa jumlah ayat, lalu simpan. **Lanjutkan Membaca** di Beranda membuka ayat sesudah penanda. Riwayat dan catatan manual tersedia di layar Al-Qur’an.

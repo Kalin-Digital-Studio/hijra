@@ -31,3 +31,13 @@ Service menangkap ID profil, shalat, dan tanggal pada saat interaksi. Antrean pe
 ## Phase 04 · Shalat Sunnah
 
 Route `/sunnah`, `/sunnah/manage`, dan `/sunnah/history` memakai komponen `src/features/sunnah`. Service dan aturan murni berada di `src/services/sunnah.ts` dan `sunnahRules.ts`. Repository Sunnah memvalidasi aktivitas serta kepemilikan profil dan mengantrekan mutasi dalam transaksi eksklusif. Dashboard membaca ringkasan tanpa membuat preferensi baru. Tracker menginisialisasi preferensi saat dibuka pertama kali.
+
+## Phase 05 · Tracker bacaan Al-Qur’an
+
+Expo SDK 58.0.26. Route `/quran`, `/quran/history`, dan `/quran/bookmark` memuat komponen bilingual dari `src/features/quran`. `useQuran` membaca SQLite berdasarkan profil dan rentang tanggal, memuat ulang saat fokus dan setelah mutasi, serta menyaring respons usang. Repository `src/database/repositories/quran.ts` mengantrekan mutasi dan memakai transaksi eksklusif untuk sesi dengan penanda. ID sesi stabil per form. Mesin hitung `src/services/quranRules.ts` menggunakan nomor surah/ayat sehingga modul Goals dan pembaca digital kelak dapat memakai identitas kanonik yang sama. Identitas dan konvensi penomoran harus dipertahankan saat memperbarui katalog.
+
+Katalog produksi dikemas sebagai JSON dan diimpor oleh migrasi SQLite v7. Seluruh pencarian dan pencatatan beroperasi melalui data lokal.
+
+### Digital Quran Reader
+
+`/quran` menjadi landing dengan pencarian dan daftar surah virtual. `/quran/reader` menampilkan blok maksimal 20 ayat dan memuat satu surah dari SQLite per navigasi. `/quran/manual` mempertahankan tracker dengan pengelolaan sesi lampau. Pembaca memakai repository sesi dan kalkulator Phase 05 yang sama. Penyimpanan sukses memicu refresh ketika Beranda atau riwayat kembali fokus. Seluruh teks dan metadata berasal dari artefak lokal.
