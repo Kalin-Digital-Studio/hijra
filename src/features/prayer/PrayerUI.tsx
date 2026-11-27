@@ -14,7 +14,7 @@ export function PrayerPanel({ children, style }: PropsWithChildren<{ style?: Vie
 }
 
 export function PrayerAction({ label, onPress, disabled, icon, selected, emphasis }: {
-  label: string; onPress: () => void; disabled?: boolean; icon?: 'back' | 'next' | 'more' | 'up' | 'down'; selected?: boolean; emphasis?: 'primary' | 'danger';
+  label: string; onPress: () => void; disabled?: boolean; icon?: 'back' | 'next' | 'more' | 'up' | 'down' | 'settings'; selected?: boolean; emphasis?: 'primary' | 'danger';
 }) {
   const { colors } = useTheme();
   return (

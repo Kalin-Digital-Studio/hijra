@@ -31,3 +31,7 @@ Di pembaca Dzikir, Latin muncul setelah Arab dengan teks miring, lalu arti pada 
 ## Phase 06B · Hub Ibadah
 
 Hub memakai hero jadwal Forest Green, ringkasan kalender, grid dua kolom tracker, serta grid alat dan pustaka yang menyesuaikan lebar dan skala font. Kompas menampilkan bearing statis saat sensor tidak tersedia.
+
+### Reader Quran
+
+Reader memakai header ringkas dengan kembali dan pengaturan, kartu surah Forest Green, ringkasan baca hari ini, lalu kartu ayat bernomor dan ringkasan sesi. Ayat Arab rata kanan dengan ukuran yang dapat disesuaikan. Terjemahan rata kiri dan tampil di bawah pemisah. Menu ayat memilih awal/akhir. Status konten tambahan muncul sekali per segmen dan pembaca tetap berjalan saat jaringan gagal. Maksimum 20 kartu dirender per halaman.

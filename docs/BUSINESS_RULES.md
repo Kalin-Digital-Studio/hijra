@@ -60,3 +60,7 @@ Pengaturan Latin dan terjemahan hanya mengubah tampilan Dzikir. Teks bawaan dita
 ## Phase 06B · Hub Ibadah
 
 Countdown memakai zona kota dan waktu Subuh hari berikutnya. Jadwal tidak memperbarui transaksi. Kalender sipil tabular diberi label terpisah dari hasil MyQuran. Favorit menyimpan identitas penyedia dan edisi.
+
+### Rentang bacaan di Reader
+
+Menu ayat mengatur posisi awal dan akhir. Ringkasan memakai hitungan inklusif dari service Quran sebelum simpan, termasuk sesi lintas surah. Hanya aksi simpan eksplisit membuat log dan dapat memperbarui posisi terakhir secara atomik. Scroll dan pilihan Latin atau terjemahan tidak menambah hitungan. Ringkasan hari ini dihitung dari sesi SQLite.

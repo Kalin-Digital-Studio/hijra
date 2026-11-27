@@ -1,6 +1,7 @@
 import { array, IslamicError, object, request, string } from './client.ts';
 import { isTime, monthDates, type City, type PrayerTimes } from './rules.ts';
 import { parseLocalDate } from '../../utils/localDate.ts';
+import type { QuranSupplementProvider } from '../quranSupplements.ts';
 
 const fields = { fajr:'subuh', dhuhr:'dzuhur', asr:'ashar', maghrib:'maghrib', isha:'isya' } as const;
 export function parseSchedule(raw: unknown, id: string, month: string) {
@@ -42,6 +43,30 @@ export async function hijriDate(date: string, signal: AbortSignal) {
 }
 export type Entry = { id: string|null; title: string; arabic?: string; latin?: string; meaning?: string; reference?: string; category?:string; grade?: string };
 const optional = (value: unknown) => typeof value==='string' && value.trim() ? value : undefined;
+export function parseQuranTranslations(raw: unknown, surah: number, start: number, end: number) {
+  const range = object(raw);
+  if (range.surah !== surah || range.start !== start || range.end !== end) throw new IslamicError('schema');
+  const translations = new Map<number, string>();
+  for (const value of array(range.ayahs)) {
+    const row = object(value);
+    const ayah = row.ayah_number;
+    if (row.surah_number !== surah || typeof ayah !== 'number' || !Number.isInteger(ayah)
+      || ayah < start || ayah > end || translations.has(ayah)) throw new IslamicError('schema');
+    translations.set(ayah, string(row.translation));
+  }
+  if (translations.size !== end - start + 1) throw new IslamicError('schema');
+  return translations;
+}
+
+export async function quranTranslations(surah: number, start: number, end: number, signal: AbortSignal) {
+  const path = `/v3/quran/${surah}/ayat/range/${start}/${end}`;
+  return parseQuranTranslations(await request('quran', path, signal), surah, start, end);
+}
+export const myQuranIndonesian: QuranSupplementProvider = {
+  kind: 'translation',
+  language: 'id',
+  load: quranTranslations,
+};
 const contentId = (value: unknown) => typeof value==='number' && Number.isSafeInteger(value) && value>0 ? String(value) :
   typeof value==='string' && /^[A-Za-z0-9_-]+$/.test(value) ? value : null;
 export async function narratorBooks(signal: AbortSignal) {

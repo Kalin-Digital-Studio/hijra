@@ -78,3 +78,12 @@ Tanpa perubahan versi SQLite v10. Preferensi global Dzikir memakai `app_settings
 ## Phase 06B · Hub Ibadah
 
 SQLite v11 menambah `islamic_content_bookmarks` dengan primary key (`user_id`,`content_type`,`provider`,`content_key`). Kota dan zona tersimpan di `app_settings.prayer_city_myquran_v3`. Tidak ada cache payload.
+
+### Preferensi tampilan Quran
+
+`app_settings` menyimpan `quran_show_transliteration` dan `quran_show_translation` secara independen. Nilai `0` menonaktifkan tampilan dan `1` mengaktifkan. Default keduanya aktif bila belum tersimpan. Pengaturan Quran terpisah dari Dzikir, dan memakai tabel yang sudah ada sehingga tidak memerlukan migrasi. Tidak ada payload terjemahan tersimpan di SQLite.
+
+
+### Migrasi v12 untuk teks Qur’an bertanda waqf
+
+Migrasi transaksi v11 → v12 memperbarui `quran_verses.arabic_text` menurut kunci lama `(surah_number, ayah_number)` dari artefak Tanzil verbatim bertanda waqf dan sajdah. Database sebelum v8 mengimpor edisi ini langsung saat tabel dibuat. Identitas ayat/surah, log, bookmark dan pengaturan dipertahankan. Tidak ada tabel baru.

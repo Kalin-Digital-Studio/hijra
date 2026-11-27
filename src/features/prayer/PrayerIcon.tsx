@@ -1,9 +1,10 @@
 import { StyleSheet, View } from 'react-native';
 import type { PrayerId, PrayerStatus } from '../../types/prayer';
 
-type Kind = PrayerId | PrayerStatus | 'FUTURE' | 'back' | 'next' | 'more' | 'up' | 'down' | 'heart' | 'droplet' | 'building' | 'moon';
+type Kind = PrayerId | PrayerStatus | 'FUTURE' | 'back' | 'next' | 'more' | 'up' | 'down' | 'heart' | 'droplet' | 'building' | 'moon' | 'settings';
 type Segment = [number, number, number, number];
 const segments: Partial<Record<Kind, Segment[]>> = {
+  settings: [[4, 8, 9, 8], [13, 8, 20, 8], [4, 16, 13, 16], [17, 16, 20, 16]],
   COMPLETED: [[5, 12, 10, 17], [10, 17, 19, 7]], MISSED: [[6, 6, 18, 18], [18, 6, 6, 18]],
   NOT_LOGGED: [[6, 12, 18, 12]], FUTURE: [[6, 12, 18, 12]],
   EXEMPT: [[5, 12, 12, 5], [12, 5, 19, 12], [19, 12, 12, 19], [12, 19, 5, 12]],
@@ -36,6 +37,7 @@ export function PrayerIcon({ kind, color, background, size = 24 }: {
       {kind === 'asr' && <><View style={circle(4, 5, 10)} /><View style={circle(8, 9, 12, true, background)} /><View style={circle(9, 10, 10)} /></>}
       {(kind === 'isha' || kind === 'moon') && <><View style={circle(3, 5, 16, true)} /><View style={circle(9, 3, 14, true, background)} /></>}
       {kind === 'more' && [5, 11, 17].map((x) => <View key={x} style={circle(x, 11, 2, true)} />)}
+      {kind === 'settings' && <><View style={circle(9, 6, 4)} /><View style={circle(13, 14, 4)} /></>}
       {segments[kind]?.map(([x, y, endX, endY], index) => {
         const length = Math.hypot(endX - x, endY - y) * scale;
         return <View key={index} style={{ position: 'absolute', width: length, height: 1.7 * scale, borderRadius: 1,

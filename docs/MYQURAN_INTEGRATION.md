@@ -12,3 +12,14 @@ Kontrak diuji langsung pada 27 November 2026 terhadap [OpenAPI v3](https://api.m
 | Asmaul Husna | `/v3/husna` | Daftar 99 entri dengan nomor unik berurutan, Arab, Latin, dan arti Indonesia. |
 
 Request aplikasi hanya berisi kode kota, tanggal, kata kunci publik, nomor halaman, atau identitas konten. Koordinat GPS, profil, riwayat, dan isi database tidak dikirim. Payload hanya dipakai untuk tampilan aktif dalam mode pengembangan. Favorit menyimpan identitas dan edisi di SQLite. [Status hak](ISLAMIC_CONTENT_LICENSES.md).
+
+## Terjemahan Reader Al-Qur’an · 28 November 2026
+
+[OpenAPI v3](https://api.myquran.com/v3/doc/apimuslim) mendokumentasikan `GET /v3/quran/{surah}` (paginasi `page` dan `limit`), `GET /v3/quran/{surah}/{ayah}` (detail), dan `GET /v3/quran/{surah}/ayat/range/{start}/{end}`. Reader memakai endpoint rentang, satu permintaan untuk blok publik hingga 20 ayat. Respons memakai `status` dan `data` yang berisi `surah`, `start`, `end`, dan `ayahs`. Setiap entri mengandung `surah_number`, `ayah_number`, `translation` Indonesia, serta Arab dan metadata yang tidak dipakai oleh Reader. Nama Latin pada metadata adalah nama surah. Respons yang diperiksa tidak menyediakan Latin ayat atau terjemahan Inggris.
+
+Mapping memvalidasi identitas surah dan batas blok dari respons, lalu menolak nomor ayat yang salah, duplikat, hilang, atau terjemahan kosong. Pengujian live mencocokkan hasil blok dengan detail Al-Fatihah 1, Al-Baqarah 1 dan 286, At-Tawbah 1, dan An-Naml 30. Blok tidak memuat pilihan awal/akhir sesi, log, atau identitas pengguna. Klien bersama menangani pembatalan, timeout, deduplikasi, retry, dan HTTP 429. Payload hanya ada di memori layar pengembangan.
+
+
+### Audit Latin per ayat
+
+Sampel `GET /v3/quran/{surah}`, `GET /v3/quran/{surah}/{ayah}` dan `GET /v3/quran/{surah}/ayat/range/{start}/{end}` mengembalikan entri dengan `id`, `surah_number`, `ayah_number`, `arab`, `translation`, `audio_url`, `image_url`, `tafsir`, dan `meta`. `translation` adalah string bahasa Indonesia. `name_latin` terdapat di metadata surah. Latin per ayat tidak ditemukan dalam sampel. `QuranSupplementProvider` mendefinisikan jenis, bahasa dan pemuatan rentang. Implementasi tunggal tetap terjemahan Indonesia MyQuran dan mengikuti gate pengembangan.

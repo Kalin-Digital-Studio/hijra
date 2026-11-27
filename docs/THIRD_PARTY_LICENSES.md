@@ -418,7 +418,7 @@ Untuk build store mandiri, audit lagi komponen native, artefak CocoaPods/Gradle,
 | expo-constants | 58.0.16 | Langsung · Metadata aplikasi | [Tarball resmi](https://registry.npmjs.org/expo-constants/-/expo-constants-58.0.16.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-doctor | 1.21.8 | Langsung · Pemeriksaan kompatibilitas proyek | [Tarball resmi](https://registry.npmjs.org/expo-doctor/-/expo-doctor-1.21.8.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
 | expo-file-system | 58.0.14 | Langsung · Penyimpanan avatar lokal | [Tarball resmi](https://registry.npmjs.org/expo-file-system/-/expo-file-system-58.0.14.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
-| expo-font | 58.0.12 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-font/-/expo-font-58.0.12.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
+| expo-font | 58.0.12 | Pemuatan font (langsung) | [Tarball resmi](https://registry.npmjs.org/expo-font/-/expo-font-58.0.12.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip | Terpasang · lisensi ditinjau |
 | expo-glass-effect | 58.0.5 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-glass-effect/-/expo-glass-effect-58.0.5.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-image-loader | 58.0.3 | Transitif | [Tarball resmi](https://registry.npmjs.org/expo-image-loader/-/expo-image-loader-58.0.3.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
 | expo-image-picker | 58.0.10 | Langsung · Pemilih foto profil perangkat | [Tarball resmi](https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-58.0.10.tgz) | MIT | Ya | Ya, sesuai ketentuan | Notice pada arsip · disertakan di aplikasi | Terpasang · lisensi ditinjau |
@@ -897,3 +897,20 @@ Tambahan aset pembaca Dzikir adalah Pickthall, The Meaning of the Glorious Koran
 ## Phase 06B · Hub Ibadah
 
 [expo-location 58.0.23](https://registry.npmjs.org/expo-location/-/expo-location-58.0.23.tgz) dipakai untuk lokasi foreground dan heading. Lisensi MIT mengizinkan penggunaan komersial dan redistribusi dengan notice. Notice tersedia di Lisensi Pihak Ketiga dalam aplikasi. Lockfile menambah satu paket; image-utils sudah ada. [Audit hak MyQuran](ISLAMIC_CONTENT_LICENSES.md).
+
+## Terjemahan Reader Quran
+
+MyQuran v3 menyediakan terjemahan Indonesia live untuk pratinjau pengembangan. Izin produksi, cache persisten dan bundling belum terverifikasi, sehingga konten tidak didistribusikan. Teks Arab tetap Tanzil Uthmani v1.1 dan font tetap menggunakan font sistem. Tidak ada paket npm, aset font, atau teks baru yang dibundel. [Status hak](ISLAMIC_CONTENT_LICENSES.md).
+
+
+### Teks Tanzil dengan waqf
+
+Tanzil Uthmani v1.1 memakai varian resmi dengan waqf dan sajdah, dengan CC BY 3.0 dan notice Tanzil yang sama. Teks disalin verbatim. Tidak ada dependensi atau font baru. [Bukti artefak dan integritas](QURAN_DATASET.md).
+
+### Font Amiri Quran
+
+| Aset | Versi | Tujuan | Sumber | Lisensi | Komersial / redistribusi | Atribusi | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Amiri Quran Regular | 1.003 | Ayat Arab dan Basmalah | [Rilis resmi](https://github.com/aliftype/amiri/releases/tag/1.003) | SIL OFL 1.1 | Ya, bersama aplikasi dengan notice OFL | Notice upstream dikemas di Profil → Tentang Aplikasi → Lisensi Pihak Ketiga | Hash dan cakupan glyph diperiksa |
+
+`expo-font` 58.0.12 kini dependensi langsung untuk runtime loading di Expo SDK 58. Versi resolusi dan pohon transitif tetap sama. Notice MIT tercantum dalam inventaris.

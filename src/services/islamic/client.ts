@@ -1,10 +1,11 @@
-export type Resource = 'prayer' | 'calendar' | 'hadith' | 'dua' | 'husna';
+export type Resource = 'prayer' | 'calendar' | 'hadith' | 'dua' | 'husna' | 'quran';
 export const permissions: Record<Resource, { live: 'UNVERIFIED'; cache: 'UNVERIFIED'; bundle: 'UNVERIFIED' }> = {
   prayer: { live: 'UNVERIFIED', cache: 'UNVERIFIED', bundle: 'UNVERIFIED' },
   calendar: { live: 'UNVERIFIED', cache: 'UNVERIFIED', bundle: 'UNVERIFIED' },
   hadith: { live: 'UNVERIFIED', cache: 'UNVERIFIED', bundle: 'UNVERIFIED' },
   dua: { live: 'UNVERIFIED', cache: 'UNVERIFIED', bundle: 'UNVERIFIED' },
   husna: { live: 'UNVERIFIED', cache: 'UNVERIFIED', bundle: 'UNVERIFIED' },
+  quran: { live: 'UNVERIFIED', cache: 'UNVERIFIED', bundle: 'UNVERIFIED' },
 };
 export const canPreviewMyQuran = typeof __DEV__ !== 'undefined' && __DEV__;
 export class IslamicError extends Error {

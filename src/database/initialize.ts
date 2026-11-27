@@ -18,7 +18,7 @@ export async function initializeDatabase(db: SQLiteDatabase) {
   await db.execAsync('PRAGMA journal_mode = WAL');
   await db.withTransactionAsync(async () => {
     const version = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
-    if (!version || version.user_version > 11) throw new Error('Unsupported database schema');
+    if (!version || version.user_version > 12) throw new Error('Unsupported database schema');
     if (version.user_version === 0) {
       await db.execAsync(initialSchema);
       await db.execAsync('PRAGMA user_version = 1');
@@ -68,6 +68,11 @@ export async function initializeDatabase(db: SQLiteDatabase) {
     if (version.user_version < 11) {
       await db.execAsync(islamicSchema);
       await db.execAsync('PRAGMA user_version = 11');
+    }
+    if (version.user_version < 12) {
+      // Databases created before v8 already import the marked edition above.
+      if (version.user_version >= 8) await seedQuranVerses(db, true);
+      await db.execAsync('PRAGMA user_version = 12');
     }
     const categorySql = 'INSERT INTO ibadah_categories (id, sort_order) VALUES (?, ?) ON CONFLICT(id) DO NOTHING';
     const typeSql = 'INSERT INTO ibadah_types (id, category_id, sort_order) VALUES (?, ?, ?) ON CONFLICT(id) DO NOTHING';

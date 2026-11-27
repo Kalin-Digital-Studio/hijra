@@ -29,3 +29,31 @@ Jumlah ayat masing-masing dari 114 surah Tanzil cocok dengan urutan ayat dalam r
 | [Pembungkus JSON](../assets/data/quran/tanzil-uthmani.json) | `f8ddeb66df064d38579d37ecbae1ddd833ff5088b595f2329e8b77d7b1864f51` |
 
 Properti `raw` di JSON mereproduksi byte UTF-8 unduhan secara persis, termasuk notice. Importer hanya memisahkan kolom nomor surah, nomor ayat, dan teks. Tes membandingkan hasil baca ulang dari SQLite dengan seluruh 6.236 baris bernomor dari sumber. Hash, urutan, jumlah dan setiap string ayat cocok. Bismillah Al-Fatihah adalah ayat 1. Bismillah pengantar yang menjadi awalan ayat 1 dalam format sumber dipertahankan tanpa baris bernomor tambahan. At-Tawbah mengikuti sumber tanpa pengantar. UI memakai font sistem. Pemeriksaan bentuk glyph dan pemenggalan pada perangkat Android/iOS masih pending.
+
+### Reader dan terjemahan tambahan · 28 November 2026
+
+Reader memakai 114 surah Tanzil Metadata dan 6.236 ayat Tanzil Uthmani v1.1 persis dari SQLite, dengan font Arab bawaan sistem. Pengantar Basmalah, harakat, waqf dan sajdah mengikuti teks sumber. Terjemahan Indonesia MyQuran ditampilkan terpisah pada pengembangan. Latin per ayat dan terjemahan Inggris belum tersedia dari respons terverifikasi. [Pemetaan dan endpoint](MYQURAN_INTEGRATION.md).
+
+
+### Audit waqf dan sajdah
+
+Artefak produksi sekarang adalah [Tanzil Uthmani v1.1 dengan marks=true dan sajdah=true](https://tanzil.net/pub/download/index.php?quranType=uthmani&outType=txt-2&agree=true&marks=true&sajdah=true). SHA-256 unduhan: `18c719bb3ba26d32ef457f40dad77cd28c4c5a34156833e26a8e5fcfdd246fb1`. SHA-256 pembungkus JSON (LF): `83bd39308e0424dcb00f6afa5fefff24136bd58a48f0c36b2762c766ce8e9776`. Angka hash di atas bagian ini merujuk pada impor awal. Notice rilis tetap dipertahankan sesuai [ketentuan Tanzil](https://tanzil.net/docs/Text_License).
+
+| Ayat | Impor awal | Tanzil dengan tanda, diverifikasi di SQLite |
+| --- | --- | --- |
+| 2:2 | Kosong | U+06DB dua kali |
+| 2:45 | Kosong | U+06DA |
+| 16:17 | Kosong | U+06D7 |
+| 16:21 | Kosong | U+06D6 |
+| 16:57 | Kosong | U+06D9 |
+| 36:76 | Kosong | U+06D8 |
+
+Frekuensi U+06D6–U+06DB berturut-turut 1.682, 603, 22, 68, 1.972 dan 12. Unduhan juga memiliki 5 saktah terpisah U+06DC dan 15 tanda sajdah U+06E9. Membandingkan 6.236 ayat verbatim, lalu mengabaikan hanya tanda baru dan spasi yang menyertainya pada salinan audit, menghasilkan urutan dan teks yang persis sama dengan impor awal. Kode produksi tidak menghapus atau menyisipkan tanda. Dataset sebelumnya tidak memuat tanda tersebut sejak sebelum impor. Reader memakai teks SQLite, bukan Arab MyQuran.
+
+Reader tidak mengatur `fontFamily` dan tidak membundel font Arab. React Native memakai font sistem dan fallback perangkat sehingga nama dan file glyph aktual bergantung pada OS. Kode reader menetapkan rata kanan, RTL, dan line height 1,85 kali ukuran Arab. Pemeriksaan glyph, shaping, harakat dan clipping masih perlu Android/iOS fisik.
+
+### Amiri Quran dan tampilan Basmalah
+
+Reader memakai Amiri Quran Regular 1.003 setelah font dimuat. Artefak `AmiriQuran.ttf` berasal dari [rilis upstream 1.003](https://github.com/aliftype/amiri/releases/tag/1.003), disalin tanpa perubahan sebagai `assets/fonts/AmiriQuran-Regular.ttf`. SHA-256 font `e2a47644762d16bdfb6d33e0d8db8c6ff30beae84150ef5a705316bbd829455c`. Tabel Unicode cmap mencakup U+06D6–U+06DC, U+06E9, U+064B–U+0652, dan U+0670. Tampilan A/B dengan data SQLite tersedia di reader pengembangan untuk pemeriksaan di perangkat.
+
+Artefak Tanzil dan SQLite tetap verbatim. Saat halaman menampilkan ayat 1, Reader memisahkan prefix Basmalah dengan batas spasi yang persis cocok. Tanzil memberi tasydid pada ba pembuka di surah 95 dan 97. Di keduanya, Reader menampilkan prefix asli itu. Al-Fatihah 1 sudah merupakan ayat bernomor. At-Tawbah tidak memiliki pengantar. An-Naml 30 tampil utuh, termasuk Basmalah yang merupakan bagian ayat. Pengantar tidak punya tindakan, ID, nomor, bookmark, atau hitungan.

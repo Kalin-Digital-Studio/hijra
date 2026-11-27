@@ -1,8 +1,29 @@
 import assert from 'node:assert/strict';
 globalThis.__DEV__ = true;
 const { request } = await import('../src/services/islamic/client.ts');
+const { parseQuranTranslations, quranTranslations } = await import('../src/services/islamic/myquran.ts');
 const envelope = (value) => new globalThis.Response(JSON.stringify({status:true,data:value}));
 const signal = () => new globalThis.AbortController().signal;
+const ayah = (number) => ({ surah_number: 1, ayah_number: number, translation: 'Fixture ' + number });
+const surah = { surah: 1, start: 1, end: 2, ayahs: [ayah(2), ayah(1)] };
+assert.equal(parseQuranTranslations(surah, 1, 1, 2).get(1), 'Fixture 1');
+for (const ayahs of [[ayah(1)], [ayah(1), ayah(1)], [ayah(1), ayah(3)],
+  [ayah(1), { ...ayah(2), surah_number: 2 }], [ayah(1), { ...ayah(2), translation: '' }]]) {
+  assert.throws(() => parseQuranTranslations({ ...surah, ayahs }, 1, 1, 2), { reason: 'schema' });
+}
+assert.throws(() => parseQuranTranslations(surah, 2, 1, 2), { reason: 'schema' });
+assert.throws(() => parseQuranTranslations(surah, 1, 2, 3), { reason: 'schema' });
+globalThis.fetch = async (url) => {
+  assert.equal(url, 'https://api.myquran.com/v3/quran/1/ayat/range/1/2');
+  return envelope(surah);
+};
+assert.equal((await quranTranslations(1, 1, 2, signal())).get(2), 'Fixture 2');
+globalThis.__DEV__ = false;
+// The client snapshots the development flag at module load.
+const productionClient = await import('../src/services/islamic/client.ts?production');
+await assert.rejects(productionClient.request('quran', '/v3/quran/1/ayat/range/1/2', signal()), { reason: 'blocked' });
+globalThis.__DEV__ = true;
+console.log('Quran surah request, explicit ayah mapping, invalid payload rejection and production gate passed.');
 let count=0;
 globalThis.fetch=async () => { count++; return envelope([1]); };
 const url='/v3/calendar/test';

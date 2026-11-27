@@ -101,3 +101,26 @@ Di perangkat, buka Dzikir Petang dan pilih Al-Ikhlas dalam antarmuka Inggris unt
 ## Phase 06B · Hub Ibadah
 
 Di Expo Go, pilih Kediri dan WIB, cek countdown, lima waktu, serta ganti bulan. Uji lintang/bujur manual secara offline. Uji izin lokasi ditolak dan diberikan, sensor, mode magnetik, dan pindah layar saat sensor berjalan. Periksa dua koleksi hadis, pencarian, doa, 99 nama, favorit, kalender, regresi tracker dan navigasi. Formal UAT tetap Phase 12.
+
+### Enhancement Reader Quran · Pemeriksaan perangkat
+
+- [ ] Buka **Ibadah → Al-Qur’an → Al-Fatihah**. Periksa tujuh kartu, harakat, dan mode terang/gelap pada Android dan iOS.
+- [ ] Dalam Expo Go pengembangan dengan internet, cek terjemahan Indonesia, matikan Latin dan terjemahan secara terpisah, lalu buka ulang untuk cek preferensi. Dalam antarmuka Inggris, cek label bahasa terjemahan.
+- [ ] Pilih 1–5, simpan dengan penanda aktif, lalu cek kenaikan dashboard 5 ayat dan 1 sesi. **Lanjutkan Membaca** membuka ayat 6. Simpan 6–7 dan pastikan posisi berikutnya Al-Baqarah 1.
+- [ ] Coba Al-Fatihah 6 sampai Al-Baqarah 3 sebagai satu sesi. Ringkasan menunjukkan 5 ayat. Batalkan sesi lain dan cek tidak ada perubahan pada riwayat.
+- [ ] Matikan internet dan buka ulang. Cek teks Arab, simpan sesi, riwayat, penanda, dan ringkasan tetap berjalan. Cek status terjemahan dan retry saat koneksi kembali.
+
+Checklist ini belum diverifikasi pada perangkat fisik. UAT formal tetap Phase 12.
+
+
+### Pemeriksaan perangkat untuk tanda waqf
+
+- [ ] Cek 2:2, 2:45, 16:17, 16:21, 16:57, dan 36:76 pada Android dan iOS, di semua ukuran huruf Arab. Bandingkan dengan [rujukan Tanzil](https://tanzil.net/docs/pause_marks). Pastikan tanda waqf, harakat dan posisi baris tetap terbaca.
+- [ ] Cek sajdah di 7:206, Basmalah di 1:1 dan di pengantar 2:1, pengecualian 9:1, serta Basmalah dalam 27:30. Aktifkan mode offline dan verifikasi tracker dan penanda.
+
+### Pembanding Amiri Quran di Expo Go
+
+- [ ] Reload proyek tanpa menghapus data aplikasi. Di reader, tekan **Dev · SQLite waqf / font A–B**. Cek 2:2 menampilkan dua U+06DB dari SQLite dan bandingkan teks yang sama pada A (System) dan B (Amiri Quran), serta lima ayat rujukan lain.
+- [ ] Pada varian B, periksa shaping, tanda di atas kata, wrapping ayat panjang dan clipping pada semua pilihan ukuran. Periksa pula satu tanda sajdah.
+- [ ] Bandingkan awal Al-Fatihah, Al-Baqarah, At-Tawbah, An-Naml dan Al-Ikhlas. Cek Basmalah dalam An-Naml 30 tetap satu ayat, dan **Lanjutkan Membaca** dari ayat 2 atau lebih tidak menampilkan pengantar.
+- [ ] Cek terjemahan dan bookmark Al-Baqarah 1 tetap di ayat 1. Simpan Al-Baqarah 1–5 dan pastikan ringkasan bertambah 5, termasuk saat offline.

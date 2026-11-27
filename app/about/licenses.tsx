@@ -5,6 +5,7 @@ import { AppHeader, BodyText, Button, Card, EmptyState, ScreenContainer } from '
 import { licenseNotices } from '../../src/constants/licenseNotices';
 import { dhikrNotice } from '../../src/constants/dhikrNotice';
 import tanzilText from '../../assets/data/quran/tanzil-uthmani.json';
+import amiriLicense from '../../assets/fonts/amiri-1.003-license.json';
 
 const quranNotice = [
   'Tanzil Quran Metadata v1.0',
@@ -26,6 +27,7 @@ const packages = Object.entries({
     'Marmaduke Pickthall, The Meaning of the Glorious Koran (1930), pp. 676–678. Public-domain original text. Scan: https://archive.org/details/in.ernet.dli.2015.216140/',
   'Tanzil Quran Metadata': quranNotice,
   'Tanzil Quran Text (Uthmani v1.1)': textNotice,
+  'Amiri Quran 1.003': amiriLicense,
 });
 
 export default function Licenses() {

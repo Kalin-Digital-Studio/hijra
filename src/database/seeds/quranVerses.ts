@@ -28,12 +28,13 @@ export function parseUthmani(raw: string, catalog: Catalog) {
   return verses;
 }
 
-export async function seedQuranVerses(db: SQLiteDatabase) {
+export async function seedQuranVerses(db: SQLiteDatabase, refreshText = false) {
   const verses = parseUthmani(source.raw, await readSurahs(db));
+  const conflict = refreshText ? ' ON CONFLICT (surah_number, ayah_number) DO UPDATE SET arabic_text = excluded.arabic_text' : '';
   for (let index = 0; index < verses.length; index += 100) {
     const batch = verses.slice(index, index + 100);
     await db.runAsync(`INSERT INTO quran_verses (surah_number, ayah_number, arabic_text)
-      VALUES ${batch.map(() => '(?, ?, ?)').join(', ')}`,
+      VALUES ${batch.map(() => '(?, ?, ?)').join(', ')}${conflict}`,
     ...batch.flatMap(({ surah, ayah, arabic }) => [surah, ayah, arabic]));
   }
 }

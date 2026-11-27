@@ -123,3 +123,11 @@ Percobaan UAT Android awal terhenti karena perbedaan versi SDK. Product Owner me
 
 Referensi tersedia di [inventaris lisensi](THIRD_PARTY_LICENSES.md), [skema database](DATABASE_SCHEMA.md), dan [langkah UAT](UAT_CHECKLIST.md).
 
+
+### Enhancement Reader Quran · 28 November 2026
+
+Reader, preferensi dan koneksi terjemahan pengembangan diimplementasikan. Tes SQLite meliputi integritas 6.236 ayat, preferensi independen setelah database dibuka ulang, hitungan inklusif, bookmark, rollback, duplikat, dan data dashboard. Pemeriksaan API meliputi validasi rentang, penolakan payload rusak, gate produksi, serta perbandingan live dengan endpoint detail. Pemeriksaan visual, glyph dan alur lengkap lewat perangkat fisik dicatat di checklist. Formal UAT tetap dijadwalkan pada Phase 12.
+
+### Amiri Quran dan pemisahan Basmalah
+
+Reader memuat Amiri Quran Regular 1.003 dari bundel dan memakai prefix Tanzil verbatim untuk tampilan Basmalah tanpa nomor pada awal surah yang memiliki pengantar. Tidak diperlukan migrasi baru. Tes SQLite memeriksa 112 pemisahan tampilan dan dua pengecualian, termasuk seluruh 6.236 ayat. Pembanding font dari SQLite tersedia saat pengembangan. Review hasil rendering perangkat fisik masih terbuka.
