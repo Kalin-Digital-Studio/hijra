@@ -41,3 +41,11 @@ Katalog produksi dikemas sebagai JSON dan diimpor oleh migrasi SQLite v7. Seluru
 ### Digital Quran Reader
 
 `/quran` menjadi landing dengan pencarian dan daftar surah virtual. `/quran/reader` menampilkan blok maksimal 20 ayat dan memuat satu surah dari SQLite per navigasi. `/quran/manual` mempertahankan tracker dengan pengelolaan sesi lampau. Pembaca memakai repository sesi dan kalkulator Phase 05 yang sama. Penyimpanan sukses memicu refresh ketika Beranda atau riwayat kembali fokus. Seluruh teks dan metadata berasal dari artefak lokal.
+
+## Phase 06 · Dzikir & Tasbih
+
+Rute `/dhikr`, `/dhikr/counter`, `/dhikr/history`, dan `/dhikr/manage` memakai SQLite dan antrean mutasi eksklusif per koneksi. ID draf menjadi ID penyimpanan. UI menampilkan ketukan secara optimistis dan mencocokkan hasil terakhir dengan database. Ketukan yang telah commit bertahan setelah restart, sementara perubahan yang masih dalam antrean bisa hilang jika proses berhenti paksa. Notifikasi Zustand memuat ulang ringkasan setelah transaksi final.
+
+## Phase 06B · Hub Ibadah
+
+`src/features/islamic` menggunakan layanan `src/services/islamic` untuk schema, timeout, pembatalan, deduplikasi dan kontrol 429. Payload hanya dipakai untuk render aktif. Arah kiblat dihitung lokal.

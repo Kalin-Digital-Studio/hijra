@@ -19,3 +19,11 @@ Fase ini menyiapkan pencatatan volume bacaan dari mushaf atau aplikasi lain, pen
 ### Digital Quran Reader & Reading Tracker
 
 Scope Release 1 diperluas untuk membaca 114 surah dalam bahasa Arab secara offline. Sesi dapat dicatat langsung dari pembaca atau melalui pencatatan manual. Terjemahan ayat, tafsir, audio, tajwid berwarna, hafalan, dan cakupan khatam dijadwalkan untuk Release 2.
+
+## Phase 06 · Dzikir & Tasbih
+
+Phase 06 menyediakan pembaca Dzikir, tasbih digital, koleksi pagi/petang/setelah shalat, draf lokal, dan pencatatan harian serta pekanan.
+
+## Phase 06B · Hub Ibadah
+
+Ibadah menjadi hub ibadah dan literasi Islam. Beranda tetap menjadi ringkasan personal. Status izin MyQuran terpisah dari tracker offline.

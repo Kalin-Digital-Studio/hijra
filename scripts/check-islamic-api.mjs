@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+globalThis.__DEV__ = true;
+const { request } = await import('../src/services/islamic/client.ts');
+const envelope = (value) => new globalThis.Response(JSON.stringify({status:true,data:value}));
+const signal = () => new globalThis.AbortController().signal;
+let count=0;
+globalThis.fetch=async () => { count++; return envelope([1]); };
+const url='/v3/calendar/test';
+assert.deepEqual(await Promise.all([request('calendar',url,signal()),request('calendar',url,signal())]),[[1],[1]]);
+assert.equal(count,1);
+globalThis.fetch=async () => new globalThis.Response('invalid JSON');
+await assert.rejects(request('calendar',url,signal()),{reason:'schema'});
+globalThis.fetch=async () => new globalThis.Response(JSON.stringify({status:false,data:[]}));
+await assert.rejects(request('calendar',url,signal()),{reason:'schema'});
+count=0;
+globalThis.fetch=async () => ++count===1 ? new globalThis.Response('',{status:503}) : envelope(true);
+assert.equal(await request('calendar',url,signal()),true);
+assert.equal(count,2);
+globalThis.fetch=async (_url,{signal:transport}) => new Promise((_,reject)=>{
+  const aborted=()=>reject(new Error('abort'));
+  if (transport.aborted) aborted();
+  else transport.addEventListener('abort',aborted,{once:true});
+});
+const user=new globalThis.AbortController();
+const pending=request('calendar',url,user.signal);
+user.abort();
+await assert.rejects(pending,{reason:'aborted'});
+await assert.rejects(request('calendar',url,signal()),{reason:'timeout'});
+count=0;
+globalThis.fetch=async () => {
+  count++;
+  return new globalThis.Response('',{status:429,headers:{'Retry-After':'30'}});
+};
+await assert.rejects(request('calendar',url,signal()),{status:429});
+await assert.rejects(request('calendar',url,signal()),{status:429});
+assert.equal(count,1);
+console.log('MyQuran client deduplication, invalid responses, bounded retry, cancellation and Retry-After passed.');

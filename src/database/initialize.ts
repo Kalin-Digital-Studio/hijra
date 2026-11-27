@@ -1,4 +1,7 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
+import { islamicSchema } from './migrations/islamic.ts';
+import { dhikrSchema } from './migrations/dhikr.ts';
+import { expandDhikrCollections, seedDhikr } from './seeds/dhikr.ts';
 import { initialSchema } from './migrations/schema.ts';
 import { profileSchema } from './migrations/profile.ts';
 import { prayerSchema } from './migrations/prayer.ts';
@@ -15,7 +18,7 @@ export async function initializeDatabase(db: SQLiteDatabase) {
   await db.execAsync('PRAGMA journal_mode = WAL');
   await db.withTransactionAsync(async () => {
     const version = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
-    if (!version || version.user_version > 8) throw new Error('Unsupported database schema');
+    if (!version || version.user_version > 11) throw new Error('Unsupported database schema');
     if (version.user_version === 0) {
       await db.execAsync(initialSchema);
       await db.execAsync('PRAGMA user_version = 1');
@@ -52,6 +55,19 @@ export async function initializeDatabase(db: SQLiteDatabase) {
       await db.execAsync(quranVerseSchema);
       await seedQuranVerses(db);
       await db.execAsync('PRAGMA user_version = 8');
+    }
+    if (version.user_version < 9) {
+      await db.execAsync(dhikrSchema);
+      await seedDhikr(db);
+      await db.execAsync('PRAGMA user_version = 9');
+    }
+    if (version.user_version < 10) {
+      await expandDhikrCollections(db);
+      await db.execAsync('PRAGMA user_version = 10');
+    }
+    if (version.user_version < 11) {
+      await db.execAsync(islamicSchema);
+      await db.execAsync('PRAGMA user_version = 11');
     }
     const categorySql = 'INSERT INTO ibadah_categories (id, sort_order) VALUES (?, ?) ON CONFLICT(id) DO NOTHING';
     const typeSql = 'INSERT INTO ibadah_types (id, category_id, sort_order) VALUES (?, ?, ?) ON CONFLICT(id) DO NOTHING';

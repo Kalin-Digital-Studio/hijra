@@ -3,7 +3,13 @@ import prayer from './prayer.ts';
 import sunnah from './sunnah.ts';
 import { quran } from './quran.ts';
 
+import { dhikr } from './dhikr.ts';
+
+import { hub } from './hub.ts';
+
 export default {
+  hub,
+  dhikr,
   ...personal,
   prayer,
   sunnah,

@@ -1,1 +1,1 @@
-{ "ios": { "NSPhotoLibraryUsageDescription": "Izinkan Hijra memilih foto profil dari perangkat ini." } }
+{ "ios": { "NSLocationWhenInUseUsageDescription": "Izinkan Hijra menggunakan lokasi pada perangkat ini untuk menghitung arah kiblat.", "NSPhotoLibraryUsageDescription": "Izinkan Hijra memilih foto profil dari perangkat ini." } }

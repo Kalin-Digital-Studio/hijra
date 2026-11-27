@@ -1,1 +1,1 @@
-{ "ios": { "NSPhotoLibraryUsageDescription": "Allow Hijra to choose a profile photo from this device." } }
+{ "ios": { "NSLocationWhenInUseUsageDescription": "Allow Hijra to use location on this device to calculate the Qibla direction.", "NSPhotoLibraryUsageDescription": "Allow Hijra to choose a profile photo from this device." } }

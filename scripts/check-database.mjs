@@ -1,3 +1,16 @@
+import { readPrayerCity, savePrayerCity, readIslamicBookmarks, writeIslamicBookmark } from '../src/database/repositories/islamic.ts';
+import { prayerDate as zonedPrayerDate, nextPrayer, qiblaBearing, compassDelta, monthShift } from '../src/services/islamic/rules.ts';
+import { parseSchedule } from '../src/services/islamic/myquran.ts';
+import { request } from '../src/services/islamic/client.ts';
+import { hub as idHub } from '../src/locales/id/hub.ts';
+import { hub as enHub } from '../src/locales/en/hub.ts';
+import { getDhikrReviewContent as getReviewDraft } from '../src/services/dhikrReviewContent.dev.ts';
+import { getDhikrReviewContent as getReleaseDraft } from '../src/services/dhikrReviewContent.ts';
+import { getDhikrReadingHelp } from '../src/services/dhikrReadingHelp.ts';
+import { changeDhikrDraft, createDhikrDraft, readDhikrDisplayPreferences, writeDhikrDisplayPreference, deleteDhikrLog, editDhikrLog, readDhikrDrafts, readDhikrHaptics, readDhikrItems, readDhikrLogs, reorderDhikr, saveCustomDhikr, saveDhikrDraft, saveDhikrPreference, writeDhikrHaptics } from '../src/database/repositories/dhikr.ts';
+import { collectionStatus, summarizeDhikr } from '../src/services/dhikrRules.ts';
+import { dhikr as idDhikr } from '../src/locales/id/dhikr.ts';
+import { dhikr as enDhikr } from '../src/locales/en/dhikr.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readVerses, readQuranFontSize, saveQuranFontSize } from '../src/database/repositories/quranReader.ts';
@@ -89,7 +102,7 @@ try {
   await writeSetting(v2Api, 'language', 'en');
   await initializeDatabase(v2Api);
   assert.equal((await readSettings(v2Api)).language, 'en');
-  assert.equal(v2.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.equal(v2.prepare('PRAGMA user_version').get().user_version, 11);
   await assert.rejects(persistProfile(freshApi, created.profile.id, clean, { language: 'id', theme: 'system', week_start: 'monday' }), /already completed/);
   assert.ok(fresh.prepare("SELECT value FROM app_settings WHERE key = 'onboarding_completed_at'").get().value);
 
@@ -109,7 +122,7 @@ try {
   assert.equal(existing.profile.displayName, 'Local');
   assert.ok(existing.profile.createdAt);
   assert.deepEqual(await readSettings(oldApi), { language: 'id', theme: 'dark', week_start: 'monday', completed: false });
-  assert.equal(old.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.equal(old.prepare('PRAGMA user_version').get().user_version, 11);
   assert.equal(old.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
   assert.equal(old.prepare('SELECT COUNT(*) AS count FROM ibadah_categories').get().count, 4);
   assert.equal(old.prepare('SELECT COUNT(*) AS count FROM ibadah_types').get().count, 31);
@@ -208,7 +221,7 @@ try {
   assert.equal((await readPrayerLogs(v4Api, 'v4-user', prayerDate))[0].id, 'old-prayer');
   assert.equal((await readLocalProfile(v4Api)).profile.avatarUri, avatar);
   assert.equal((await readSettings(v4Api)).language, 'en');
-  assert.equal(v4.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.equal(v4.prepare('PRAGMA user_version').get().user_version, 11);
   assert.equal((await readSunnahSessions(v4Api, 'v4-user', prayerDate)).length, 0);
   v4.exec("CREATE TRIGGER fail_default BEFORE INSERT ON user_sunnah_preferences WHEN NEW.ibadah_type_id = 'before-fajr' BEGIN SELECT RAISE(ABORT, 'simulated preference failure'); END;");
   await assert.rejects(ensureSunnahPreferences(v4Api, 'v4-user'), /simulated preference failure/);
@@ -311,7 +324,7 @@ try {
   v5.exec("INSERT INTO sunnah_prayer_logs (id, user_id, ibadah_type_id, prayer_date, rakaat) VALUES ('prior', 'q-user', 'duha', '2024-07-01', 2);");
   const qa = adapter(v5);
   await initializeDatabase(qa);
-  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 11);
   assert.equal(v5.prepare("SELECT avatar_uri FROM user_profiles WHERE id='q-user'").get().avatar_uri, 'file:///avatar.png');
   assert.equal(v5.prepare("SELECT rakaat FROM sunnah_prayer_logs WHERE id='prior'").get().rakaat, 2);
   assert.equal((await readSettings(qa)).language, 'en');
@@ -332,7 +345,7 @@ try {
   `);
   const legacyApi = adapter(legacyQuran);
   await initializeDatabase(legacyApi);
-  assert.equal(legacyQuran.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.equal(legacyQuran.prepare('PRAGMA user_version').get().user_version, 11);
   assert.equal((await readSurahs(legacyApi)).get(2).id, 'Legacy ID');
   assert.equal((await readReading(legacyApi, 'legacy', '2024-07-01'))[0].id, 'legacy-session');
   assert.deepEqual({ ...await readBookmark(legacyApi, 'legacy') }, { surah: 2, ayah: 4 });
@@ -450,9 +463,11 @@ try {
   assert.equal(readerTotals.sessions, 2);
   assert.deepEqual(nextPosition(catalog, await readBookmark(offlineReopen, 'reader-profile')), pos(2, 1));
   // Emulate an already deployed v7 database populated with reading records.
-  v5.exec('DROP TABLE quran_verses; PRAGMA user_version = 7;');
+  v5.exec(`DROP TABLE islamic_content_bookmarks; DROP TABLE dhikr_drafts; DROP TABLE dhikr_logs; DROP TABLE dhikr_collection_sessions;
+    DROP TABLE user_dhikr_preferences; DROP TABLE dhikr_collection_items; DROP TABLE dhikr_collections;
+    DROP TABLE dhikr_items; DROP TABLE quran_verses; PRAGMA user_version = 7;`);
   await initializeDatabase(qa);
-  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 8);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 11);
   assert.deepEqual(await readVerses(qa, 1), opening);
   assert.deepEqual(await readBookmark(qa, 'reader-profile'), await readBookmark(offlineReopen, 'reader-profile'));
   assert.equal((await readReading(qa, 'reader-profile', today)).length, 2);
@@ -462,9 +477,198 @@ try {
   await assert.rejects(initializeDatabase(adapter(brokenQuran)), /already exists/);
   assert.equal(brokenQuran.prepare('PRAGMA user_version').get().user_version, 5);
   assert.equal(brokenQuran.prepare("SELECT count(*) AS count FROM sqlite_master WHERE name = 'quran_surahs'").get().count, 0);
+  assert.deepEqual(Object.keys(idDhikr).sort(), Object.keys(enDhikr).sort());
+  assert.deepEqual(Object.keys(idDhikr.catalog).sort(), Object.keys(enDhikr.catalog).sort());
+  const dhikrCatalog = await readFile(new URL('../assets/data/dhikr/catalog.json', import.meta.url), 'utf8');
+  assert.equal(createHash('sha256').update(dhikrCatalog.replace(/\r\n/g, '\n')).digest('hex'),
+    '42f453ee163f758b97473f967c20901084f627d2d3ebef4d849e207d73415738');
+  v5.exec(`DROP TABLE islamic_content_bookmarks; DROP TABLE dhikr_drafts; DROP TABLE dhikr_logs; DROP TABLE dhikr_collection_sessions;
+    DROP TABLE user_dhikr_preferences; DROP TABLE dhikr_collection_items; DROP TABLE dhikr_collections;
+    DROP TABLE dhikr_items; PRAGMA user_version = 8;`);
+  const priorReader = await readReading(qa, 'reader-profile', today);
+  await initializeDatabase(qa);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 11);
+  assert.deepEqual(await readReading(qa, 'reader-profile', today), priorReader);
+  const v9User = 'q-user';
+  v5.exec('DROP TABLE islamic_content_bookmarks;');
+  v5.exec(`DELETE FROM dhikr_collection_items WHERE collection_id IN ('morning','evening','post-591');
+    DELETE FROM dhikr_collections WHERE id='post-591';
+    DELETE FROM dhikr_items WHERE id LIKE 'guided-%';
+    UPDATE dhikr_collections SET version=1,reference='Muslim 2692' WHERE id IN ('morning','evening');
+    INSERT INTO dhikr_collection_items VALUES ('morning',0,'tasbih-tahmid',100,1),('evening',0,'tasbih-tahmid',100,1);
+    PRAGMA user_version = 9;`);
+  const oldMorning = await createDhikrDraft(qa, v9User, day, 'morning', true);
+  const oldEvening = await createDhikrDraft(qa, v9User, day, 'evening', true);
+  await changeDhikrDraft(qa, v9User, oldMorning.id, { type: 'manual', count: 15 });
+  await changeDhikrDraft(qa, v9User, oldEvening.id, { type: 'manual', count: 100 });
+  await saveDhikrDraft(qa, v9User, oldEvening.id, false);
+  const savedBefore = await readDhikrLogs(qa, v9User, day);
+  const draftBefore = (await readDhikrDrafts(qa, v9User))[0];
+  const historyBefore = v5.prepare('SELECT snapshot FROM dhikr_collection_sessions WHERE id=?').get(oldEvening.id).snapshot;
+  await initializeDatabase(qa);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 11);
+  assert.deepEqual(await readDhikrLogs(qa, v9User, day), savedBefore);
+  assert.equal(v5.prepare('SELECT snapshot FROM dhikr_collection_sessions WHERE id=?').get(oldEvening.id).snapshot, historyBefore);
+  assert.deepEqual((await readDhikrDrafts(qa, v9User))[0], draftBefore);
+  assert.deepEqual(await createDhikrDraft(qa, v9User, day, 'morning', true), draftBefore);
+  await changeDhikrDraft(qa, v9User, oldMorning.id, { type: 'manual', count: 100 });
+  await saveDhikrDraft(qa, v9User, oldMorning.id, false);
+  const expanded = await createDhikrDraft(qa, v9User, day, 'morning', true);
+  assert.equal(expanded.version, 2);
+  assert.equal(expanded.steps.length, 7);
+  assert.notEqual(expanded.id, oldMorning.id);
+  for (const surah of [112, 113, 114]) {
+    const step = expanded.steps.find((item) => item.id === 'guided-surah-' + surah);
+    assert.equal(step.target, 3);
+    assert.deepEqual(step.arabic.split('\n'), (await readVerses(qa, surah)).map((verse) => verse.arabic));
+  }
+  const quranBeforeDhikr = await readReading(qa, v9User, day);
+  await changeDhikrDraft(qa, v9User, expanded.id, { type: 'position', index: 1 });
+  await changeDhikrDraft(qa, v9User, expanded.id, { type: 'manual', count: 3 });
+  await changeDhikrDraft(qa, v9User, expanded.id, { type: 'position', index: 2 });
+  await changeDhikrDraft(qa, v9User, expanded.id, { type: 'position', index: 0 });
+  const backToReading = await changeDhikrDraft(qa, v9User, expanded.id, { type: 'position', index: 1 });
+  assert.equal(backToReading.current, 1);
+  assert.equal(backToReading.progress[1].count, 3);
+  assert.equal(backToReading.progress[2].count, 0);
+  assert.equal(collectionStatus(backToReading.steps, backToReading.progress).completed, 1);
+  await saveDhikrDraft(qa, v9User, expanded.id, true);
+  assert.deepEqual(await readReading(qa, v9User, day), quranBeforeDhikr);
+  const expandedArtifact = await readFile(new URL('../assets/data/dhikr/expansion-v2.json', import.meta.url), 'utf8');
+  assert.equal(createHash('sha256').update(expandedArtifact.replace(/\r\n/g, '\n')).digest('hex'),
+    '0c2cead6487a6fec218f96a379048e14a24fe8c8abeca15750c7f643c7512485');
+  const dhikrUser = 'other';
+  assert.equal((await readDhikrItems(qa, dhikrUser)).length, 19);
+  const free = await createDhikrDraft(qa, dhikrUser, today, 'free', false);
+  await Promise.all(Array.from({ length: 200 }, () => changeDhikrDraft(qa, dhikrUser, free.id, { type: 'count', delta: 1 })));
+  const reopenedDhikr = adapter(open('phase05-upgrade.db'));
+  assert.equal((await readDhikrDrafts(reopenedDhikr, dhikrUser))[0].progress[0].count, 200);
+  await changeDhikrDraft(qa, dhikrUser, free.id, { type: 'count', delta: -1 });
+  await Promise.all([saveDhikrDraft(qa, dhikrUser, free.id, false), saveDhikrDraft(qa, dhikrUser, free.id, false)]);
+  assert.equal((await readDhikrLogs(qa, dhikrUser, today))[0].count, 199);
+  assert.equal((await readDhikrDrafts(qa, dhikrUser)).length, 0);
+
+  for (const id of ['morning', 'evening', 'post-34', 'post-33', 'post-591']) {
+    const draft = await createDhikrDraft(qa, dhikrUser, day, id, true, id.startsWith('post') ? 'fajr' : null);
+    assert(draft.steps.every((step) => step.arabic && step.reference));
+    const almost = draft.steps.map((step, i) => ({ count: i === draft.steps.length - 1 ? 0 : step.target ?? 0, checked: false }));
+    assert.equal(collectionStatus(draft.steps, almost).complete, false);
+    for (const [index, step] of draft.steps.entries()) {
+      await changeDhikrDraft(qa, dhikrUser, draft.id, { type: 'position', index });
+      await changeDhikrDraft(qa, dhikrUser, draft.id, step.mode === 'CHECKLIST' ? { type: 'check' } : { type: 'manual', count: step.target });
+    }
+    v5.exec("CREATE TRIGGER fail_dhikr BEFORE INSERT ON dhikr_logs BEGIN SELECT RAISE(ABORT, 'test fail'); END;");
+    await assert.rejects(saveDhikrDraft(qa, dhikrUser, draft.id, false), /test fail/);
+    assert((await readDhikrDrafts(qa, dhikrUser)).some((data) => data.id === draft.id));
+    assert.equal(v5.prepare('SELECT COUNT(*) AS count FROM dhikr_collection_sessions WHERE id=?').get(draft.id).count, 0);
+    v5.exec('DROP TRIGGER fail_dhikr');
+    await saveDhikrDraft(qa, dhikrUser, draft.id, false);
+  }
+  const collections = await readDhikrLogs(qa, dhikrUser, day);
+  assert(collections.every((entry) => entry.status === 'COMPLETE'));
+  assert.deepEqual(summarizeDhikr(collections), {
+    repetitions: 426, checks: 6, sessions: 23, activities: 14, days: 1, completedCollections: 5, partialCollections: 0,
+  });
+  const partial = await createDhikrDraft(qa, dhikrUser, today, 'morning', true);
+  await changeDhikrDraft(qa, dhikrUser, partial.id, { type: 'position', index: 1 });
+  await changeDhikrDraft(qa, dhikrUser, partial.id, { type: 'count', delta: 1 });
+  await assert.rejects(saveDhikrDraft(qa, dhikrUser, partial.id, false), /Incomplete/);
+  await saveDhikrDraft(qa, dhikrUser, partial.id, true);
+  assert((await readDhikrLogs(qa, dhikrUser, today)).some((entry) => entry.status === 'INCOMPLETE'));
+  await deleteDhikrLog(qa, dhikrUser, partial.id, true);
+
+  const customDhikr = { id: 'dhikr-test', label: 'Custom fixture', mode: 'CHECKLIST', target: null, archived: 0,
+    arabic: null, latin: null, meaning: null, notes: null };
+  await saveCustomDhikr(qa, dhikrUser, customDhikr);
+  await assert.rejects(saveCustomDhikr(qa, 'q-user', customDhikr), /Unavailable activity/);
+  assert(!(await readDhikrItems(qa, 'q-user')).some((item) => item.id === customDhikr.id));
+  await saveDhikrPreference(qa, dhikrUser, customDhikr.id, 1, 30);
+  await reorderDhikr(qa, dhikrUser, [customDhikr.id, 'free']);
+  const personal = await createDhikrDraft(qa, dhikrUser, today, customDhikr.id, false);
+  await changeDhikrDraft(qa, dhikrUser, personal.id, { type: 'check' });
+  await saveDhikrDraft(qa, dhikrUser, personal.id, false);
+  await saveCustomDhikr(qa, dhikrUser, { ...customDhikr, mode: 'COUNTER', archived: 1 });
+  assert.equal((await readDhikrLogs(qa, dhikrUser, today)).find((entry) => entry.id === personal.id).mode, 'CHECKLIST');
+  await editDhikrLog(qa, dhikrUser, free.id, day, 197);
+  assert((await readDhikrLogs(qa, dhikrUser, day)).some((entry) => entry.id === free.id && entry.count === 197));
+  await writeDhikrHaptics(qa, false);
+  assert.equal(await readDhikrHaptics(reopenedDhikr), false);
+  assert.equal((await readVerses(reopenedDhikr, 1)).length, 7);
+  assert.deepEqual(v5.prepare('PRAGMA foreign_key_check').all(), []);
+  const displayDraft = await createDhikrDraft(qa, dhikrUser, today, 'evening', true);
+  await changeDhikrDraft(qa, dhikrUser, displayDraft.id, { type: 'check' });
+  await changeDhikrDraft(qa, dhikrUser, displayDraft.id, { type: 'position', index: 1 });
+  const readingBeforeToggle = await changeDhikrDraft(qa, dhikrUser, displayDraft.id, { type: 'count', delta: 1 });
+  const savedBeforeToggle = await readDhikrLogs(qa, dhikrUser, today);
+  assert.deepEqual(await readDhikrDisplayPreferences(qa), { latin: true, translation: true });
+  await writeDhikrDisplayPreference(qa, 'latin', false);
+  assert.deepEqual(await readDhikrDisplayPreferences(reopenedDhikr), { latin: false, translation: true });
+  await Promise.all([writeDhikrDisplayPreference(qa, 'latin', true), writeDhikrDisplayPreference(qa, 'translation', false)]);
+  assert.deepEqual(await readDhikrDisplayPreferences(reopenedDhikr), { latin: true, translation: false });
+  assert.deepEqual((await readDhikrDrafts(reopenedDhikr, dhikrUser)).find((draft) => draft.id === displayDraft.id), readingBeforeToggle);
+  assert.deepEqual(await readDhikrLogs(reopenedDhikr, dhikrUser, today), savedBeforeToggle);
+  for (const [index, count] of [[1, 4], [2, 5], [3, 6]]) {
+    const step = readingBeforeToggle.steps[index];
+    assert.equal(getDhikrReadingHelp(step, false, 'en').english.lines.length, count);
+    assert.equal(getDhikrReadingHelp(step, false, 'id').english, null);
+    assert.equal(getDhikrReadingHelp({ ...step, reference: 'other' }, false, 'en').english, null);
+  }
+  const ownHelp = { ...readingBeforeToggle.steps[0], latin: 'Personal pronunciation', meaning: 'Personal meaning' };
+  assert.deepEqual(getDhikrReadingHelp(ownHelp, true, 'en'), {
+    latin: 'Personal pronunciation', meaning: 'Personal meaning', english: null,
+  });
+  assert.deepEqual(getDhikrReadingHelp(ownHelp, false, 'en'), { latin: null, meaning: null, english: null });
+  const reviewItems = (await readDhikrItems(qa, dhikrUser)).filter((item) => !item.owner && !!item.arabic);
+  assert.equal(reviewItems.length, 18);
+  assert.equal(new Set(reviewItems.map((item) => item.arabic)).size, 18);
+  for (const item of reviewItems) {
+    assert(getReviewDraft(item)?.latin, item.id);
+    assert(getReviewDraft(item)?.meaning, item.id);
+    assert.equal(getReviewDraft({ ...item, arabic: item.arabic + ' ' }), null);
+    assert.equal(getReviewDraft({ ...item, reference: 'incorrect' }), null);
+    assert.equal(getReleaseDraft(item), null);
+    assert.equal(item.latin, null);
+    assert.equal(item.meaning, null);
+  }
+  assert.equal(reviewItems.filter((item) => !!getReviewDraft(item)?.english).length, 11);
+  assert.match(getReviewDraft(reviewItems.find((item) => item.id === 'guided-evening-dua')).latin, /amsainā.*nusyūr/u);
+  assert.equal(getReviewDraft({ id: 'free' }), null);
+  console.log('Dhikr review overlay: exact Arabic and reference matching, 18 Latin/ID drafts, 11 EN drafts, and release stub passed.');
+  assert.deepEqual(Object.keys(idHub).sort(), Object.keys(enHub).sort());
+  const baseTime = Date.parse('2026-12-31T15:30:00Z');
+  assert.equal(zonedPrayerDate(baseTime,'Asia/Jakarta'),'2026-12-31');
+  assert.equal(zonedPrayerDate(baseTime,'Asia/Makassar'),'2026-12-31');
+  assert.equal(zonedPrayerDate(baseTime,'Asia/Jayapura'),'2027-01-01');
+  assert.equal(monthShift('2026-12',1),'2027-01');
+  const prayerTimes = {fajr:'04:10',dhuhr:'12:00',asr:'15:30',maghrib:'18:00',isha:'19:05'};
+  assert.equal(nextPrayer(baseTime,'Asia/Jakarta',{'2026-12-31':prayerTimes}),null);
+  assert.deepEqual(nextPrayer(baseTime,'Asia/Jakarta',{'2026-12-31':prayerTimes,'2027-01-01':{...prayerTimes,fajr:'04:13'}}),
+    {prayer:'fajr',time:'04:13',date:'2027-01-01',seconds:20580});
+  assert(Math.abs(qiblaBearing(-6.2088,106.8456)-295.15)<0.2);
+  assert(Math.abs(qiblaBearing(40.7128,-74.006)-58.48)<0.2);
+  assert.equal(qiblaBearing(90.1,0),null);
+  assert.equal(compassDelta(359,1),2);
+  assert.throws(()=>parseSchedule({id:'other'},'city-a','2026-11'),/schema/);
+  assert.throws(()=>parseSchedule({id:'city-a',jadwal:{'2026-11-01':{subuh:'28:12'}}},'city-a','2026-11'),/schema/);
+  await assert.rejects(request('hadith','/v3/hadis/enc',new AbortController().signal),/blocked/);
+  const priorDhikr=await readDhikrLogs(qa,dhikrUser,today);
+  v5.exec('DROP TABLE islamic_content_bookmarks; PRAGMA user_version = 10;');
+  await initializeDatabase(qa);
+  assert.deepEqual(await readDhikrLogs(qa,dhikrUser,today),priorDhikr);
+  const testCity={id:'example',name:'Test city',zone:'Asia/Jayapura'};
+  await savePrayerCity(qa,testCity);
+  assert.deepEqual(await readPrayerCity(reopenedDhikr),testCity);
+  await writeIslamicBookmark(qa,dhikrUser,'hadith','v3:enc:1',true);
+  await writeIslamicBookmark(qa,dhikrUser,'hadith','v3:enc:1',true);
+  assert.deepEqual((await readIslamicBookmarks(reopenedDhikr,dhikrUser,'hadith')).map(({key})=>key),['v3:enc:1']);
+  assert.equal((await readIslamicBookmarks(qa,'q-user','hadith')).length,0);
+  await writeIslamicBookmark(qa,dhikrUser,'hadith','v3:enc:1',false);
+  assert.equal((await readIslamicBookmarks(qa,dhikrUser,'hadith')).length,0);
+  console.log('Islamic Hub: timezone, midnight, year rollover, Qibla bearing, schema rejection, permission gate, v11 migration and bookmarks passed.');
+  console.log('Dhikr v10, collection expansion, preserved v9 snapshots, full Quran passages, navigation, 200 queued taps, restart, full and partial collections, rollback, idempotency, privacy, preferences, and history passed.');
   console.log('Quran migration to v8, verbatim text integrity, font persistence, reader recording, production catalog calculations, bookmark transitions, atomic rollback, duplicate submission and localization parity passed.');
 
-  console.log('Database v8, v1/v2/v4 upgrades, Phase 01–03 regression, Sunnah preferences, ownership, history, idempotency, sessions, summaries and local dates passed.');
+  console.log('Database v11, v1/v2/v4 upgrades, Phase 01–03 regression, Sunnah preferences, ownership, history, idempotency, sessions, summaries and local dates passed.');
 } finally {
   for (const db of dbs) if (db.isOpen) db.close();
   await rm(directory, { recursive: true });

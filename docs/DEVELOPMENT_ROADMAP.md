@@ -28,3 +28,11 @@ Tracker memakai 114 surah dari katalog Tanzil offline. Makna nama surah berbahas
 ### Enhancement Phase 05 · Digital Quran Reader & Reading Tracker
 
 Pembaca native, teks Arab offline, pencatatan dari ayat akhir, dan lanjutan bacaan dari Beranda masuk Release 1. Terjemahan ayat, audio, tafsir, tajwid berwarna, hafalan, dan cakupan khatam tetap di Release 2.
+
+## Phase 06 · Dzikir & Tasbih
+
+Phase 06 mencakup Dzikir & Tasbih, personalisasi, integrasi pencatatan lanjutan setelah Shalat Wajib, dan ringkasan offline.
+
+## Phase 06B · Hub Ibadah
+
+06B menambahkan hub, Arah Kiblat dan MyQuran dengan akses live pengembangan. Phase 07 tetap Personal Goals & Planner.

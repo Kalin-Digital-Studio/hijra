@@ -1,0 +1,132 @@
+{
+  "status": "REVIEW_REQUIRED",
+  "releaseMarker": "HIJRA_DHIKR_REVIEW_DRAFTS_V1",
+  "items": {
+    "tasbih": {
+      "arabic": "سُبْحَانَ اللَّهِ",
+      "reference": "Muslim 2137a",
+      "latin": "Subḥānallāh",
+      "meaning": "Mahasuci Allah.",
+      "english": "Glory be to Allah."
+    },
+    "tahmid": {
+      "arabic": "الْحَمْدُ لِلَّهِ",
+      "reference": "Muslim 2137a",
+      "latin": "Al-ḥamdu lillāh",
+      "meaning": "Segala puji bagi Allah.",
+      "english": "All praise belongs to Allah."
+    },
+    "takbir": {
+      "arabic": "اللَّهُ أَكْبَرُ",
+      "reference": "Muslim 2137a",
+      "latin": "Allāhu akbar",
+      "meaning": "Allah Mahabesar.",
+      "english": "Allah is greater."
+    },
+    "tahlil": {
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ",
+      "reference": "Muslim 2137a",
+      "latin": "Lā ilāha illallāh",
+      "meaning": "Tiada tuhan yang berhak disembah selain Allah.",
+      "english": "There is no deity worthy of worship except Allah."
+    },
+    "istighfar": {
+      "arabic": "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ",
+      "reference": "Muslim 484d",
+      "latin": "Astagfirullāha wa atūbu ilaih",
+      "meaning": "Aku memohon ampun kepada Allah dan bertobat kepada-Nya.",
+      "english": "I ask Allah for forgiveness and repent to Him."
+    },
+    "salawat": {
+      "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ، وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ، وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ",
+      "reference": "Al-Bukhari 6357",
+      "latin": "Allāhumma ṣalli ‘alā Muḥammadin wa ‘alā āli Muḥammad, kamā ṣallaita ‘alā āli Ibrāhīm, innaka ḥamīdum majīd. Allāhumma bārik ‘alā Muḥammadin wa ‘alā āli Muḥammad, kamā bārakta ‘alā āli Ibrāhīm, innaka ḥamīdum majīd.",
+      "meaning": "Ya Allah, limpahkanlah selawat kepada Muhammad dan keluarga Muhammad, sebagaimana Engkau melimpahkan selawat kepada keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji, Mahamulia. Ya Allah, limpahkanlah keberkahan kepada Muhammad dan keluarga Muhammad, sebagaimana Engkau melimpahkan keberkahan kepada keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji, Mahamulia.",
+      "english": null
+    },
+    "hawqala": {
+      "arabic": "لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ",
+      "reference": "Al-Bukhari 6384",
+      "latin": "Lā ḥaula wa lā quwwata illā billāh",
+      "meaning": "Tiada daya dan kekuatan kecuali dengan pertolongan Allah.",
+      "english": "There is no power or strength except through Allah."
+    },
+    "tasbih-tahmid": {
+      "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+      "reference": "Muslim 2692",
+      "latin": "Subḥānallāhi wa biḥamdih",
+      "meaning": "Mahasuci Allah dan segala puji bagi-Nya.",
+      "english": "Glory be to Allah, and praise be to Him."
+    },
+    "closing": {
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَىْءٍ قَدِيرٌ",
+      "reference": "Muslim 597a",
+      "latin": "Lā ilāha illallāhu waḥdahu lā syarīka lah, lahul-mulku wa lahul-ḥamdu wa huwa ‘alā kulli syai’in qadīr.",
+      "meaning": "Tiada tuhan yang berhak disembah selain Allah semata, tanpa sekutu bagi-Nya. Milik-Nya segala kekuasaan dan segala puji. Dia Mahakuasa atas segala sesuatu.",
+      "english": null
+    },
+    "guided-sayyid": {
+      "arabic": "اللَّهُمَّ أَنْتَ رَبِّي، لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَىَّ وَأَبُوءُ لَكَ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ",
+      "reference": "Al-Bukhari 6306",
+      "latin": "Allāhumma anta rabbī, lā ilāha illā anta, khalaqtanī wa anā ‘abduka, wa anā ‘alā ‘ahdika wa wa‘dika mastaṭa‘tu, a‘ūżu bika min syarri mā ṣana‘tu, abū’u laka bini‘matika ‘alayya wa abū’u laka biżanbī, fagfir lī, fa innahu lā yagfiruż-żunūba illā anta.",
+      "meaning": "Ya Allah, Engkau Tuhanku. Tiada tuhan yang berhak disembah selain Engkau. Engkau menciptakanku dan aku adalah hamba-Mu. Aku berpegang pada perjanjian dan janji-Mu semampuku. Aku berlindung kepada-Mu dari keburukan yang telah kulakukan. Aku mengakui nikmat-Mu kepadaku dan mengakui dosaku kepada-Mu. Ampunilah aku. Sungguh, tiada yang mengampuni dosa selain Engkau.",
+      "english": null
+    },
+    "guided-morning-dua": {
+      "arabic": "اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
+      "reference": "Abu Dawud 5068",
+      "latin": "Allāhumma bika aṣbaḥnā wa bika amsainā, wa bika naḥyā, wa bika namūtu, wa ilaikan-nusyūr.",
+      "meaning": "Ya Allah, dengan-Mu kami memasuki waktu pagi dan dengan-Mu kami memasuki waktu petang. Dengan-Mu kami hidup dan dengan-Mu kami mati. Kepada-Mu kami dibangkitkan.",
+      "english": "O Allah, through You we enter the morning and through You we enter the evening. Through You we live and through You we die. To You is the resurrection."
+    },
+    "guided-evening-dua": {
+      "arabic": "اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
+      "reference": "Abu Dawud 5068",
+      "latin": "Allāhumma bika amsainā, wa bika naḥyā, wa bika namūtu, wa ilaikan-nusyūr.",
+      "meaning": "Ya Allah, dengan-Mu kami memasuki waktu petang, dengan-Mu kami hidup, dengan-Mu kami mati, dan kepada-Mu kami dibangkitkan.",
+      "english": "O Allah, through You we enter the evening, through You we live, through You we die, and to You is the resurrection."
+    },
+    "guided-protection": {
+      "arabic": "بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَىْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
+      "reference": "Abu Dawud 5088",
+      "latin": "Bismillāhil-lażī lā yaḍurru ma‘asmihi syai’un fil-arḍi wa lā fis-samā’i wa huwas-samī‘ul-‘alīm.",
+      "meaning": "Dengan nama Allah. Bersama nama-Nya, tiada sesuatu pun di bumi atau di langit yang dapat membahayakan. Dialah Yang Maha Mendengar, Maha Mengetahui.",
+      "english": null
+    },
+    "guided-post-istighfar": {
+      "arabic": "أَسْتَغْفِرُ اللَّهَ",
+      "reference": "Muslim 591",
+      "latin": "Astagfirullāh",
+      "meaning": "Aku memohon ampun kepada Allah.",
+      "english": "I ask Allah for forgiveness."
+    },
+    "guided-post-salam": {
+      "arabic": "اللَّهُمَّ أَنْتَ السَّلاَمُ وَمِنْكَ السَّلاَمُ تَبَارَكْتَ ذَا الْجَلاَلِ وَالإِكْرَامِ",
+      "reference": "Muslim 591",
+      "latin": "Allāhumma antas-salāmu wa minkas-salām, tabārakta żal-jalāli wal-ikrām.",
+      "meaning": "Ya Allah, Engkaulah As-Salām dan dari-Mu datang keselamatan. Mahaberkah Engkau, wahai Pemilik keagungan dan kemuliaan.",
+      "english": "O Allah, You are Peace and from You comes peace. Blessed are You, Possessor of Majesty and Honor."
+    },
+    "guided-surah-112": {
+      "arabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ هُوَ ٱللَّهُ أَحَدٌ\nٱللَّهُ ٱلصَّمَدُ\nلَمْ يَلِدْ وَلَمْ يُولَدْ\nوَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ",
+      "reference": "Quran 112 · Abu Dawud 5082 · Tanzil Uthmani v1.1",
+      "latin": "Bismillāhir-raḥmānir-raḥīm.\n1. Qul huwallāhu aḥad.\n2. Allāhuṣ-ṣamad.\n3. Lam yalid wa lam yūlad.\n4. Wa lam yakul lahū kufuwan aḥad.",
+      "meaning": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang.\n1. Katakanlah: Dialah Allah, Yang Maha Esa.\n2. Allah, tempat segala sesuatu bergantung.\n3. Dia tidak beranak dan tidak pula diperanakkan.\n4. Tidak ada seorang pun yang setara dengan-Nya.",
+      "english": null
+    },
+    "guided-surah-113": {
+      "arabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ\nمِن شَرِّ مَا خَلَقَ\nوَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ\nوَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ\nوَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+      "reference": "Quran 113 · Abu Dawud 5082 · Tanzil Uthmani v1.1",
+      "latin": "Bismillāhir-raḥmānir-raḥīm.\n1. Qul a‘ūżu birabbil-falaq.\n2. Min syarri mā khalaq.\n3. Wa min syarri gāsiqin iżā waqab.\n4. Wa min syarrin-naffāṡāti fil-‘uqad.\n5. Wa min syarri ḥāsidin iżā ḥasad.",
+      "meaning": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang.\n1. Katakanlah: Aku berlindung kepada Tuhan yang membelah fajar.\n2. Dari keburukan segala yang Dia ciptakan.\n3. Dari keburukan malam yang gelap ketika menyelimuti.\n4. Dari keburukan para peniup pada simpul-simpul.\n5. Dan dari keburukan orang yang dengki ketika ia mendengki.",
+      "english": null
+    },
+    "guided-surah-114": {
+      "arabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ\nمَلِكِ ٱلنَّاسِ\nإِلَٰهِ ٱلنَّاسِ\nمِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ\nٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ\nمِنَ ٱلْجِنَّةِ وَٱلنَّاسِ",
+      "reference": "Quran 114 · Abu Dawud 5082 · Tanzil Uthmani v1.1",
+      "latin": "Bismillāhir-raḥmānir-raḥīm.\n1. Qul a‘ūżu birabbin-nās.\n2. Malikin-nās.\n3. Ilāhin-nās.\n4. Min syarril-waswāsil-khannās.\n5. Allażī yuwaswisu fī ṣudūrin-nās.\n6. Minal-jinnati wan-nās.",
+      "meaning": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang.\n1. Katakanlah: Aku berlindung kepada Tuhan manusia.\n2. Raja manusia.\n3. Sesembahan manusia.\n4. Dari keburukan pembisik yang bersembunyi.\n5. Yang membisikkan ke dalam dada manusia.\n6. Dari golongan jin dan manusia.",
+      "english": null
+    }
+  }
+}

@@ -56,7 +56,7 @@ export default function DailyPrayer() {
       {data && userId ? <>
         <PrayerSummary summary={summarizePrayers(slots.map(({ record }) => record))} />
         <View style={styles.cards}>
-          {slots.map(({ id, record }) => <PrayerActivityCard key={JSON.stringify([userId, date, id])} id={id} record={record}
+          {slots.map(({ id, record }) => <PrayerActivityCard date={date} key={JSON.stringify([userId, date, id])} id={id} record={record}
             save={async (change) => {
               const saved = await savePrayer(db, { userId, prayerId: id, date }, change);
               refreshPrayerReaders();

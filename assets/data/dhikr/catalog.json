@@ -1,0 +1,124 @@
+{
+  "items": [
+    {
+      "id": "tasbih",
+      "arabic": "سُبْحَانَ اللَّهِ",
+      "reference": "Muslim 2137a",
+      "target": 33
+    },
+    {
+      "id": "tahmid",
+      "arabic": "الْحَمْدُ لِلَّهِ",
+      "reference": "Muslim 2137a",
+      "target": 33
+    },
+    {
+      "id": "takbir",
+      "arabic": "اللَّهُ أَكْبَرُ",
+      "reference": "Muslim 2137a",
+      "target": 33
+    },
+    {
+      "id": "tahlil",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ",
+      "reference": "Muslim 2137a",
+      "target": null
+    },
+    {
+      "id": "istighfar",
+      "arabic": "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ",
+      "reference": "Muslim 484d",
+      "target": 100
+    },
+    {
+      "id": "salawat",
+      "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ، وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ، وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ",
+      "reference": "Al-Bukhari 6357",
+      "target": null
+    },
+    {
+      "id": "hawqala",
+      "arabic": "لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ",
+      "reference": "Al-Bukhari 6384",
+      "target": null
+    },
+    {
+      "id": "tasbih-tahmid",
+      "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+      "reference": "Muslim 2692",
+      "target": 100
+    },
+    {
+      "id": "closing",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَىْءٍ قَدِيرٌ",
+      "reference": "Muslim 597a",
+      "target": null
+    }
+  ],
+  "collections": [
+    {
+      "id": "morning",
+      "category": "MORNING",
+      "reference": "Muslim 2692",
+      "steps": [
+        [
+          "tasbih-tahmid",
+          100
+        ]
+      ]
+    },
+    {
+      "id": "evening",
+      "category": "EVENING",
+      "reference": "Muslim 2692",
+      "steps": [
+        [
+          "tasbih-tahmid",
+          100
+        ]
+      ]
+    },
+    {
+      "id": "post-34",
+      "category": "POST_PRAYER",
+      "reference": "Muslim 596a",
+      "steps": [
+        [
+          "tasbih",
+          33
+        ],
+        [
+          "tahmid",
+          33
+        ],
+        [
+          "takbir",
+          34
+        ]
+      ]
+    },
+    {
+      "id": "post-33",
+      "category": "POST_PRAYER",
+      "reference": "Muslim 597a",
+      "steps": [
+        [
+          "tasbih",
+          33
+        ],
+        [
+          "tahmid",
+          33
+        ],
+        [
+          "takbir",
+          33
+        ],
+        [
+          "closing",
+          null
+        ]
+      ]
+    }
+  ]
+}

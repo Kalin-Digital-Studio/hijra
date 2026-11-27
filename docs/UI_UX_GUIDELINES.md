@@ -19,3 +19,15 @@ Gunakan kartu ringkasan Forest Green, kontrol tanggal dari tracker shalat, dan d
 ### Pembaca Al-Qur’an
 
 Teks setiap ayat rata kanan dan arah tulisan RTL. Tata letak aplikasi mengikuti pengaturan bahasa. Identitas ayat tampil terpisah dari teks. Empat ukuran font tersedia dan tersimpan. Blok ayat dapat digulir, dengan tombol untuk blok sebelumnya/berikutnya dan lompat langsung. Simpan memakai aksi utama bertema hijau, sementara penghapusan bookmark memakai aksi destruktif dengan konfirmasi.
+
+## Phase 06 · Dzikir & Tasbih
+
+Counter memakai target sentuh besar, koreksi satu langkah, konfirmasi reset, dan feedback kesalahan. Bacaan Arab ditampilkan rata kanan menggunakan pola font sistem dari pembaca Quran. Koleksi memilih bacaan sebelumnya/berikutnya, dengan progres per bacaan. Getaran opsional memakai React Native Vibration di Android. Dukungan haptik iOS belum tersedia.
+
+## Enhancement Phase 06 · Pembaca Dzikir untuk pemula
+
+Di pembaca Dzikir, Latin muncul setelah Arab dengan teks miring, lalu arti pada kartu lembut bertema. Ayat surah bernomor. Menu Pengaturan Bacaan mengontrol masing-masing bagian, dan bagian yang disembunyikan tidak mengambil ruang.
+
+## Phase 06B · Hub Ibadah
+
+Hub memakai hero jadwal Forest Green, ringkasan kalender, grid dua kolom tracker, serta grid alat dan pustaka yang menyesuaikan lebar dan skala font. Kompas menampilkan bearing statis saat sensor tidak tersedia.

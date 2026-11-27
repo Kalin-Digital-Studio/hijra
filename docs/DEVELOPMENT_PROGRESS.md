@@ -1,5 +1,41 @@
 # Status pengembangan Hijra
 
+## Phase 06B · Islamic Lifestyle Hub
+
+**PHASE 06B FUNCTIONAL DEVELOPMENT COMPLETE — PRODUCTION CONTENT APPROVAL PENDING**
+
+Hub Ibadah, ringkasan tracker lokal, Arah Kiblat dan kalender sipil tabular tersedia. Jadwal, kalender MyQuran, hadis HadeethEnc/Al-Arba’in, doa dan Husna berjalan pada mode pengembangan. Hak komersial live serta cache dan redistribusi masih tertahan per layanan. Tidak ada payload API di SQLite. Fitur Dzikir review tetap berstatus pending.
+
+Expo SDK 58.0.26 dipertahankan dan expo-location 58.0.23 ditambahkan dengan MIT. TypeScript, lint, Expo Doctor 20/20, ekspor Android/iOS, gate konten Dzikir, migrasi SQLite v11, regresi dan pemeriksaan klien API lulus. Uji MyQuran live mencakup 30 hari Kediri, konversi Hijriah, pencarian/detail hadis, 42 Al-Arba’in, 108 doa dan 99 nama. Pemeriksaan versi Expo menyarankan patch terbaru untuk Expo, File System, Router dan Splash Screen yang sudah dipin. Patch tersebut tidak diterapkan dalam fase ini.
+
+Verifikasi manual Android/iOS untuk sensor, izin dan alur saat offline masih pending. Tanggal perayaan resmi dan browse kategori HadeethEnc belum tersedia dari kontrak yang diintegrasikan. Formal UAT tetap di Phase 12.
+
+## Phase 06 · Preview konten pendamping Dzikir
+
+Draf Latin dan arti Indonesia tersedia untuk 18/18 bacaan dan draf Inggris untuk 11/18. Tiga arti Inggris Pickthall tetap tersedia dalam rilis. Tidak ada perubahan pada SQLite v10, data transaksi atau Phase 05. Persetujuan reviewer independen dan hak distribusi rilis untuk draf baru masih terbuka.
+
+TypeScript, lint, Expo Doctor 20/20, tes SQLite dan ekspor Android/iOS lulus. Pemeriksaan artefak mendeteksi overlay pada bundle preview dan memastikan overlay tidak ikut bundle rilis. Pengujian visual dan interaksi di perangkat masih terbuka. [Materi review](DHIKR_CONTENT_REVIEW.md).
+
+## Phase 06 Reader Enhancement · Bantuan membaca
+
+**PHASE 06 READER FUNCTIONALITY COMPLETE — CONTENT REVIEW PENDING**
+
+Pembaca Dzikir mendukung pengaturan tampilan Latin dan arti secara independen, konten pribadi berlabel, dan tiga arti Inggris Pickthall offline untuk Al-Ikhlas, Al-Falaq, dan An-Nas. Matriks 18 bacaan menandai Latin dan arti Indonesia yang menunggu review berkualifikasi. SQLite tetap v10 tanpa migrasi. Modul Quran Reader tetap di luar cakupan.
+
+TypeScript, lint, Expo Doctor 20/20, bundle Android/iOS dan suite SQLite lulus. Suite menguji persistensi preferensi, pemetaan ayat, preservasi counter/checklist, snapshot draf, log final, dan regresi Phase 01–05. Skenario penerimaan dengan Latin dan arti Indonesia bawaan belum dapat dijalankan. Pengujian visual, interaksi, dan restart offline pada ponsel masih pending. Formal UAT tetap Phase 12.
+
+## Phase 06 Enhancement · Koleksi dan navigasi
+
+SQLite v10 menambah bacaan Pagi/Petang versi 2 dan pilihan Istighfar serta doa salam terpisah. Daftar bacaan, label Sebelumnya/Selanjutnya, dan indikator progres tersedia. Tes basis data lulus untuk navigasi dan hitungan per bacaan, kesamaan teks surah, cakupan parsial dan lengkap, ringkasan, serta upgrade v9 yang menjaga draf dan snapshot historis. TypeScript, lint, Expo Doctor 20/20, serta bundle Android dan iOS lulus. Verifikasi tampilan Arab dan alur di perangkat fisik masih terbuka. Formal UAT tetap Phase 12.
+
+## Phase 06 · Digital Dzikir & Tasbih Tracker
+
+Implementasi dan verifikasi teknis lulus pada Expo SDK 58.0.26. SQLite v9 mempertahankan data lama, termasuk sesi Quran pada upgrade v8 → v9. Database suite lulus untuk 200 ketukan yang diantrekan, pemulihan hitungan setelah buka ulang, koleksi lengkap/sebagian, rollback pada kegagalan insert, simpan ganda, preferensi, kepemilikan, dan edit riwayat. TypeScript, lint, Expo Doctor 20/20 serta ekspor bundle Android dan iOS lulus.
+
+Katalog berisi sembilan formula Arab terverifikasi, tiga konteks koleksi dengan dua variasi setelah shalat, dan satu Tasbih Bebas tanpa teks. Bukti sumber, izin, checksum dan notice tercatat pada [audit dataset](DHIKR_DATASET.md). Transliterasi dan makna opsional belum tersedia. Getaran ketuk opsional terbatas pada Android.
+
+Verifikasi perangkat fisik untuk glyph Arab, ketukan cepat, pemulihan draf dan pengujian mode pesawat masih terbuka di [checklist](UAT_CHECKLIST.md). Formal Product Owner UAT tetap Phase 12.
+
 ## Phase 05 Enhancement · Digital Quran Reader & Reading Tracker
 
 Pembaca native menampilkan teks Arab Tanzil Uthmani v1.1 secara offline. Pengguna memilih awal dan akhir dari layar baca, lalu dapat menyimpan penanda bersama sesi. Beranda membuka pembaca pada ayat berikutnya. Tracker manual serta riwayat pekanan tetap tersedia.

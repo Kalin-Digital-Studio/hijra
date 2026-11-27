@@ -12,6 +12,7 @@
     "plugins": [
       "expo-router",
       "expo-sqlite",
+      ["expo-location", { "locationWhenInUsePermission": "Allow Hijra to use your location on this device to calculate the Qibla direction.", "locationAlwaysAndWhenInUsePermission": false, "locationAlwaysPermission": false }],
       ["expo-splash-screen", {
         "backgroundColor": "#174638",
         "image": "./assets/branding/logo_hijra.png",

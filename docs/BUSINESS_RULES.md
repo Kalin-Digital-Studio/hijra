@@ -44,3 +44,19 @@ Katalog offline memerlukan nomor urut, nama Latin, dan jumlah ayat untuk semua 1
 ### Pencatatan dari pembaca
 
 Sesi hanya ditulis setelah pengguna memilih ayat akhir dan mengonfirmasi simpan. Lanjutan dalam satu sesi hanya tersedia ke surah berikutnya setelah pengguna mengonfirmasi telah membaca sampai akhir surah. Pengguna dapat memilih awal baru. ID, tanggal, dan rentang dikunci saat konfirmasi. Penanda diperbarui secara atomik bila dipilih. Opsi ini aktif secara default di pembaca. Durasi dan catatan tetap opsional melalui tracker manual. Posisi setelah An-Nas menawarkan mulai ulang melalui konfirmasi.
+
+## Phase 06 · Dzikir & Tasbih
+
+Counter menyimpan hitungan aktual sampai 999.999; target pribadi 33, 99, 100 atau nilai positif lain hanya untuk pengukuran sesi. Target koleksi mengikuti riwayat. Penyelesaian wajib dihitung per bacaan. Sesi parsial hanya dicatat setelah konfirmasi; checklist tidak menambah hitungan repetisi. Total sesi menghitung log individual, sedangkan koleksi dihitung dari ID induk yang berbeda. Aktivitas historis menjaga mode saat dicatat. Draf tidak masuk statistik.
+
+## Enhancement Phase 06 · Koleksi dan navigasi
+
+Draf dan sesi lama mempertahankan daftar bacaan, target dan status dari snapshot. Pagi dan Petang versi 2 berlaku untuk sesi baru. Memilih Sebelumnya, Selanjutnya, atau bacaan dari daftar hanya memindahkan posisi. Tiga kali Al-Ikhlas berarti tiga kali membaca surah utuh. Checklist doa menandai bacaan tuntas di aplikasi.
+
+## Enhancement Phase 06 · Pembaca Dzikir untuk pemula
+
+Pengaturan Latin dan terjemahan hanya mengubah tampilan Dzikir. Teks bawaan ditampilkan berdasarkan sumber dan versi yang telah diverifikasi. Makna pribadi ditampilkan dengan identitas bacaan pengguna. Preferensi bersama berlaku pada reader, penghitung, dan checklist.
+
+## Phase 06B · Hub Ibadah
+
+Countdown memakai zona kota dan waktu Subuh hari berikutnya. Jadwal tidak memperbarui transaksi. Kalender sipil tabular diberi label terpisah dari hasil MyQuran. Favorit menyimpan identitas penyedia dan edisi.

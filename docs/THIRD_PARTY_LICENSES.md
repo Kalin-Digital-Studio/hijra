@@ -881,3 +881,19 @@ Tanzil Quran Metadata v1.0 digunakan untuk katalog surah offline. Copyright (C) 
 | Tanzil Quran Text Uthmani | 1.1 | Ayat Arab offline | [Unduhan](https://tanzil.net/download/) · [Ketentuan](https://tanzil.net/docs/Text_License) | CC BY 3.0 sesuai notice Tanzil | Verbatim, dengan copyright, atribusi dan tautan | Copyright (C) 2007–2026 Tanzil Project. Notice unduhan tersedia di aplikasi. | 6.236 ayat diverifikasi setara dengan sumber setelah impor |
 
 Tidak ada font eksternal atau dependensi npm baru. [Audit teks dan checksum](QURAN_DATASET.md).
+
+## Phase 06 · Dzikir & Tasbih
+
+Phase 06 memakai fragmen formula Arab klasik dari Hadith API edisi Arab Sahih Muslim dan Sahih al-Bukhari pada revisi yang dipin. Repositori menyediakan Unlicense. Notice tersedia offline di Lisensi Pihak Ketiga. Tidak ada npm dependency atau font tambahan. [Audit konten](DHIKR_DATASET.md).
+
+## Enhancement Phase 06 · Koleksi dan navigasi
+
+Phase 06 enhancement menggunakan tambahan fragmen Arab klasik dari edisi Arab Abu Dawud, Al-Bukhari dan Muslim pada revisi [Hadith API yang dipin](https://github.com/fawazahmed0/hadith-api/tree/df57907be35291c91ad6a6691180e22ca9920784). Notice Unlicense yang sama tetap tampil offline. Ayat untuk tiga surah berasal dari Tanzil Uthmani yang sudah diaudit dan tampil dengan atribusi dalam pembaca Dzikir. [Audit sumber dan checksum](DHIKR_DATASET.md).
+
+## Enhancement Phase 06 · Pembaca Dzikir untuk pemula
+
+Tambahan aset pembaca Dzikir adalah Pickthall, The Meaning of the Glorious Koran (1930), hlm. 676–678. Teks asli domain publik dipakai untuk arti Inggris tiga surah. Kredit dan sumber pemindaian tersedia offline melalui Lisensi Pihak Ketiga. Lisensi Tanzil dan Hadith API tetap berlaku pada teks Arab. [Bukti dan checksum](DHIKR_DATASET.md).
+
+## Phase 06B · Hub Ibadah
+
+[expo-location 58.0.23](https://registry.npmjs.org/expo-location/-/expo-location-58.0.23.tgz) dipakai untuk lokasi foreground dan heading. Lisensi MIT mengizinkan penggunaan komersial dan redistribusi dengan notice. Notice tersedia di Lisensi Pihak Ketiga dalam aplikasi. Lockfile menambah satu paket; image-utils sudah ada. [Audit hak MyQuran](ISLAMIC_CONTENT_LICENSES.md).

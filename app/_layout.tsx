@@ -98,6 +98,14 @@ function Application() {
             <Stack.Screen name="sunnah/history" />
             <Stack.Screen name="sunnah/manage" />
             <Stack.Screen name="quran/index" />
+            <Stack.Screen name="dhikr/index" />
+            <Stack.Screen name="dhikr/counter" />
+            <Stack.Screen name="dhikr/history" />
+            <Stack.Screen name="dhikr/manage" />
+            <Stack.Screen name="islamic/schedule" />
+            <Stack.Screen name="islamic/calendar" />
+            <Stack.Screen name="islamic/qibla" />
+            <Stack.Screen name="islamic/[resource]" />
             <Stack.Screen name="quran/reader" />
             <Stack.Screen name="quran/manual" />
             <Stack.Screen name="quran/history" />

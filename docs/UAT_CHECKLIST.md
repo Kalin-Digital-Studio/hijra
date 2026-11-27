@@ -75,3 +75,29 @@ Formal Product Owner UAT dijadwalkan pada Phase 12.
 - [ ] Buka atribusi di modul dan notice lengkap di Profil → Tentang Aplikasi → Lisensi Pihak Ketiga.
 
 Formal Product Owner UAT tetap di Phase 12.
+
+## Phase 06 · Dzikir & Tasbih
+
+1. Buka Dzikir & Tasbih. Lakukan ketukan cepat, koreksi, reset, ganti target, keluar, dan buka ulang draf.
+2. Jalankan koleksi pagi, petang, serta dua variasi setelah shalat. Simpan koleksi penuh dan sebagian dan cek hitungan di Beranda serta riwayat.
+3. Pada shalat yang tercatat selesai, buka Dzikir Setelah Shalat dan cek konteks shalat dan tanggalnya. Uji edit/hapus sesi lampau, checklist, favorit, dan arsip aktivitas pribadi.
+4. Uji dua bahasa, tema terang/gelap, font Arab, getaran Android, dan pemulihan draf offline. Formal UAT tetap Phase 12.
+
+## Enhancement Phase 06 · Koleksi dan navigasi
+
+Pada perangkat fisik, buka koleksi baru Pagi dan Petang. Gunakan Sebelumnya, Selanjutnya, dan daftar bacaan. Verifikasi hitungan tetap, tombol batas nonaktif, harakat dan Basmalah tampil sesuai Quran Reader, serta koleksi berfungsi dalam mode pesawat setelah bundle dimuat. Buka draf yang sudah ada sebelum migrasi untuk memeriksa daftar dan progres aslinya.
+
+## Enhancement Phase 06 · Pembaca Dzikir untuk pemula
+
+Di perangkat, buka Dzikir Petang dan pilih Al-Ikhlas dalam antarmuka Inggris untuk memeriksa arti Pickthall. Coba dua pengaturan secara terpisah sambil menjaga hitungan dan checklist. Ulangi menggunakan dzikir pribadi yang berisi Latin dan arti pada antarmuka Indonesia. Buka ulang offline untuk memeriksa pengaturan, lalu simpan sesi dan periksa Beranda. Skenario Latin dan arti Indonesia bawaan menunggu konten terverifikasi.
+
+### Preview draf bacaan Dzikir
+
+- [ ] Mulai ulang Metro setelah pembaruan konfigurasi, buka Dzikir Petang, dan pilih Doa Petang. Periksa teks Latin, arti, referensi, dan label Konten dalam review.
+- [ ] Uji Latin dan arti secara terpisah. Simpan sesi dan buka ulang untuk mencocokkan preferensi dan progres.
+- [ ] Periksa dzikir harian dan setelah shalat, surah bernomor, serta prioritas terjemahan Pickthall pada bahasa Inggris.
+- [ ] Gunakan `npm run export:release` dan verifikasi keluaran rilis dari perangkat atau build terpasang. Konten draf hanya tersedia dalam build pengembangan.
+
+## Phase 06B · Hub Ibadah
+
+Di Expo Go, pilih Kediri dan WIB, cek countdown, lima waktu, serta ganti bulan. Uji lintang/bujur manual secara offline. Uji izin lokasi ditolak dan diberikan, sensor, mode magnetik, dan pindah layar saat sensor berjalan. Periksa dua koleksi hadis, pencarian, doa, 99 nama, favorit, kalender, regresi tracker dan navigasi. Formal UAT tetap Phase 12.

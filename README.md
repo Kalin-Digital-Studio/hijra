@@ -43,3 +43,11 @@ an**’an** atau kartu Al-Qur’an di Beranda pada Expo Go. Tracker menampilkan 
 ## Digital Quran Reader
 
 Dari **Ibadah → Al-Qur’an**, pilih surah dan baca teks Arab offline. Gunakan **Mulai Membaca** atau **Lompat ke Ayat** untuk memilih posisi. Pilih **Selesai membaca sampai ayat …**, periksa jumlah ayat, lalu simpan. **Lanjutkan Membaca** di Beranda membuka ayat sesudah penanda. Riwayat dan catatan manual tersedia di layar Al-Qur’an.
+
+## Phase 06 · Dzikir & Tasbih
+
+Buka **Ibadah → Dzikir & Tasbih**. Pilih Tasbih Bebas, bacaan harian, koleksi, atau dzikir pribadi. Penghitungan dan tanda checklist tersimpan sebagai draf. Tekan **Simpan** untuk memasukkan sesi ke riwayat dan ringkasan Beranda.
+
+## Phase 06B · Hub Ibadah
+
+Buka **Ibadah** untuk ringkasan empat tracker, Arah Kiblat, kalender, jadwal dan pustaka. MyQuran tersedia dalam Expo Go mode pengembangan selama audit hak rilis.

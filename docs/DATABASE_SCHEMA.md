@@ -62,3 +62,19 @@ Migrasi transaksional menambah `quran_surahs` (nomor surah sebagai PK, nama Arab
 ## SQLite v8 · Teks Al-Qur’an
 
 Migrasi v7 → v8 menambah `quran_verses` dengan kunci primer `(surah_number, ayah_number)`, foreign key ke `quran_surahs`, dan `arabic_text` wajib terisi. Importer memverifikasi urutan dan hitungan terhadap metadata, lalu memasukkan teks tanpa mengubah karakter. Tabel pengguna, sesi, dan penanda tetap terpelihara. `app_settings.quran_font_size` menyimpan salah satu dari 24, 30, 38 dan 46, dengan default 30.
+
+## Phase 06 · Dzikir & Tasbih
+
+Migrasi SQLite v9 menambah `dhikr_items`, `dhikr_collections`, `dhikr_collection_items`, `user_dhikr_preferences`, `dhikr_collection_sessions`, `dhikr_logs`, dan `dhikr_drafts`. Data draf dan snapshot aturan historis menyimpan JSON. Finalisasi menulis induk koleksi dan log yang dikerjakan, lalu menghapus draf dalam satu transaksi. ID draf stabil mencegah simpan ganda. Tabel dan riwayat Phase 01–05 dipertahankan.
+
+## Enhancement Phase 06 · Koleksi dan navigasi
+
+Migrasi SQLite v10 menambah sembilan master bacaan dan satu koleksi setelah shalat. Definisi Pagi/Petang aktif diperbarui ke versi 2. Tabel, draf, catatan, dan snapshot historis dipertahankan. Data surah bersumber dari `quran_verses` yang telah diverifikasi di Phase 05. Validasi jumlah dan posisi ayat dijalankan sebelum commit migrasi.
+
+## Enhancement Phase 06 · Pembaca Dzikir untuk pemula
+
+Tanpa perubahan versi SQLite v10. Preferensi global Dzikir memakai `app_settings.dhikr_show_transliteration` dan `app_settings.dhikr_show_translation`, masing-masing string `true` atau `false`. Kunci yang belum ada dibaca sebagai aktif. Teks pribadi memakai kolom dan snapshot yang sudah tersedia. Arti Inggris bawaan dipetakan dari aset lokal berdasarkan identitas bacaan, referensi dan jumlah ayat.
+
+## Phase 06B · Hub Ibadah
+
+SQLite v11 menambah `islamic_content_bookmarks` dengan primary key (`user_id`,`content_type`,`provider`,`content_key`). Kota dan zona tersimpan di `app_settings.prayer_city_myquran_v3`. Tidak ada cache payload.

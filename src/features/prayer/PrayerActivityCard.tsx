@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { BodyText, Input } from '../../components/ui';
@@ -9,10 +10,11 @@ import { prayerStatuses, type PrayerChange, type PrayerDay, type PrayerId } from
 import { PrayerIcon } from './PrayerIcon';
 import { PrayerAction, PrayerModal, PrayerPanel, prayerStyles } from './PrayerUI';
 
-export function PrayerActivityCard({ id, record, save }: {
-  id: PrayerId; record: PrayerDay; save: (change: PrayerChange) => Promise<PrayerDay>;
+export function PrayerActivityCard({ id, date, record, save }: {
+  id: PrayerId; date: string; record: PrayerDay; save: (change: PrayerChange) => Promise<PrayerDay>;
 }) {
   const { t } = useTranslation();
+  const router = useRouter();
   const { colors } = useTheme();
   const [menu, setMenu] = useState<'status' | 'notes'>();
   const [notes, setNotes] = useState('');
@@ -94,6 +96,8 @@ export function PrayerActivityCard({ id, record, save }: {
         })}
         <BodyText style={[prayerStyles.small, { color: colors.muted }]}>{t('prayer.attributeHint')}</BodyText>
       </View>}
+      {completed && <PrayerAction label={t('dhikr.post')}
+        onPress={() => router.push({ pathname: '/dhikr', params: { prayer: id, date } })} />}
       {feedback && <BodyText accessibilityLiveRegion="polite" style={prayerStyles.small}>{t(`prayer.${feedback}`)}</BodyText>}
       {feedback === 'saveError' && <PrayerAction label={t('retry')} onPress={() => {
         if (failed.current) void submit(failed.current);
