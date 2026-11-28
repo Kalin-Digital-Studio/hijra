@@ -1,3 +1,4 @@
+import { invalidateGoals } from '../../stores/goalRevision';
 import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useCallback, useState } from 'react';
@@ -8,6 +9,7 @@ import { useProfile } from '../../stores/profile';
 
 const useRevision = create<{ value: number }>(() => ({ value: 0 }));
 export function refreshDhikr() {
+  invalidateGoals();
   useRevision.setState(({ value }) => ({ value: value + 1 }));
 }
 type Data = { items: DhikrItem[]; drafts: Draft[]; logs: DhikrLog[] };

@@ -1,9 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 import type { PrayerId, PrayerStatus } from '../../types/prayer';
 
-type Kind = PrayerId | PrayerStatus | 'FUTURE' | 'back' | 'next' | 'more' | 'up' | 'down' | 'heart' | 'droplet' | 'building' | 'moon' | 'settings';
+type Kind = PrayerId | PrayerStatus | 'FUTURE' | 'back' | 'next' | 'more' | 'up' | 'down' | 'heart' | 'droplet' | 'building' | 'moon' | 'settings' | 'book' | 'calendar' | 'target';
 type Segment = [number, number, number, number];
 const segments: Partial<Record<Kind, Segment[]>> = {
+  calendar: [[4,6,20,6],[20,6,20,20],[20,20,4,20],[4,20,4,6],[4,10,20,10],[8,4,8,8],[16,4,16,8],[8,14,10,14],[14,14,16,14]],
+  book: [[3,5,8,5],[8,5,12,7],[12,7,16,5],[16,5,21,5],[21,5,21,17],[21,17,16,17],[16,17,12,19],[12,19,8,17],[8,17,3,17],[3,17,3,5],[12,7,12,19]],
   settings: [[4, 8, 9, 8], [13, 8, 20, 8], [4, 16, 13, 16], [17, 16, 20, 16]],
   COMPLETED: [[5, 12, 10, 17], [10, 17, 19, 7]], MISSED: [[6, 6, 18, 18], [18, 6, 6, 18]],
   NOT_LOGGED: [[6, 12, 18, 12]], FUTURE: [[6, 12, 18, 12]],
@@ -31,6 +33,7 @@ export function PrayerIcon({ kind, color, background, size = 24 }: {
   return (
     <View accessible={false} importantForAccessibility="no" style={{ width: size, height: size }}>
       {kind === 'dhuhr' && <View style={circle(6, 6, 12)} />}
+      {kind === 'target' && <><View style={circle(3, 3, 18)} /><View style={circle(7, 7, 10)} /><View style={circle(11, 11, 2, true)} /></>}
       {(kind === 'fajr' || kind === 'maghrib') && <View style={[styles.horizon, { left: 6 * scale, top: 8 * scale, width: 12 * scale, height: 9 * scale }]}>
         <View style={circle(0, 1, 12)} />
       </View>}

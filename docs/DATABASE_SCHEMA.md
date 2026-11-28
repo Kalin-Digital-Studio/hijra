@@ -87,3 +87,23 @@ SQLite v11 menambah `islamic_content_bookmarks` dengan primary key (`user_id`,`c
 ### Migrasi v12 untuk teks Qur’an bertanda waqf
 
 Migrasi transaksi v11 → v12 memperbarui `quran_verses.arabic_text` menurut kunci lama `(surah_number, ayah_number)` dari artefak Tanzil verbatim bertanda waqf dan sajdah. Database sebelum v8 mengimpor edisi ini langsung saat tabel dibuat. Identitas ayat/surah, log, bookmark dan pengaturan dipertahankan. Tidak ada tabel baru.
+
+
+### SQLite v13 · Target Ibadah
+
+Migrasi aditif dan transaksional membuat `personal_goals` (ID, pemilik, tanggal dibuat), `personal_goal_versions` (PK goal + tanggal efektif, nama, kategori, filter, metrik, target, cadence dan lifecycle), serta `personal_goal_periods` (PK goal + start, end exclusive, versi, Week Start, flag transisi). Akhir versi tersirat oleh tanggal mulai versi berikutnya. FK komposit menjaga kepemilikan versi oleh goal dan trigger menolak rentang periode yang bertumpuk. Konfigurasi target berasal dari versi yang dipasangkan. Actual, target efektif, coverage, dan status diturunkan saat dibaca sehingga riwayat langsung mencerminkan data terkoreksi tanpa cache kemajuan terpisah.
+
+
+### Phase 08 · Beranda
+
+Beranda memakai skema v13. Agregasi memakai `prayer_logs`, `sunnah_prayer_logs`, `quran_reading_logs`, `quran_bookmarks`, `quran_surahs`, `dhikr_logs`, `dhikr_collection_sessions`, dan tabel Target. Kota memakai `app_settings.prayer_city_myquran_v3`. Feed memproyeksikan kolom publik dalam UI tanpa membaca catatan pribadi ke feed. Tidak diperlukan migrasi.
+
+
+### Phase 09 · sumber Laporan
+
+Agregasi membaca skema SQLite v13. Tabel sumber meliputi `prayer_logs`, `sunnah_prayer_logs`, `quran_reading_logs`, `quran_surahs`, `dhikr_logs`, `dhikr_collection_sessions`, dan periode beserta versi Target. Informasi profil menentukan cakupan shalat. Batas atribusi Target memakai `end_exclusive` yang sudah tersedia. Tidak ada tabel, indeks, atau migrasi baru untuk Laporan.
+
+
+### SQLite v14 · Muhasabah mingguan
+
+Migrasi membuat `weekly_reflections` dengan PK `id`, FK `user_id` ke `user_profiles`, `week_start`, `week_end_exclusive`, `week_start_preference` berbentuk nama hari, `feeling`, `gratitude`, `challenges`, `improvement_plan`, `created_at`, serta `updated_at`. UNIQUE mencakup pemilik dan pasangan tanggal. Trigger menolak `INSERT` yang beririsan. Layanan memvalidasi tanggal, batas pekan tujuh hari, panjang dan isi. Pada edit, hanya jurnal dan `updated_at` yang diperbarui. Tidak ada tabel transaksi riwayat. `weekly_reflections` merupakan sumber data pengguna wajib untuk rancangan Backup & Restore Phase 11.

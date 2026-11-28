@@ -12,6 +12,7 @@ import { initializeDatabase } from '../src/database/initialize';
 import { readLocalProfile } from '../src/database/repositories/profile';
 import { readSettings } from '../src/database/repositories/settings';
 import { useTheme } from '../src/hooks/useTheme';
+import { GoalReconciliation } from '../src/features/goals/useGoals';
 import i18n, { localizationReady } from '../src/services/i18n';
 import { useProfile } from '../src/stores/profile';
 import { useSettings } from '../src/stores/settings';
@@ -87,10 +88,15 @@ function Application() {
   return (
     <>
       <StatusBar style={isDark ? 'light' : 'dark'} />
+      {status === 'ready' && completed && <GoalReconciliation />}
       {status === 'ready' ? (
         <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
           <Stack.Protected guard={completed}>
             <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="goals/[view]" />
+            <Stack.Screen name="reports/[section]" />
+            <Stack.Screen name="reports/reflection/[view]" />
+            <Stack.Screen name="reports/worship-history/[view]" />
             <Stack.Screen name="ibadah/[category]" />
             <Stack.Screen name="prayer/index" />
             <Stack.Screen name="prayer/history" />

@@ -1,0 +1,7 @@
+# Muhasabah Mingguan
+
+Laporan menampilkan status pekan dan pintasan ke Muhasabah Mingguan serta Riwayat Muhasabah. Editor mencakup perasaan opsional, rasa syukur, tantangan, dan rencana. Jurnal dapat disimpan jika ada satu nilai yang bermakna. Teks dipangkas di tepi dan setiap kolom dibatasi 5.000 karakter. Edit menggunakan ID lama dan menjaga waktu dibuat. Tombol Kembali dan navigasi minggu melindungi draf melalui dialog konfirmasi. Hapus memerlukan konfirmasi dan hanya menghapus jurnal.
+
+Pekan adalah rentang lokal inklusif awal dan eksklusif akhir dengan snapshot preferensi awal pekan. Setelah preferensi berubah, kandidat beririsan diarahkan ke jurnal yang tersimpan. Jika lebih dari satu jurnal lama beririsan dengan kandidat, jurnal yang meliputi tanggal acuan diprioritaskan dan jurnal lainnya tetap dapat diakses lewat riwayat. Jurnal baru memakai pekan kalender yang tidak beririsan. Tanggal asli tetap menjadi acuan ringkasan dan riwayat.
+
+Ringkasan memakai agregasi Laporan yang membaca transaksi asli hingga hari ini. Jurnal tersimpan terpisah dan tidak menyimpan snapshot statistik. Riwayat memakai filter tahun dari awal pekan, halaman 15 jurnal, dan cuplikan maksimum 120 karakter. Laporan hanya membaca ID agar bisa menampilkan status. Konten jurnal diproses dan disimpan lokal, tanpa API, log konten, atau klaim enkripsi khusus. `weekly_reflections` adalah sumber data untuk desain Phase 11. [Skema basis data](DATABASE_SCHEMA.md) · [Checklist](UAT_CHECKLIST.md).

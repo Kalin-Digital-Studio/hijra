@@ -64,3 +64,23 @@ Countdown memakai zona kota dan waktu Subuh hari berikutnya. Jadwal tidak memper
 ### Rentang bacaan di Reader
 
 Menu ayat mengatur posisi awal dan akhir. Ringkasan memakai hitungan inklusif dari service Quran sebelum simpan, termasuk sesi lintas surah. Hanya aksi simpan eksplisit membuat log dan dapat memperbarui posisi terakhir secara atomik. Scroll dan pilihan Latin atau terjemahan tidak menambah hitungan. Ringkasan hari ini dihitung dari sesi SQLite.
+
+
+### Target pribadi dan periode aktif
+
+Target baru mencakup aktivitas yang sudah disimpan sejak awal periode berjalan. Edit, jeda, lanjut dan arsip memakai tanggal efektif. Konfigurasi periode tersimpan tidak berubah akibat edit. Koreksi catatan ibadah dapat mengubah actual dan status periode lama. Kapasitas Wajib mengecualikan EXEMPT eksplisit. Ringkasan hanya membagi jumlah target tercapai dengan target aktif yang berlaku. [Aturan per metrik](GOAL_CALCULATION_ENGINE.md).
+
+
+### Beranda
+
+Ringkasan hari ini memakai tanggal lokal tracker. Wajib menggunakan jumlah selesai dan slot yang berlaku. Grafik mencakup hari ini dan enam tanggal sebelumnya, terlepas dari awal pekan. Target hari ini hanya mencakup versi aktif DAILY yang berlaku. Catatan tanpa jam ibadah menampilkan tanggal. Koleksi Dzikir muncul sekali sebagai parent di aktivitas terakhir. [Aturan rinci](DASHBOARD_INTEGRATION.md).
+
+
+### Laporan, cakupan dan atribusi
+
+Laporan periode kalender aktif hanya mencakup tanggal hingga hari ini. Status terlewat hanya berasal dari catatan eksplisit. Persentase Wajib menggunakan slot yang berlaku, sedangkan tepat waktu dan berjamaah memakai shalat selesai. Periode Target selesai dihitung menurut hari terakhir, dan periode terbuka tampil tersendiri. [Rumus](REPORT_CALCULATION_RULES.md).
+
+
+### Muhasabah dan riwayat lintas tracker
+
+Satu jurnal per rentang mingguan tanpa tumpang tindih dalam satu profil. Saat awal pekan berubah, kandidat beririsan membuka jurnal dengan rentang asli. Penyimpanan membutuhkan perasaan atau catatan yang bermakna. Riwayat hanya menampilkan aktivitas tersimpan yang sesuai. Koleksi Dzikir final menjadi satu entri dan anaknya dapat dilihat pada detail.

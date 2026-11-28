@@ -15,7 +15,7 @@ export default function DailySunnah() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const today = useToday();
-  const { date: routeDate } = useLocalSearchParams<{ date?: string }>();
+  const { date: routeDate, activity: routeActivity } = useLocalSearchParams<{ date?: string; activity?: string }>();
   const [selection, setSelection] = useState<{ date: string | null }>();
   const [picking, setPicking] = useState(false);
   const requested = selection ? selection.date : routeDate;
@@ -28,8 +28,10 @@ export default function DailySunnah() {
     setSelection({ date: next === today ? null : next });
     setPicking(false);
   }
-  const active = data?.activities.filter((activity) => activity.active) ?? [];
-  const inactive = data?.activities.filter((activity) => !activity.active && data.sessions.some((session) => session.activityId === activity.id)) ?? [];
+  const focused = data?.activities.find(activity => activity.id === routeActivity);
+  const active = data?.activities.filter(activity => activity.active && activity !== focused) ?? [];
+  const inactive = data?.activities.filter(activity => !activity.active && activity !== focused &&
+    data.sessions.some(session => session.activityId === activity.id)) ?? [];
   return (
     <ScreenContainer standalone compact>
       <View style={prayerStyles.line}>
@@ -55,6 +57,8 @@ export default function DailySunnah() {
         {date !== today && <PrayerAction label={t('prayer.today')} onPress={() => choose(today)} />}
         {data && userId ? <>
           <SunnahSummary sessions={data.sessions} title={date === today ? t('sunnah.todayTitle') : `${t('sunnah.dailyTitle')} · ${dateLabel}`} />
+          {focused && <SunnahActivityCard key={JSON.stringify([userId,date,focused.id])} activity={focused}
+            target={{activityId:focused.id,userId,date}} sessions={data.sessions.filter(session => session.activityId === focused.id)} />}
           {[{ title: 'mine', activities: active }, { title: 'inactiveRecorded', activities: inactive }].map(({ title, activities }) => {
             if (!activities.length && title === 'inactiveRecorded') return null;
             return <View key={title} style={styles.cards}>

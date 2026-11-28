@@ -1,3 +1,7 @@
+import { verifyReflectionHistory } from './check-reflection-history.mjs';
+import { verifyReports } from './check-reports.mjs';
+import { verifyDashboard } from './check-dashboard.mjs';
+import { verifyGoals } from './check-goals.mjs';
 import { readPrayerCity, savePrayerCity, readIslamicBookmarks, writeIslamicBookmark } from '../src/database/repositories/islamic.ts';
 import { prayerDate as zonedPrayerDate, nextPrayer, qiblaBearing, compassDelta, monthShift } from '../src/services/islamic/rules.ts';
 import { parseSchedule } from '../src/services/islamic/myquran.ts';
@@ -71,6 +75,21 @@ const open = (name) => {
 };
 const clean = { displayName: '  أحمد Éka  ', gender: null, avatarUri: null };
 try {
+  const goalsDb = open('goals.db');
+  const goalsApi = adapter(goalsDb);
+  await initializeDatabase(goalsApi);
+  await verifyGoals(goalsDb, goalsApi);
+  const dashboardDb = open('dashboard.db');
+  const dashboardApi = adapter(dashboardDb);
+  await initializeDatabase(dashboardApi);
+  await verifyDashboard(dashboardDb, dashboardApi);
+  const reportsDb = open('reports.db');
+  const reportsApi = adapter(reportsDb);
+  await initializeDatabase(reportsApi);
+  await verifyReports(reportsDb, reportsApi);
+  const reflectionDb = open('reflection.db');
+  const reflectionApi = adapter(reflectionDb);
+  await verifyReflectionHistory(reflectionDb, reflectionApi, () => adapter(open('reflection.db')));
   const fresh = open('fresh.db');
   const freshApi = adapter(fresh);
   await initializeDatabase(freshApi);
@@ -103,7 +122,7 @@ try {
   await writeSetting(v2Api, 'language', 'en');
   await initializeDatabase(v2Api);
   assert.equal((await readSettings(v2Api)).language, 'en');
-  assert.equal(v2.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(v2.prepare('PRAGMA user_version').get().user_version, 14);
   await assert.rejects(persistProfile(freshApi, created.profile.id, clean, { language: 'id', theme: 'system', week_start: 'monday' }), /already completed/);
   assert.ok(fresh.prepare("SELECT value FROM app_settings WHERE key = 'onboarding_completed_at'").get().value);
 
@@ -123,7 +142,7 @@ try {
   assert.equal(existing.profile.displayName, 'Local');
   assert.ok(existing.profile.createdAt);
   assert.deepEqual(await readSettings(oldApi), { language: 'id', theme: 'dark', week_start: 'monday', completed: false });
-  assert.equal(old.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(old.prepare('PRAGMA user_version').get().user_version, 14);
   assert.equal(old.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
   assert.equal(old.prepare('SELECT COUNT(*) AS count FROM ibadah_categories').get().count, 4);
   assert.equal(old.prepare('SELECT COUNT(*) AS count FROM ibadah_types').get().count, 31);
@@ -222,7 +241,7 @@ try {
   assert.equal((await readPrayerLogs(v4Api, 'v4-user', prayerDate))[0].id, 'old-prayer');
   assert.equal((await readLocalProfile(v4Api)).profile.avatarUri, avatar);
   assert.equal((await readSettings(v4Api)).language, 'en');
-  assert.equal(v4.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(v4.prepare('PRAGMA user_version').get().user_version, 14);
   assert.equal((await readSunnahSessions(v4Api, 'v4-user', prayerDate)).length, 0);
   v4.exec("CREATE TRIGGER fail_default BEFORE INSERT ON user_sunnah_preferences WHEN NEW.ibadah_type_id = 'before-fajr' BEGIN SELECT RAISE(ABORT, 'simulated preference failure'); END;");
   await assert.rejects(ensureSunnahPreferences(v4Api, 'v4-user'), /simulated preference failure/);
@@ -325,7 +344,7 @@ try {
   v5.exec("INSERT INTO sunnah_prayer_logs (id, user_id, ibadah_type_id, prayer_date, rakaat) VALUES ('prior', 'q-user', 'duha', '2024-07-01', 2);");
   const qa = adapter(v5);
   await initializeDatabase(qa);
-  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 14);
   assert.equal(v5.prepare("SELECT avatar_uri FROM user_profiles WHERE id='q-user'").get().avatar_uri, 'file:///avatar.png');
   assert.equal(v5.prepare("SELECT rakaat FROM sunnah_prayer_logs WHERE id='prior'").get().rakaat, 2);
   assert.equal((await readSettings(qa)).language, 'en');
@@ -346,7 +365,7 @@ try {
   `);
   const legacyApi = adapter(legacyQuran);
   await initializeDatabase(legacyApi);
-  assert.equal(legacyQuran.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(legacyQuran.prepare('PRAGMA user_version').get().user_version, 14);
   assert.equal((await readSurahs(legacyApi)).get(2).id, 'Legacy ID');
   assert.equal((await readReading(legacyApi, 'legacy', '2024-07-01'))[0].id, 'legacy-session');
   assert.deepEqual({ ...await readBookmark(legacyApi, 'legacy') }, { surah: 2, ayah: 4 });
@@ -511,7 +530,7 @@ try {
     DROP TABLE user_dhikr_preferences; DROP TABLE dhikr_collection_items; DROP TABLE dhikr_collections;
     DROP TABLE dhikr_items; DROP TABLE quran_verses; PRAGMA user_version = 7;`);
   await initializeDatabase(qa);
-  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 14);
   assert.deepEqual(await readVerses(qa, 1), opening);
   assert.deepEqual(await readBookmark(qa, 'reader-profile'), await readBookmark(offlineReopen, 'reader-profile'));
   assert.equal((await readReading(qa, 'reader-profile', today)).length, 2);
@@ -531,7 +550,7 @@ try {
     DROP TABLE dhikr_items; PRAGMA user_version = 8;`);
   const priorReader = await readReading(qa, 'reader-profile', today);
   await initializeDatabase(qa);
-  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 14);
   assert.deepEqual(await readReading(qa, 'reader-profile', today), priorReader);
   const v9User = 'q-user';
   v5.exec('DROP TABLE islamic_content_bookmarks;');
@@ -550,7 +569,7 @@ try {
   const draftBefore = (await readDhikrDrafts(qa, v9User))[0];
   const historyBefore = v5.prepare('SELECT snapshot FROM dhikr_collection_sessions WHERE id=?').get(oldEvening.id).snapshot;
   await initializeDatabase(qa);
-  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 14);
   assert.deepEqual(await readDhikrLogs(qa, v9User, day), savedBefore);
   assert.equal(v5.prepare('SELECT snapshot FROM dhikr_collection_sessions WHERE id=?').get(oldEvening.id).snapshot, historyBefore);
   assert.deepEqual((await readDhikrDrafts(qa, v9User))[0], draftBefore);
@@ -719,7 +738,7 @@ try {
   assert.equal((await readVerses(qa, 2))[1].arabic, legacyAyah);
   v5.exec('DROP TRIGGER fail_marked_upgrade');
   await initializeDatabase(qa);
-  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 12);
+  assert.equal(v5.prepare('PRAGMA user_version').get().user_version, 14);
   assert.equal((await readVerses(qa, 2))[1].arabic, second[1].arabic);
   assert.deepEqual(await readReading(qa, 'reader-profile', today), beforeMarkedUpgrade);
   assert.deepEqual(await readBookmark(qa, 'reader-profile'), beforeMarkedBookmark);
@@ -728,7 +747,7 @@ try {
   console.log('Dhikr v10, collection expansion, preserved v9 snapshots, full Quran passages, navigation, 200 queued taps, restart, full and partial collections, rollback, idempotency, privacy, preferences, and history passed.');
   console.log('Quran migration to v8, verbatim text integrity, font persistence, reader recording, production catalog calculations, bookmark transitions, atomic rollback, duplicate submission and localization parity passed.');
 
-  console.log('Database v12, v1/v2/v4 upgrades, Phase 01–03 regression, Sunnah preferences, ownership, history, idempotency, sessions, summaries and local dates passed.');
+  console.log('Database v14, v1/v2/v4 upgrades, Phase 01–03 regression, Sunnah preferences, ownership, history, idempotency, sessions, summaries and local dates passed.');
 } finally {
   for (const db of dbs) if (db.isOpen) db.close();
   await rm(directory, { recursive: true });

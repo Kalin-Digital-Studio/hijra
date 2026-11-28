@@ -27,3 +27,18 @@ Phase 06 menyediakan pembaca Dzikir, tasbih digital, koleksi pagi/petang/setelah
 ## Phase 06B · Hub Ibadah
 
 Ibadah menjadi hub ibadah dan literasi Islam. Beranda tetap menjadi ringkasan personal. Status izin MyQuran terpisah dari tracker offline.
+
+
+## Phase 07 · Target Ibadah
+
+Tab Target membantu perencanaan pribadi melalui target opsional, rekomendasi, dan riwayat. Progres berasal dari tracker yang sudah ada. Angka pencapaian mengukur target yang ditetapkan pengguna.
+
+
+## Phase 08 · Beranda Personal
+
+Beranda merangkum data ibadah pribadi, jadwal shalat, posisi Quran, dan target harian. Pengguna membuka tracker yang sudah ada untuk mengelola aktivitas. Grafik tujuh hari menampilkan jumlah shalat wajib tercatat.
+
+
+## Phase 09 · Laporan Ibadah
+
+Laporan merangkum catatan Shalat Wajib, Sunnah, Quran, Dzikir, dan periode Target. Kalender dan pembanding membantu pengguna meninjau aktivitas tercatat per kategori.

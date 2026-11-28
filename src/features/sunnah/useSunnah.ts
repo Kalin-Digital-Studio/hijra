@@ -1,3 +1,4 @@
+import { invalidateGoals } from '../../stores/goalRevision';
 import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useCallback, useState } from 'react';
@@ -9,6 +10,7 @@ import type { SunnahActivity, SunnahSession } from '../../types/sunnah';
 
 const useRevision = create<{ value: number }>(() => ({ value: 0 }));
 export function refreshSunnah() {
+  invalidateGoals();
   useRevision.setState(({ value }) => ({ value: value + 1 }));
 }
 

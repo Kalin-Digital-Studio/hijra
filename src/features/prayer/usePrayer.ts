@@ -1,3 +1,4 @@
+import { invalidateGoals } from '../../stores/goalRevision';
 import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useCallback, useEffect, useState } from 'react';
@@ -10,6 +11,7 @@ import { localDate } from '../../utils/localDate';
 
 const usePrayerRevision = create<{ revision: number }>(() => ({ revision: 0 }));
 export function refreshPrayerReaders() {
+  invalidateGoals();
   usePrayerRevision.setState(({ revision }) => ({ revision: revision + 1 }));
 }
 

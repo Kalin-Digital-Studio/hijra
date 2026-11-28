@@ -35,3 +35,28 @@ Hub memakai hero jadwal Forest Green, ringkasan kalender, grid dua kolom tracker
 ### Reader Quran
 
 Reader memakai header ringkas dengan kembali dan pengaturan, kartu surah Forest Green, ringkasan baca hari ini, lalu kartu ayat bernomor dan ringkasan sesi. Ayat Arab rata kanan dengan ukuran yang dapat disesuaikan. Terjemahan rata kiri dan tampil di bawah pemisah. Menu ayat memilih awal/akhir. Status konten tambahan muncul sekali per segmen dan pembaca tetap berjalan saat jaringan gagal. Maksimum 20 kartu dirender per halaman.
+
+
+### Tab Target
+
+Gunakan ringkasan Forest Green dengan pilihan Harian, Mingguan dan Bulanan, angka progres bertulisan, dan bar berlabel aksesibilitas. Bar dibatasi 100% sementara angka aktual dapat lebih besar. Tampilkan perbedaan target efektif, periode transisi, perubahan terjadwal, dan opsi tracker. Riwayat memakai filter dan halaman berisi hingga 20 periode. Edit dan rekomendasi memakai field angka, pemilih periode, dan review sebelum simpan.
+
+
+### Beranda Phase 08
+
+Urutan Beranda mengikuti prototipe dari sapaan, jadwal Forest Green, grid ringkasan ibadah, kartu Quran hijau, target harian, grafik 7 hari, aktivitas terakhir, hingga footer. Indikator target memakai bar bawaan. Untuk layar sempit atau font aksesibilitas, grid menjadi satu kolom dan grafik data beralih ke daftar tanggal yang dapat dibaca. Aksi avatar membuka Profil.
+
+
+### Laporan Phase 09
+
+Ringkasan mendahulukan periode dan kartu Wajib Forest Green, diikuti grid 2×2, tren, perbandingan, dan pintasan detail/kalender. Data chart ditampilkan sebagai bar native dengan angka dan tanggal. Grid beralih ke satu kolom pada font besar atau layar sempit. Kalender memadukan warna, simbol, dan label pembaca layar. Pada layar sempit kisi dapat digeser horizontal agar tombol tanggal mempertahankan 48 dp.
+
+
+### Phase 09A · Penyempurnaan Laporan
+
+Laporan memakai header dengan satu aksi ikon kalender 48 dp, segmented control satu baris pada skala font normal, dan satu kartu navigasi tanggal. Layar yang sangat sempit atau ukuran font aksesibilitas membungkus segmen menjadi dua baris. Tautan periode kini tampil saat membuka periode lain. Hero Forest Green menggunakan cincin native dari View dengan angka di tengah dan label N/A yang dapat dibaca. Kartu KPI mengikuti hierarki ikon, label, angka, dan satuan dari Beranda. Grafik memakai bar horizontal, skala bersatuan, dan N/A terpisah dari nol. Perbandingan memakai sepasang bar dengan skala yang sama per metrik, dan pintasan detail menggunakan ikon serta chevron.
+
+
+### Phase 10 · Muhasabah & Riwayat
+
+Di Laporan, bagian baru berada setelah Detail Laporan dan sebelum footer. Editor memakai navigasi pekan ringkas, kartu Forest Green dua kolom, lima pilihan emoji dengan label aksesibilitas, tiga catatan multiline, tombol simpan, dan penjelasan privasi. Grid disusun vertikal pada layar sempit atau font besar. Riwayat ibadah dikelompokkan menurut tanggal dengan ikon, status, dan detail.

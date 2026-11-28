@@ -12,12 +12,14 @@ import { draftTitle, DhikrLoad, DhikrScreen, DhikrSummary } from './DhikrUI';
 import { refreshDhikr, useDhikr } from './useDhikr';
 
 const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
+const dailyCollections = ['morning', 'evening'];
+const postCollections = ['post-591', 'post-34', 'post-33'];
 
 export default function DhikrHome() {
   const { t } = useTranslation();
   const router = useRouter();
   const today = useToday();
-  const params = useLocalSearchParams<{ date?: string; prayer?: string }>();
+  const params = useLocalSearchParams<{ date?: string; prayer?: string; activity?: string }>();
   const routePrayer = prayers.find((id) => id === params.prayer);
   const initialDate = typeof params.date === 'string' && parseLocalDate(params.date) && params.date <= today ? params.date : today;
   const [selected, setSelected] = useState<string>();
@@ -27,6 +29,8 @@ export default function DhikrHome() {
   const [error, setError] = useState(false);
   const date = selected ?? initialDate;
   const { db, user, data } = useDhikr(today);
+  const requestedCollection = [...dailyCollections,...postCollections].find(id => 'collection:'+id === params.activity);
+  const requestedItem = data?.items.find(item => item.id === params.activity && !item.archived);
 
   async function open(id: string, collection: boolean) {
     if (!user || busy) return;
@@ -45,6 +49,10 @@ export default function DhikrHome() {
   return <DhikrScreen title={t('dhikr.title')}>
     {!data ? <DhikrLoad failed={data === null} /> : <>
       <DhikrSummary logs={data.logs} />
+      {requestedCollection && <PrayerAction emphasis="primary" label={t('dhikr.catalog.'+requestedCollection)}
+        disabled={busy} onPress={() => void open(requestedCollection,true)} />}
+      {requestedItem && <PrayerAction emphasis="primary" label={requestedItem.owner ? requestedItem.label : t(requestedItem.label)}
+        disabled={busy} onPress={() => void open(requestedItem.id,false)} />}
       <View style={prayerStyles.wrap}>
         <PrayerAction label={t('dhikr.history')} onPress={() => router.push('/dhikr/history')} />
         <PrayerAction label={t('dhikr.manage')} onPress={() => router.push('/dhikr/manage')} />
@@ -59,7 +67,7 @@ export default function DhikrHome() {
       <PrayerPanel>
         <BodyText style={prayerStyles.section}>{t('dhikr.collections')}</BodyText>
         <BodyText>{t('dhikr.collectionInfo')}</BodyText>
-        {['morning','evening'].map((id) => <PrayerAction key={id} disabled={busy} label={t(`dhikr.catalog.${id}`)} onPress={() => void open(id, true)} />)}
+        {dailyCollections.map((id) => <PrayerAction key={id} disabled={busy} label={t(`dhikr.catalog.${id}`)} onPress={() => void open(id, true)} />)}
       </PrayerPanel>
       <PrayerPanel>
         <BodyText style={prayerStyles.section}>{t('dhikr.post')}</BodyText>
@@ -67,7 +75,7 @@ export default function DhikrHome() {
           <PrayerAction label={t('dhikr.general')} selected={!context} onPress={() => setContext(null)} />
           {prayers.map((id) => <PrayerAction key={id} label={t(`types.${id}`)} selected={context === id} onPress={() => setContext(id)} />)}
         </View>
-        {['post-591','post-34','post-33'].map((id) => <PrayerAction key={id} disabled={busy} label={t(`dhikr.catalog.${id}`)} onPress={() => void open(id, true)} />)}
+        {postCollections.map((id) => <PrayerAction key={id} disabled={busy} label={t(`dhikr.catalog.${id}`)} onPress={() => void open(id, true)} />)}
       </PrayerPanel>
       <PrayerPanel>
         <BodyText style={prayerStyles.section}>{t('dhikr.daily')}</BodyText>

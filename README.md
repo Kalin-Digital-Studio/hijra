@@ -51,3 +51,23 @@ Buka **Ibadah → Dzikir & Tasbih**. Pilih Tasbih Bebas, bacaan harian, koleksi,
 ## Phase 06B · Hub Ibadah
 
 Buka **Ibadah** untuk ringkasan empat tracker, Arah Kiblat, kalender, jadwal dan pustaka. MyQuran tersedia dalam Expo Go mode pengembangan selama audit hak rilis.
+
+
+## Target Ibadah
+
+Buka tab **Target** untuk membuat target harian, mingguan, atau bulanan. Modul berjalan offline di Expo Go SDK 58. Gunakan instalasi dan alamat Metro yang sama untuk mempertahankan data setelah migrasi SQLite v13. Panduan dan skenario cek tersedia di [Target Ibadah](docs/PERSONAL_GOALS.md) dan [Checklist](docs/UAT_CHECKLIST.md).
+
+
+## Beranda Personal · Phase 08
+
+Beranda menampilkan jadwal shalat kota yang dipilih di Ibadah, ringkasan hari ini, posisi lanjut Quran, target harian, grafik tujuh tanggal terakhir, dan lima aktivitas terbaru. Ringkasan lokal berfungsi tanpa internet. Jalankan `npm run start` dan buka Beranda di Expo Go. [Rincian integrasi](docs/DASHBOARD_INTEGRATION.md).
+
+
+## Laporan Ibadah · Phase 09
+
+Buka tab **Laporan** untuk memilih periode, membandingkan periode sebelumnya, membuka detail setiap kategori, atau melihat Kalender Konsistensi. Komputasi memakai SQLite lokal dan bekerja offline setelah aplikasi terbuka. [Panduan Laporan](docs/REPORTS_ANALYTICS.md).
+
+
+## Muhasabah & Riwayat
+
+Buka **Laporan → Muhasabah & Riwayat** untuk membuat jurnal mingguan, membuka riwayat muhasabah, atau melihat catatan ibadah lintas tracker. Simpan jurnal dengan minimal satu perasaan atau catatan. Jurnal berada di SQLite lokal. [Muhasabah Mingguan](docs/WEEKLY_REFLECTION.md) · [Riwayat Ibadah](docs/WORSHIP_HISTORY.md).

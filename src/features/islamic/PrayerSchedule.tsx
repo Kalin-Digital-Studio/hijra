@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { AppState, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { BodyText, EmptyState, Input } from '../../components/ui';
-import { canPreviewMyQuran } from '../../services/islamic/client';
+import { canPreviewMyQuran, IslamicError } from '../../services/islamic/client';
 import { scheduleMonth, searchCities } from '../../services/islamic/myquran';
 import { monthShift, nextPrayer, prayerDate, prayerIds, zones, type City, type PrayerTimes, type Zone } from '../../services/islamic/rules';
 import { light, radius, space } from '../../theme/tokens';
@@ -16,11 +16,12 @@ import { useRemote } from './useRemote';
 
 function useClock() {
   const [now,setNow]=useState(Date.now);
-  useEffect(()=>{
+  useFocusEffect(useCallback(()=>{
+    setNow(Date.now());
     const timer=setInterval(()=>setNow(Date.now()),1000);
     const subscription=AppState.addEventListener('change',state=>{if(state==='active')setNow(Date.now());});
     return ()=>{clearInterval(timer);subscription.remove();};
-  },[]);
+  },[]));
   return now;
 }
 function Times({row,active,green}: {row:PrayerTimes;active?:string;green?:boolean}) {
@@ -34,12 +35,12 @@ function Times({row,active,green}: {row:PrayerTimes;active?:string;green?:boolea
 }
 function useMonth(city: City|null|undefined, month:string) {
   const load=useCallback((signal:AbortSignal)=>scheduleMonth(city!,month,signal),[city,month]);
-  return useRemote(city ? city.id+'|'+month : null,load);
+  return useRemote(city ? city.id+'|'+city.zone+'|'+month : null,load);
 }
-export function PrayerHero() {
+export function PrayerHero({compact = false}: {compact?:boolean}) {
   const {t}=useTranslation();
   const router=useRouter();
-  const {city}=useCity();
+  const {city,failed}=useCity();
   const now=useClock();
   const day=prayerDate(now,city?.zone??'Asia/Jakarta');
   const month=day.slice(0,7), tomorrow=addDays(day,1).slice(0,7);
@@ -50,27 +51,37 @@ export function PrayerHero() {
   const { fontScale, width } = useWindowDimensions();
   const showIllustration = fontScale <= 1.25 && width >= 330;
   const row = current.data?.[day];
+  const fetching = !current.data || (tomorrow!==month && !following.data);
+  const requestError = current.error ?? following.error;
+  const limited = requestError instanceof IslamicError && requestError.status === 429;
+  const status = failed ? 'hub.localError' : city === undefined ? 'loading' : !city ? 'hub.heroChooseCity' :
+    !canPreviewMyQuran ? 'hub.blocked' : limited ? 'hub.limited' :
+    requestError || !fetching ? 'hub.scheduleUnavailable' : 'loading';
   const openSchedule = () => router.push('/islamic/schedule');
+  const location = city ? [city.name,compact && ['WIB','WITA','WIT'][zones.indexOf(city.zone)]].filter(Boolean).join(' · ') : t('hub.chooseCity');
   return <View style={heroStyles.card}>
     <Pressable accessibilityRole="button" accessibilityLabel={t('hub.chooseCity')}
       onPress={() => router.push({ pathname: '/islamic/schedule', params: { city: 'choose' } })}
       style={heroStyles.city}>
       <View style={heroStyles.cityDot} />
-      <BodyText style={heroStyles.light}>{city?.name ?? t('hub.chooseCity')}</BodyText>
+      <BodyText style={[heroStyles.light,heroStyles.cityName]}>{location}</BodyText>
       <BodyText style={heroStyles.light} aria-hidden>⌄</BodyText>
     </Pressable>
     <View style={heroStyles.main}>
       <View style={heroStyles.details}>
         <BodyText style={heroStyles.caption}>{t(next ? 'hub.nextPrayer' : 'hub.schedule')}</BodyText>
         {next ? <>
-          <BodyText style={heroStyles.prayer}>{t('types.' + next.prayer)}</BodyText>
+          <View style={heroStyles.prayerName}>
+            {compact && <PrayerIcon kind={next.prayer} color={light.accent} background={light.primary} size={20} />}
+            <BodyText style={heroStyles.prayer}>{t('types.' + next.prayer)}</BodyText>
+          </View>
           <BodyText style={heroStyles.time}>{next.time}</BodyText>
           <BodyText style={heroStyles.countdown}>{t('hub.countdown', { duration })}</BodyText>
-        </> : <BodyText style={heroStyles.light}>{t(!canPreviewMyQuran ? 'hub.blocked' : city ? 'hub.scheduleUnavailable' : 'hub.heroChooseCity')}</BodyText>}
+        </> : <BodyText style={heroStyles.light}>{t(status)}</BodyText>}
       </View>
       {showIllustration && <MosqueMark />}
     </View>
-    <View style={heroStyles.times}>
+    {!compact && <View style={heroStyles.times}>
       {prayerIds.map((id) => {
         const active = next?.date === day && next.prayer === id;
         return <View key={id} style={[heroStyles.slot, fontScale > 1.25 && heroStyles.wideSlot, active && heroStyles.activeSlot]}>
@@ -80,9 +91,13 @@ export function PrayerHero() {
           <BodyText style={[heroStyles.slotTime, active && heroStyles.countdown]}>{row?.[id] ?? '—'}</BodyText>
         </View>;
       })}
-    </View>
+    </View>}
+    {canPreviewMyQuran && city && !next && (requestError || !fetching) &&
+      <Pressable accessibilityRole="button" onPress={() => {current.retry();if(tomorrow!==month)following.retry();}} style={heroStyles.footer}>
+        <BodyText style={heroStyles.light}>{t('retry')}</BodyText>
+      </Pressable>}
     <Pressable accessibilityRole="button" accessibilityLabel={t('hub.schedule')} onPress={openSchedule} style={heroStyles.footer}>
-      <BodyText style={[heroStyles.caption, heroStyles.details]}>{t('hub.prayerSource')}</BodyText>
+      <BodyText style={[heroStyles.light, heroStyles.details]}>{t(compact ? 'dashboard.fullSchedule' : 'hub.prayerSource')}</BodyText>
       <PrayerIcon kind="next" color={light.onPrimary} background={light.primary} size={18} />
     </Pressable>
   </View>;
@@ -100,13 +115,15 @@ function MosqueMark() {
 
 const heroStyles = StyleSheet.create({
   card: { backgroundColor: light.primary, borderRadius: radius.lg, paddingHorizontal: space.md, paddingTop: space.xs },
-  city: { alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: space.xs, minHeight: 44 },
+  city: { alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: space.xs, minHeight: 48 },
+  cityName: {flexShrink:1},
   cityDot: { width: 7, height: 7, borderRadius: 4, borderWidth: 1, borderColor: light.accent },
   light: { color: light.onPrimary, fontSize: 13, lineHeight: 19, fontWeight: '600' },
   caption: { color: '#C9DDD3', fontSize: 12, lineHeight: 17 },
   main: { flexDirection: 'row', alignItems: 'center', paddingBottom: space.md, gap: space.sm },
   details: { flex: 1 },
   prayer: { color: light.onPrimary, fontWeight: '700', fontSize: 20, lineHeight: 27 },
+  prayerName: {flexDirection:'row',alignItems:'center',gap:space.xs,flexWrap:'wrap'},
   time: { color: light.onPrimary, fontWeight: '800', fontSize: 34, lineHeight: 42, fontVariant: ['tabular-nums'] },
   countdown: { color: '#F2D297', fontSize: 12, lineHeight: 18 },
   times: { paddingTop: space.sm, borderTopWidth: StyleSheet.hairlineWidth, borderColor: '#628778', flexDirection: 'row', flexWrap: 'wrap', gap: 2 },

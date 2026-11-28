@@ -1,3 +1,7 @@
+import { reflection } from './reflection.ts';
+import { reports } from './reports.ts';
+import { dashboard } from './dashboard.ts';
+import { goals } from './goals.ts';
 import personal from './personal.ts';
 import prayer from './prayer.ts';
 import sunnah from './sunnah.ts';
@@ -8,6 +12,10 @@ import { dhikr } from './dhikr.ts';
 import { hub } from './hub.ts';
 
 export default {
+  reflection,
+  reports,
+  dashboard,
+  goals,
   hub,
   dhikr,
   ...personal,

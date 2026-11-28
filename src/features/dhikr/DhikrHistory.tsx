@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams,useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -16,8 +16,10 @@ export default function DhikrHistory() {
   const { t } = useTranslation();
   const router = useRouter();
   const today = useToday();
+  const {date:initialDate}=useLocalSearchParams<{date?:string}>();
   const weekStart = useSettings((state) => state.week_start);
-  const [anchor, setAnchor] = useState<string>();
+  const [anchor, setAnchor] = useState<string|undefined>(()=>
+    typeof initialDate==='string'&&parseLocalDate(initialDate)&&initialDate<=today?initialDate:undefined);
   const [editing, setEditing] = useState<DhikrLog>();
   const [count, setCount] = useState('');
   const [date, setDate] = useState('');

@@ -36,3 +36,23 @@ Phase 06 mencakup Dzikir & Tasbih, personalisasi, integrasi pencatatan lanjutan 
 ## Phase 06B · Hub Ibadah
 
 06B menambahkan hub, Arah Kiblat dan MyQuran dengan akses live pengembangan. Phase 07 tetap Personal Goals & Planner.
+
+
+## Phase 07 · Target Ibadah dan Ibadah Planner
+
+Lingkup mencakup target berulang, rekomendasi opsional, progres otomatis, riwayat, edit, jeda, lanjut, dan arsip. Phase 08 berada di luar perubahan ini. Formal UAT tetap di Phase 12.
+
+
+## Phase 08 · Dashboard Integration
+
+Lingkup perombakan Beranda meliputi sapaan, jadwal, ringkasan harian, lanjut Quran, target harian, grafik tujuh hari, dan aktivitas terbaru. Modul Laporan lengkap berada di fase sesudahnya. UAT formal tetap dijadwalkan di Phase 12.
+
+
+## Phase 09 · Reports & Analytics
+
+Lingkup mencakup ringkasan periode, lima halaman detail, kalender konsistensi, dan perbandingan dalam jumlah hari yang sama. Verifikasi perangkat dicatat pada checklist. Formal UAT tetap Phase 12.
+
+
+## Phase 10 · Muhasabah dan Riwayat
+
+Muhasabah Mingguan, jurnal privat, riwayat muhasabah, serta riwayat ibadah lintas tracker masuk Phase 10. `weekly_reflections` menjadi sumber data pengguna untuk desain Backup & Restore Phase 11. UAT formal tetap dijadwalkan di Phase 12.

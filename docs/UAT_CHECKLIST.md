@@ -124,3 +124,58 @@ Checklist ini belum diverifikasi pada perangkat fisik. UAT formal tetap Phase 12
 - [ ] Pada varian B, periksa shaping, tanda di atas kata, wrapping ayat panjang dan clipping pada semua pilihan ukuran. Periksa pula satu tanda sajdah.
 - [ ] Bandingkan awal Al-Fatihah, Al-Baqarah, At-Tawbah, An-Naml dan Al-Ikhlas. Cek Basmalah dalam An-Naml 30 tetap satu ayat, dan **Lanjutkan Membaca** dari ayat 2 atau lebih tidak menampilkan pengantar.
 - [ ] Cek terjemahan dan bookmark Al-Baqarah 1 tetap di ayat 1. Simpan Al-Baqarah 1–5 dan pastikan ringkasan bertambah 5, termasuk saat offline.
+
+
+## Phase 07 · Verifikasi perangkat Target Ibadah
+
+- [ ] Buka Target pada perangkat dengan data lama. Cek profil, bookmark dan riwayat ibadah tetap tersedia.
+- [ ] Catat 15 ayat, buat target harian 20 ayat, cek 75%. Tambahkan 15 ayat, cek 150% dengan bar penuh. Hapus sesi kedua dan cek kembali 75%.
+- [ ] Cek Shalat Wajib dengan 3 selesai dan 1 EXEMPT menghasilkan 3/4. Uji 5 EXEMPT dan pastikan persentase kosong.
+- [ ] Gunakan target Dhuha/Tahajud dan Dzikir Pagi. Cek pintasan, satu hari dari beberapa sesi, koleksi parsial vs selesai, dan custom activity.
+- [ ] Pilih satu atau semua rekomendasi, sesuaikan jumlah/periode, review, cancel, lalu ulang dan simpan. Uji peringatan duplikat.
+- [ ] Edit nama, metrik dan jenis periode. Cek jadwal penerapan, batalkan, lalu ulang. Uji jeda, lanjutkan dan arsip. Ubah awal pekan dan cek periode transisi setelah pergantian.
+- [ ] Buka riwayat dengan filter, cek periode arsip, lalu koreksi transaksi historis dan cek progres yang berubah.
+- [ ] Verifikasi Android/iOS, tema terang/gelap/sistem, Indonesia/Inggris, skala font dan mode pesawat. Formal UAT tetap Phase 12.
+
+
+## Phase 08 · Verifikasi perangkat Beranda
+
+- [ ] Buka Beranda. Periksa avatar dan tanggal, mode terang/gelap/sistem, bahasa Indonesia/Inggris, dan ukuran font besar.
+- [ ] Ganti kota lewat **Lihat Jadwal Lengkap** dan cek Beranda. Periksa jadwal berikutnya setelah Isya dan pergantian bulan, termasuk status jadwal tidak tersedia saat koneksi putus.
+- [ ] Catat tiga shalat selesai, satu EXEMPT, dan satu belum dicatat. Cek **3/4 dan 75%**. Cek grafik untuk hari kosong, terlewat, lengkap dengan pengecualian, dan semua EXEMPT.
+- [ ] Simpan dua Tahajud dan satu Dhuha. Simpan 75 kali istighfar dan buat draft tambahan. Cek ringkasan tiga sesi Sunnah dan 75 pengulangan.
+- [ ] Simpan 15 ayat yang berakhir di Al-Baqarah 45, lalu cek tombol lanjut membuka ayat 46. Uji penanda akhir surah dan opsi mulai ulang setelah An-Nas.
+- [ ] Buat target harian 20 ayat. Cek 15/20, simpan 5 ayat lagi dan cek target tercapai. Tambahkan target pekanan dan cek pengecualiannya di ringkasan hari ini.
+- [ ] Koreksi transaksi lama dan pastikan grafik dan target mengikuti. Cek feed maksimal lima, tanggal fallback, pintasan, dan satu parent per koleksi.
+- [ ] Uji mode pesawat setelah Expo Go terbuka. Uji kembali dari latar belakang dan pergantian tanggal. Tes dengan profil terisolasi untuk kondisi kosong, dengan data Product Owner tetap tersedia.
+
+
+## Phase 09 · Verifikasi perangkat Laporan
+
+- [ ] Reload Expo Go, buka **Laporan** dan cek Mingguan, Bulanan, Tahunan, serta Rentang khusus. Coba kembali ke periode kini, masuk detail, lalu kembali dan periksa pilihan tetap dipertahankan.
+- [ ] Uji data Shalat Wajib lengkap, terlewat, belum dicatat dan EXEMPT. Pastikan tanggal mendatang tidak masuk. Cek atribut Ya, Tidak dan Belum diisi.
+- [ ] Buat sesi Quran lintas Al-Fatihah 6 hingga Al-Baqarah 3. Periksa alokasi 2 + 3. Coba filter surah dan cek durasi hanya pada ringkasan sesi yang cocok.
+- [ ] Cek beberapa sesi Sunnah di hari yang sama, aktivitas kustom, rakaat kosong, counter dan checklist Dzikir, serta status koleksi parsial dan selesai.
+- [ ] Cek filter kategori/frekuensi Target, versi lama setelah edit, periode terbuka, dan atribusi periode tutup lintas bulan.
+- [ ] Bandingkan bulan berjalan dengan bulan sebelumnya. Cek hari yang dibandingkan, perubahan poin persentase, dan baseline nol.
+- [ ] Pilih hari pada Kalender dan buka tracker terkait. Koreksi transaksi dan cek laporan otomatis berubah. Uji mode pesawat setelah Expo Go terbuka, kedua bahasa, tema, ukuran font, serta Android/iOS.
+
+Formal UAT tetap Phase 12.
+
+
+### Phase 09A · Pemeriksaan visual Laporan
+
+- [ ] Pada Android kecil dengan ukuran font normal, cek judul dan ikon kalender, empat segmen satu baris, serta awal KPI dalam viewport bila ukuran perangkat memungkinkan. Pada font aksesibilitas, cek segmen dan KPI terbaca saat dibungkus.
+- [ ] Geser ke periode lama dan cek tautan periode kini hanya muncul di sana. Uji periode Custom, panah nonaktif untuk masa depan, dan jalur dari ikon kalender.
+- [ ] Periksa hero pada 0%, persentase parsial, 100% dan semua EXEMPT. Cek bar tren, pasangan perbandingan, kondisi baseline nol, serta pintasan detail.
+- [ ] Cek terang/gelap/sistem, Indonesia/Inggris, label pembaca layar, dan ulangi alur offline Phase 09 di HP. Bila gear melayang masih muncul, bandingkan dengan Expo Go lain atau build rilis untuk mengidentifikasi pemiliknya.
+
+
+## Phase 10 · Verifikasi perangkat
+
+- [ ] Pada Expo Go dengan profil yang sudah ada, buka **Laporan → Muhasabah & Riwayat**. Simpan hanya perasaan, kosongkan semua input untuk cek validasi, lalu edit dan buka ulang.
+- [ ] Ketik perubahan lalu tekan Back atau pindah minggu. Pastikan dialog pembuangan muncul dan membatalkan dialog mempertahankan draf. Periksa keyboard, kedua bahasa, tema, dan font besar.
+- [ ] Ubah awal pekan. Pastikan kandidat yang beririsan membuka tanggal asli dan kandidat non-overlap bisa dipakai. Cek filter tahun dan konfirmasi hapus.
+- [ ] Cocokkan ringkasan dengan Laporan untuk rentang yang sama. Koreksi catatan tracker dan pastikan statistik berubah dengan jurnal tetap tersimpan.
+- [ ] Cek setiap filter riwayat dan rentang khusus. Cek status Wajib, sesi Quran lintas surah, abaikan draft, serta lihat anak koleksi dari detail parent. Periksa jam yang kosong dan kembali ke filter semula.
+- [ ] Aktifkan mode pesawat setelah Expo Go terbuka. Uji simpan, buka ulang, lihat riwayat dan periksa data ibadah tetap ada setelah satu jurnal dihapus. Formal UAT tetap Phase 12.

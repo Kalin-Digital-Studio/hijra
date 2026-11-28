@@ -1,3 +1,4 @@
+import { invalidateGoals } from '../../stores/goalRevision';
 import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useCallback, useState } from 'react';
@@ -8,6 +9,7 @@ import type { Catalog, Position, Session } from '../../services/quranRules';
 
 const useRevision = create<{ version: number }>(() => ({ version: 0 }));
 export function refreshQuran() {
+  invalidateGoals();
   useRevision.setState(({ version }) => ({ version: version + 1 }));
 }
 

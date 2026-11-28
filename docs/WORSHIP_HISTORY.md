@@ -1,0 +1,7 @@
+# Riwayat Ibadah
+
+Tab Laporan membuka riwayat read-only dengan filter Semua Aktivitas, Wajib, Sunnah, Quran dan Dzikir. Pilihan tanggal adalah hari ini, pekan sesuai preferensi awal pekan, bulan, atau rentang khusus hingga 366 hari. Filter bertahan ketika kembali dari detail.
+
+Proyeksi SQLite menyatukan transaksi empat tracker dan parent koleksi. Wajib mencatat COMPLETED, MISSED dan EXEMPT saja dan atribut opsional hanya tampil bila diisi. Sunnah memakai tanggal, jam yang diisi, dan rakaat nullable. Quran menampilkan awal, akhir, hitungan inklusif dan durasi menit yang dicatat. Dzikir counter menampilkan pengulangan dan checklist menampilkan status selesai. Parent koleksi final tampil sekali. Detail memuat log anak dan jumlah aktual, tanpa menyunting snapshot historis. Draft dan anak koleksi tidak muncul di feed.
+
+Urutan memakai tanggal terbaru, lalu jam aktual bila semua aktivitas pada tanggal tersebut mempunyai jam, timestamp simpan bila ada, dan kategori serta ID. Jam tampilan selalu berasal dari jam aktivitas tersimpan. SQL membatasi tanggal dan pemilik, mengambil 24 entri per halaman, serta menampilkan total. Detail membaca ulang rekaman asli sehingga penghapusan atau koreksi segera terlihat saat kembali atau setelah sinyal refresh. Perubahan rekaman dilakukan melalui tracker asal. Query feed dan detail tidak memasukkan kolom catatan pribadi. [Checklist](UAT_CHECKLIST.md).

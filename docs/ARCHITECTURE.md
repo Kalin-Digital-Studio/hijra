@@ -49,3 +49,23 @@ Rute `/dhikr`, `/dhikr/counter`, `/dhikr/history`, dan `/dhikr/manage` memakai S
 ## Phase 06B · Hub Ibadah
 
 `src/features/islamic` menggunakan layanan `src/services/islamic` untuk schema, timeout, pembatalan, deduplikasi dan kontrol 429. Payload hanya dipakai untuk render aktif. Arah kiblat dihitung lokal.
+
+
+### Phase 07 · Target Ibadah
+
+Expo Router mempertahankan tab `goals` dan membuka `/goals/[view]` dalam stack pengguna yang sudah onboarding. `goalRules.ts` menangani registry, periode, dan kalkulasi. `repositories/goals.ts` menyerialkan tulis dan rekonsiliasi, memakai repositori tracker untuk pembacaan, dan menyajikan hasil saat periode dibuka. Store invalidasi terhubung ke refresh tracker setelah mutasi. Rekonsiliasi berjalan saat boot profil, resume, pergantian tanggal dan fokus. [Rincian algoritme](GOAL_CALCULATION_ENGINE.md).
+
+
+### Phase 08 · Agregasi Beranda
+
+`repositories/dashboard.ts` membaca transaksi dan data master secara paralel, kemudian membentuk snapshot dengan ringkasan tracker dan mesin Target yang sudah ada. `dashboardRules.ts` menyajikan rentang, preview, dan posisi baca. `useDashboard` mendengarkan fokus, profil, tanggal, serta invalidasi tracker dan target. Prayer Hero memakai `PrayerHero` dan `useCity` dari Hub Ibadah dengan jam terisolasi. [Arsitektur Beranda](DASHBOARD_INTEGRATION.md).
+
+
+### Phase 09 · Laporan
+
+Tab `reports` membuka ringkasan dan `/reports/[section]` membawa periode ke detail, perbandingan, atau kalender. `reportDates.ts` mengelola rentang dan bucket. `repositories/reports.ts` mengumpulkan data dengan query tanggal dan pemilik yang terbatas, memakai pemanggilan langsung repositori tracker serta mesin Target. `reportRules.ts` menghitung seluruh hasil. Hook menyelaraskan data pada fokus, pemilik, kalender lokal, awal pekan, dan sinyal invalidasi. [Arsitektur Laporan](REPORTS_ANALYTICS.md).
+
+
+### Phase 10 · Muhasabah & Riwayat
+
+Pintasan Laporan membuka `/reports/reflection/[view]` atau `/reports/worship-history/[view]` di stack terlindungi. Jurnal memakai repositori `reflections`, sedangkan ringkasan pekanan memakai agregasi Laporan. `worshipHistory` memproyeksikan sumber asli menjadi daftar dan detail read-only. Hook memuat ulang pada fokus dan revisi yang sama dengan tracker, Target, dan resume aplikasi.
